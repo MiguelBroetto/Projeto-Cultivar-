@@ -1,0 +1,47 @@
+/* Cabeçalho centralizando menu */
+header {
+    display: flex;
+    justify-content: center; /* centraliza horizontalmente */
+    align-items: center;
+    background-color: #adbd9c;
+    color: #fff;
+    padding: 10px 20px;
+    position: relative;
+}
+
+/* Ajusta o logo para ficar fixo na esquerda */
+.logo {
+    position: absolute;
+    left: 20px;
+}
+
+.logo img {
+    height: 50px;
+}
+
+/* Menu central */
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+footer{
+    background-color: #889975;
+    color: #fff;
+    text-align: center;
+    padding: 10px 20px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
