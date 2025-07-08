@@ -1,7 +1,8 @@
 /* Cabeçalho centralizando menu */
 header {
     display: flex;
-    justify-content: center; /* centraliza horizontalmente */
+    justify-content: center;
+    /* centraliza horizontalmente */
     align-items: center;
     background-color: #adbd9c;
     color: #fff;
@@ -36,7 +37,63 @@ nav a:hover {
     text-decoration: underline;
 }
 
-footer{
+/* Contêiner de todos os produtos */
+.produtos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Cada card de produto */
+.produto {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Efeito ao passar o mouse */
+.produto:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Imagem do produto */
+.produto img {
+    width: 100%;
+    height: auto;
+    max-height: 150px;
+    /* Ajuste conforme preferir */
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+/* Nome do produto */
+.produto h2 {
+    font-size: 1.2em;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+/* Descrição */
+.produto .descricao {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+/* Preço */
+.produto .preco {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #004080;
+}
+
+
+footer {
     background-color: #889975;
     color: #fff;
     text-align: center;
