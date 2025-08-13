@@ -1,0 +1,32 @@
+body {
+    background-color: #b0be9b; /* Light muted green to match logo style */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #2c4a1f;
+  }
+  .underline-limited {
+    width: 120px;
+    border-bottom: 2px solid #2c4a1f;
+    margin: 0.5rem auto 1.5rem auto;
+  }
+  .logo-container img {
+    max-width: 150px;
+    filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.1));
+  }
+  label {
+    font-weight: 600;
+    color: #2c4a1f;
+  }
+  input, textarea {
+    border: 1.5px solid #234012;
+  }
+  input:focus, textarea:focus {
+    outline: none;
+    border-color: #4a7a2d;
+    box-shadow: 0 0 5px #76b17f88;
+  }
+  button {
+    background-color: #2c4a1f;
+  }
+  button:hover {
+    background-color: #4a7a2d;
+  }
