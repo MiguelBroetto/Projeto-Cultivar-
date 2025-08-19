@@ -22,11 +22,11 @@ body {
   input:focus, textarea:focus {
     outline: none;
     border-color: #4a7a2d;
-    box-shadow: 0 0 5px #76b17f88;
+    box-shadow: 0 0 5px #adbd9c;
   }
   button {
-    background-color: #2c4a1f;
+    background-color: #adbd9c;
   }
   button:hover {
-    background-color: #4a7a2d;
+    background-color: #adbd9c;
   }
