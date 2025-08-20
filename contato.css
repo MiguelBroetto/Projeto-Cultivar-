@@ -1,32 +1,248 @@
+/* ==============================
+   ESTILO GERAL
+   ============================== */
+html,
 body {
-    background-color: #b0be9b; /* Light muted green to match logo style */
+    height: 100%;
+    margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to bottom right, #e9f5e9, #ffffff);
+    color: #2f4f2f;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==============================
+   CABEÇALHO
+   ============================== */
+header {
+    display: flex;
+    justify-content: center; /* centraliza menu */
+    align-items: center;
+    background-color: #adbd9c;
+    color: #fff;
+    padding: 15px 20px;
+    position: relative;
+    width: 100%;
+}
+
+/* Logo à esquerda */
+.logo {
+    position: absolute;
+    left: 20px;
+}
+
+.logo img {
+    height: 50px;
+}
+
+/* Menu central */
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* ==============================
+   CONTEÚDO PRINCIPAL
+   ============================== */
+main {
+    flex: 1;
+    max-width: 1200px;
+    width: 100%;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+/* Título */
+h1, h2 {
+    text-align: center;
     color: #2c4a1f;
-  }
-  .underline-limited {
+    margin-bottom: 10px;
+}
+
+.underline-limited {
     width: 120px;
     border-bottom: 2px solid #2c4a1f;
     margin: 0.5rem auto 1.5rem auto;
-  }
-  .logo-container img {
+}
+
+/* Logo container (se houver no corpo do site) */
+.logo-container img {
     max-width: 150px;
     filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.1));
-  }
-  label {
+}
+
+/* ==============================
+   FORMULÁRIOS
+   ============================== */
+label {
     font-weight: 600;
     color: #2c4a1f;
-  }
-  input, textarea {
+    display: block;
+    margin-bottom: 6px;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 10px;
     border: 1.5px solid #234012;
-  }
-  input:focus, textarea:focus {
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 1em;
+}
+
+input:focus, textarea:focus, select:focus {
     outline: none;
     border-color: #4a7a2d;
-    box-shadow: 0 0 5px #adbd9c;
-  }
-  button {
+    box-shadow: 0 0 6px #adbd9c;
+}
+
+/* Botão */
+button {
     background-color: #adbd9c;
-  }
-  button:hover {
-    background-color: #adbd9c;
-  }
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s ease;
+}
+
+button:hover {
+    background-color: #8ea57c;
+}
+
+/* ==============================
+   RODAPÉ
+   ============================== */
+footer {
+    background-color: #889975;
+    color: #fff;
+    text-align: center;
+    padding: 15px 20px;
+    width: 100%;
+    margin-top: auto;
+}
+
+/* ==============================
+   RESPONSIVIDADE
+   ============================== */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .logo {
+        position: static;
+        margin-bottom: 10px;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    main {
+        margin: 15px;
+        padding: 15px;
+    }
+
+    footer {
+        font-size: 14px;
+        padding: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo img {
+        height: 40px;
+    }
+
+    nav ul {
+        gap: 8px;
+    }
+
+    nav a {
+        font-size: 14px;
+    }
+}
+
+/* ==============================
+   ÍCONE DO CARRINHO
+   ============================== */
+.carrinho-link img {
+  height: 50px; /* mesmo tamanho da logo */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.carrinho-link img:hover {
+  transform: scale(1.1); /* efeito ao passar o mouse */
+}
+
+
+.carrinho-link img {
+  height: 50px; /* mesmo tamanho da logo */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.carrinho-link img:hover {
+  transform: scale(1.1); /* efeito ao passar o mouse */
+}
+
+.perfil-link img {
+  height: 50px; /* mesmo tamanho da logo */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.perfil-link img:hover {
+  transform: scale(1.1); /* efeito ao passar o mouse */
+}
+
+.inicio-link img {
+  height: 50px; /* mesmo tamanho da logo */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.inicio-link img:hover {
+  transform: scale(1.1); /* efeito ao passar o mouse */
+}
+
+.sobre-link img {
+  height: 50px; /* mesmo tamanho da logo */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.sobre-link img:hover {
+  transform: scale(1.1); /* efeito ao passar o mouse */
+}
+
+.contato-link img {
+  height: 50px; /* mesmo tamanho da logo */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.contato-link img:hover {
+  transform: scale(1.1); /* efeito ao passar o mouse */
+}

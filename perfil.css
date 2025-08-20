@@ -1,0 +1,202 @@
+/* Corpo */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to bottom right, #e9f5e9, #ffffff);
+  color: #2f4f2f;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Cabeçalho */
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #adbd9c;
+  color: #fff;
+  padding: 15px 20px;
+  position: relative;
+}
+
+.logo {
+  position: absolute;
+  left: 20px;
+}
+
+.logo img {
+  height: 50px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Conteúdo principal */
+main {
+  max-width: 600px;
+  width: 100%;
+  margin: 30px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  flex-grow: 1;
+}
+
+h1,
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2f4f2f;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input,
+select {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+}
+
+button {
+  background: #4CAF50;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 1em;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #3e8e41;
+}
+
+.perfil-info {
+  text-align: center;
+}
+
+.perfil-info p {
+  font-size: 1.1em;
+  margin: 10px 0;
+}
+
+.logout {
+  background: #ff4d4d;
+}
+
+.logout:hover {
+  background: #cc0000;
+}
+
+.pagamentos {
+  margin-top: 30px;
+  border-top: 2px solid #ccc;
+  padding-top: 20px;
+}
+
+.pagamento-item {
+  background: #f1f8f1;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+  background-color: #889975;
+  color: #fff;
+  text-align: center;
+  padding: 10px 20px;
+  margin-top: auto;
+}
+
+.carrinho-link img {
+  height: 50px; /* mesmo tamanho da logo */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.carrinho-link img:hover {
+  transform: scale(1.1); /* efeito ao passar o mouse */
+}
+
+
+.carrinho-link img {
+  height: 50px; /* mesmo tamanho da logo */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.carrinho-link img:hover {
+  transform: scale(1.1); /* efeito ao passar o mouse */
+}
+
+.perfil-link img {
+  height: 50px; /* mesmo tamanho da logo */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.perfil-link img:hover {
+  transform: scale(1.1); /* efeito ao passar o mouse */
+}
+
+.inicio-link img {
+  height: 50px; /* mesmo tamanho da logo */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.inicio-link img:hover {
+  transform: scale(1.1); /* efeito ao passar o mouse */
+}
+
+.sobre-link img {
+  height: 50px; /* mesmo tamanho da logo */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.sobre-link img:hover {
+  transform: scale(1.1); /* efeito ao passar o mouse */
+}
+
+.contato-link img {
+  height: 50px; /* mesmo tamanho da logo */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.contato-link img:hover {
+  transform: scale(1.1); /* efeito ao passar o mouse */
+}

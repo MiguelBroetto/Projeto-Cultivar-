@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil do Usuário</title>
+  <link rel="stylesheet" href="perfil.css">
+</head>
+
+<body>
+  <header>
+    <div class="logo">
+      <img src="./imagens/logocultivar+.png" alt="Logo do Site">
+    </div>
+    <nav>
+      <ul>
+        <li>
+          <a href="index.html" class="inicio-link">
+            <img src="./imagens/home.png" alt="inicio">
+          </a>
+        </li>
+        <li>
+          <a href="sobre.html" class="sobre-link">
+            <img src="./imagens/Sobre (1).png" alt="sobre">
+          </a>
+        </li>
+        <li>
+          <a href="carrinho.html" class="carrinho-link">
+            <img src="./imagens/carrinho.png" alt="Carrinho">
+          </a>
+        </li>
+        <li>
+          <a href="contato.html" class="contato-link">
+            <img src="./imagens/contato (1).png" alt="contato">
+          </a>
+        </li>
+        <li>
+          <a href="perfil.html" class="perfil-link">
+            <img src="./imagens/perfil (1).png" alt="perfil">
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Perfil do Usuário</h1>
+
+    <!-- Formulário de cadastro -->
+    <div id="form-container">
+      <form id="cadastroForm">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" required>
+
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" required>
+
+        <label for="senha">Senha:</label>
+        <input type="password" id="senha" required>
+
+        <button type="submit">Criar Conta</button>
+      </form>
+    </div>
+
+    <!-- Perfil do usuário -->
+    <div id="perfil-container" class="perfil-info" style="display: none;">
+      <p><strong>Nome:</strong> <span id="perfil-nome"></span></p>
+      <p><strong>Email:</strong> <span id="perfil-email"></span></p>
+      <button class="logout" onclick="logout()">Sair</button>
+
+      <!-- Formas de pagamento -->
+      <div class="pagamentos">
+        <h2>Adicione uma forma de pagamento</h2>
+        <form id="pagamentoForm">
+          <label for="tipoPagamento">Tipo:</label>
+          <select id="tipoPagamento" required>
+            <option value="">Selecione</option>
+            <option value="Cartão de Crédito">Cartão de Crédito</option>
+            <option value="Pix">Pix</option>
+          </select>
+
+          <label for="detalhes">Detalhes:</label>
+          <input type="text" id="detalhes" placeholder="Selecione o tipo de pagamento" required>
+
+
+          <button type="submit">Salvar e Continuar</button>
+        </form>
+
+        <div id="listaPagamentos"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Minha Loja - Todos os direitos reservados</p>
+  </footer>
+
+  <script>
+    const formContainer = document.getElementById("form-container");
+    const perfilContainer = document.getElementById("perfil-container");
+    const cadastroForm = document.getElementById("cadastroForm");
+    const perfilNome = document.getElementById("perfil-nome");
+    const perfilEmail = document.getElementById("perfil-email");
+    const pagamentoForm = document.getElementById("pagamentoForm");
+    const listaPagamentos = document.getElementById("listaPagamentos");
+
+    const tipoPagamento = document.getElementById("tipoPagamento");
+    const detalhes = document.getElementById("detalhes");
+
+    // Verifica se já existe usuário logado
+    window.onload = function () {
+      const usuario = JSON.parse(localStorage.getItem("usuario"));
+      if (usuario) {
+        mostrarPerfil(usuario);
+      }
+    };
+
+    // Cadastrar usuário
+    cadastroForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const usuario = {
+        nome: document.getElementById("nome").value,
+        email: document.getElementById("email").value,
+        senha: document.getElementById("senha").value,
+        pagamentos: []
+      };
+      localStorage.setItem("usuario", JSON.stringify(usuario));
+      mostrarPerfil(usuario);
+    });
+
+    // Mostrar perfil
+    function mostrarPerfil(usuario) {
+      formContainer.style.display = "none";
+      perfilContainer.style.display = "block";
+      perfilNome.textContent = usuario.nome;
+      perfilEmail.textContent = usuario.email;
+      mostrarPagamentos(usuario.pagamentos || []);
+    }
+
+    // Logout
+    function logout() {
+      localStorage.removeItem("usuario");
+      formContainer.style.display = "block";
+      perfilContainer.style.display = "none";
+    }
+
+    // Adicionar forma de pagamento
+    pagamentoForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const tipo = document.getElementById("tipoPagamento").value;
+      const detalhes = document.getElementById("detalhes").value;
+
+      const usuario = JSON.parse(localStorage.getItem("usuario"));
+      if (!usuario.pagamentos) usuario.pagamentos = [];
+      usuario.pagamentos.push({ tipo, detalhes });
+
+      localStorage.setItem("usuario", JSON.stringify(usuario));
+      mostrarPagamentos(usuario.pagamentos);
+
+      pagamentoForm.reset();
+
+      // Se for o primeiro pagamento salvo → redireciona para tela principal
+      if (usuario.pagamentos.length === 1) {
+        window.location.href = "index.html";
+      }
+    });
+
+    // Mostrar lista de pagamentos
+    function mostrarPagamentos(pagamentos) {
+      listaPagamentos.innerHTML = "";
+      pagamentos.forEach(p => {
+        const div = document.createElement("div");
+        div.classList.add("pagamento-item");
+        div.textContent = `${p.tipo} - ${p.detalhes}`;
+        listaPagamentos.appendChild(div);
+      });
+    }
+
+    tipoPagamento.addEventListener("change", function () {
+    detalhes.value = ""; // limpa o campo
+    detalhes.removeAttribute("maxlength");
+    detalhes.removeAttribute("pattern");
+    detalhes.placeholder = "";
+
+    if (tipoPagamento.value === "Cartão de Crédito") {
+      detalhes.setAttribute("maxlength", "16");
+      detalhes.setAttribute("pattern", "\\d{16}");
+      detalhes.placeholder = "Digite os 16 números do cartão";
+    } else if (tipoPagamento.value === "Pix") {
+      detalhes.setAttribute("maxlength", "11");
+      detalhes.setAttribute("pattern", "\\d{11}");
+      detalhes.placeholder = "Digite o CPF (11 números)";
+    }
+  });
+
+  // Impede digitar letras no campo de detalhes
+  detalhes.addEventListener("input", function () {
+    this.value = this.value.replace(/\D/g, ""); // só números
+  });
+  </script>
+
+</body>
+
+</html>

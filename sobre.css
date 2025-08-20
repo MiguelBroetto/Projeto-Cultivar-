@@ -153,3 +153,53 @@ footer {
         font-size: 15px;
     }
 }
+
+.carrinho-link img {
+  height: 50px; /* mesmo tamanho da logo */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.carrinho-link img:hover {
+  transform: scale(1.1); /* efeito ao passar o mouse */
+}
+
+.perfil-link img {
+  height: 50px; /* mesmo tamanho da logo */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.perfil-link img:hover {
+  transform: scale(1.1); /* efeito ao passar o mouse */
+}
+
+.inicio-link img {
+  height: 50px; /* mesmo tamanho da logo */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.inicio-link img:hover {
+  transform: scale(1.1); /* efeito ao passar o mouse */
+}
+
+.sobre-link img {
+  height: 50px; /* mesmo tamanho da logo */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.sobre-link img:hover {
+  transform: scale(1.1); /* efeito ao passar o mouse */
+}
+
+.contato-link img {
+  height: 50px; /* mesmo tamanho da logo */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.contato-link img:hover {
+  transform: scale(1.1); /* efeito ao passar o mouse */
+}
