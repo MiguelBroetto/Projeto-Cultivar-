@@ -26,6 +26,26 @@ header {
     width: 100%;
 }
 
+#img_home{
+    height: 30px;
+}
+
+#img_sobre{
+    height: 30px;
+}
+
+#img_carrinho{
+    height: 30px;
+}
+
+#img_contato{
+    height: 30px;
+}
+
+#img_perfil{
+    height: 30px;
+}
+
 /* Logo à esquerda */
 .logo {
     position: absolute;
@@ -33,7 +53,7 @@ header {
 }
 
 .logo img {
-    height: 50px;
+    height: 130px;
 }
 
 /* Menu central */
