@@ -10,7 +10,7 @@
 
 <body>
   <header>
-    <div class="logo">
+   <div class="logo">
       <img src="./imagens/logocultivar+.png" alt="Logo do Site">
     </div>
     <nav>
@@ -82,7 +82,6 @@
 
           <label for="detalhes">Detalhes:</label>
           <input type="text" id="detalhes" placeholder="Selecione o tipo de pagamento" required>
-
 
           <button type="submit">Salvar e Continuar</button>
         </form>
@@ -178,26 +177,26 @@
     }
 
     tipoPagamento.addEventListener("change", function () {
-    detalhes.value = ""; // limpa o campo
-    detalhes.removeAttribute("maxlength");
-    detalhes.removeAttribute("pattern");
-    detalhes.placeholder = "";
+      detalhes.value = ""; // limpa o campo
+      detalhes.removeAttribute("maxlength");
+      detalhes.removeAttribute("pattern");
+      detalhes.placeholder = "";
 
-    if (tipoPagamento.value === "Cartão de Crédito") {
-      detalhes.setAttribute("maxlength", "16");
-      detalhes.setAttribute("pattern", "\\d{16}");
-      detalhes.placeholder = "Digite os 16 números do cartão";
-    } else if (tipoPagamento.value === "Pix") {
-      detalhes.setAttribute("maxlength", "11");
-      detalhes.setAttribute("pattern", "\\d{11}");
-      detalhes.placeholder = "Digite o CPF (11 números)";
-    }
-  });
+      if (tipoPagamento.value === "Cartão de Crédito") {
+        detalhes.setAttribute("maxlength", "16");
+        detalhes.setAttribute("pattern", "\\d{16}");
+        detalhes.placeholder = "Digite os 16 números do cartão";
+      } else if (tipoPagamento.value === "Pix") {
+        detalhes.setAttribute("maxlength", "11");
+        detalhes.setAttribute("pattern", "\\d{11}");
+        detalhes.placeholder = "Digite o CPF (11 números)";
+      }
+    });
 
-  // Impede digitar letras no campo de detalhes
-  detalhes.addEventListener("input", function () {
-    this.value = this.value.replace(/\D/g, ""); // só números
-  });
+    // Impede digitar letras no campo de detalhes
+    detalhes.addEventListener("input", function () {
+      this.value = this.value.replace(/\D/g, ""); // só números
+    });
   </script>
 
 </body>
