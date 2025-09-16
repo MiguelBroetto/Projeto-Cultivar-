@@ -10,7 +10,7 @@
 
 <body>
   <header>
-   <div class="logo">
+    <div class="logo">
       <img src="./imagens/logo cultivar +(sem fundo).png" alt="Logo do Site">
     </div>
     <nav>
@@ -71,19 +71,17 @@
 
       <!-- Formas de pagamento -->
       <div class="pagamentos">
-        <h2>Adicione uma forma de pagamento</h2>
-        <form id="pagamentoForm">
-          <label for="tipoPagamento">Tipo:</label>
-          <select id="tipoPagamento" required>
-            <option value="">Selecione</option>
+        <h2>Adicionar forma de pagamento</h2>
+
+        <!-- FORMULÁRIO QUE VOCÊ ME PASSOU -->
+        <form id="formPerfil">
+          <label>Forma de Pagamento:</label>
+          <select id="pagamento">
             <option value="Cartão de Crédito">Cartão de Crédito</option>
             <option value="Pix">Pix</option>
+            <option value="Boleto">Boleto</option>
           </select>
-
-          <label for="detalhes">Detalhes:</label>
-          <input type="text" id="detalhes" placeholder="Selecione o tipo de pagamento" required>
-
-          <button type="submit">Salvar e Continuar</button>
+          <button type="submit">Salvar</button>
         </form>
 
         <div id="listaPagamentos"></div>
@@ -101,11 +99,7 @@
     const cadastroForm = document.getElementById("cadastroForm");
     const perfilNome = document.getElementById("perfil-nome");
     const perfilEmail = document.getElementById("perfil-email");
-    const pagamentoForm = document.getElementById("pagamentoForm");
     const listaPagamentos = document.getElementById("listaPagamentos");
-
-    const tipoPagamento = document.getElementById("tipoPagamento");
-    const detalhes = document.getElementById("detalhes");
 
     // Verifica se já existe usuário logado
     window.onload = function () {
@@ -122,7 +116,6 @@
         nome: document.getElementById("nome").value,
         email: document.getElementById("email").value,
         senha: document.getElementById("senha").value,
-        pagamentos: []
       };
       localStorage.setItem("usuario", JSON.stringify(usuario));
       mostrarPerfil(usuario);
@@ -134,71 +127,38 @@
       perfilContainer.style.display = "block";
       perfilNome.textContent = usuario.nome;
       perfilEmail.textContent = usuario.email;
-      mostrarPagamentos(usuario.pagamentos || []);
+      mostrarPagamentos();
     }
 
     // Logout
     function logout() {
       localStorage.removeItem("usuario");
+      localStorage.removeItem("formaPagamento");
       formContainer.style.display = "block";
       perfilContainer.style.display = "none";
     }
 
-    // Adicionar forma de pagamento
-    pagamentoForm.addEventListener("submit", function (e) {
+    // Salvar forma de pagamento (seu código adaptado)
+    document.getElementById("formPerfil").addEventListener("submit", (e) => {
       e.preventDefault();
-      const tipo = document.getElementById("tipoPagamento").value;
-      const detalhes = document.getElementById("detalhes").value;
-
-      const usuario = JSON.parse(localStorage.getItem("usuario"));
-      if (!usuario.pagamentos) usuario.pagamentos = [];
-      usuario.pagamentos.push({ tipo, detalhes });
-
-      localStorage.setItem("usuario", JSON.stringify(usuario));
-      mostrarPagamentos(usuario.pagamentos);
-
-      pagamentoForm.reset();
-
-      // Se for o primeiro pagamento salvo → redireciona para tela principal
-      if (usuario.pagamentos.length === 1) {
-        window.location.href = "index.html";
-      }
+      const pagamento = document.getElementById("pagamento").value;
+      localStorage.setItem("formaPagamento", pagamento);
+      alert("Forma de pagamento salva com sucesso!");
+      mostrarPagamentos();
     });
 
     // Mostrar lista de pagamentos
-    function mostrarPagamentos(pagamentos) {
+    function mostrarPagamentos() {
       listaPagamentos.innerHTML = "";
-      pagamentos.forEach(p => {
+      const pagamentoSalvo = localStorage.getItem("formaPagamento");
+      if (pagamentoSalvo) {
         const div = document.createElement("div");
         div.classList.add("pagamento-item");
-        div.textContent = `${p.tipo} - ${p.detalhes}`;
+        div.textContent = `Forma de pagamento: ${pagamentoSalvo}`;
         listaPagamentos.appendChild(div);
-      });
-    }
-
-    tipoPagamento.addEventListener("change", function () {
-      detalhes.value = ""; // limpa o campo
-      detalhes.removeAttribute("maxlength");
-      detalhes.removeAttribute("pattern");
-      detalhes.placeholder = "";
-
-      if (tipoPagamento.value === "Cartão de Crédito") {
-        detalhes.setAttribute("maxlength", "16");
-        detalhes.setAttribute("pattern", "\\d{16}");
-        detalhes.placeholder = "Digite os 16 números do cartão";
-      } else if (tipoPagamento.value === "Pix") {
-        detalhes.setAttribute("maxlength", "11");
-        detalhes.setAttribute("pattern", "\\d{11}");
-        detalhes.placeholder = "Digite o CPF (11 números)";
       }
-    });
-
-    // Impede digitar letras no campo de detalhes
-    detalhes.addEventListener("input", function () {
-      this.value = this.value.replace(/\D/g, ""); // só números
-    });
+    }
   </script>
 
 </body>
-
 </html>

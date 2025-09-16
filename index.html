@@ -69,109 +69,7 @@
                         <p class="descricao">Descrição breve do produto 3.</p>
                         <p class="preco">R$ 199,90</p>
                     </div>
-                    <div class="produto">
-                        <img src="imagem.png" alt="Produto 1">
-                        <h2>Produto 1</h2>
-                        <p class="descricao">Descrição breve do produto 1.</p>
-                        <p class="preco">R$ 99,90</p>
-                    </div>
-                    <div class="produto">
-                        <img src="imagem.png" alt="Produto 1">
-                        <h2>Produto 1</h2>
-                        <p class="descricao">Descrição breve do produto 1.</p>
-                        <p class="preco">R$ 99,90</p>
-                    </div>
-                    <div class="produto">
-                        <img src="imagem.png" alt="Produto 1">
-                        <h2>Produto 1</h2>
-                        <p class="descricao">Descrição breve do produto 1.</p>
-                        <p class="preco">R$ 99,90</p>
-                    </div>
-                    <div class="produto">
-                        <img src="imagem.png" alt="Produto 1">
-                        <h2>Produto 1</h2>
-                        <p class="descricao">Descrição breve do produto 1.</p>
-                        <p class="preco">R$ 99,90</p>
-                    </div>
-                    <div class="produto">
-                        <img src="imagem.png" alt="Produto 1">
-                        <h2>Produto 1</h2>
-                        <p class="descricao">Descrição breve do produto 1.</p>
-                        <p class="preco">R$ 99,90</p>
-                    </div>
-                    <div class="produto">
-                        <img src="imagem.png" alt="Produto 1">
-                        <h2>Produto 1</h2>
-                        <p class="descricao">Descrição breve do produto 1.</p>
-                        <p class="preco">R$ 99,90</p>
-                    </div>
-                    <div class="produto">
-                        <img src="imagem.png" alt="Produto 1">
-                        <h2>Produto 1</h2>
-                        <p class="descricao">Descrição breve do produto 1.</p>
-                        <p class="preco">R$ 99,90</p>
-                    </div>
-                    <div class="produto">
-                        <img src="imagem.png" alt="Produto 1">
-                        <h2>Produto 1</h2>
-                        <p class="descricao">Descrição breve do produto 1.</p>
-                        <p class="preco">R$ 99,90</p>
-                    </div>
-                    <div class="produto">
-                        <img src="imagem.png" alt="Produto 1">
-                        <h2>Produto 1</h2>
-                        <p class="descricao">Descrição breve do produto 1.</p>
-                        <p class="preco">R$ 99,90</p>
-                    </div>
-                    <div class="produto">
-                        <img src="imagem.png" alt="Produto 1">
-                        <h2>Produto 1</h2>
-                        <p class="descricao">Descrição breve do produto 1.</p>
-                        <p class="preco">R$ 99,90</p>
-                    </div>
-                    <div class="produto">
-                        <img src="imagem.png" alt="Produto 1">
-                        <h2>Produto 1</h2>
-                        <p class="descricao">Descrição breve do produto 1.</p>
-                        <p class="preco">R$ 99,90</p>
-                    </div>
-                    <div class="produto">
-                        <img src="imagem.png" alt="Produto 1">
-                        <h2>Produto 1</h2>
-                        <p class="descricao">Descrição breve do produto 1.</p>
-                        <p class="preco">R$ 99,90</p>
-                    </div>
-                    <div class="produto">
-                        <img src="imagem.png" alt="Produto 1">
-                        <h2>Produto 1</h2>
-                        <p class="descricao">Descrição breve do produto 1.</p>
-                        <p class="preco">R$ 99,90</p>
-                    </div>
-                    <div class="produto">
-                        <img src="imagem.png" alt="Produto 1">
-                        <h2>Produto 1</h2>
-                        <p class="descricao">Descrição breve do produto 1.</p>
-                        <p class="preco">R$ 99,90</p>
-                    </div>
-                    <div class="produto">
-                        <img src="imagem.png" alt="Produto 1">
-                        <h2>Produto 1</h2>
-                        <p class="descricao">Descrição breve do produto 1.</p>
-                        <p class="preco">R$ 99,90</p>
-                    </div>
-                    <div class="produto">
-                        <img src="imagem.png" alt="Produto 1">
-                        <h2>Produto 1</h2>
-                        <p class="descricao">Descrição breve do produto 1.</p>
-                        <p class="preco">R$ 99,90</p>
-                    </div>
-                    <div class="produto">
-                        <img src="imagem.png" alt="Produto 1">
-                        <h2>Produto 1</h2>
-                        <p class="descricao">Descrição breve do produto 1.</p>
-                        <p class="preco">R$ 99,90</p>
-                    </div>
-                    <!-- Pode adicionar mais produtos copiando o bloco acima -->
+                    <!-- pode repetir mais produtos aqui -->
                 </div>
             </main>
         </main>
@@ -180,6 +78,33 @@
     <footer>
         <p>&copy; 2025 Cultivar +</p>
     </footer>
+
+    <!-- SCRIPT PARA ADICIONAR AO CARRINHO -->
+    <script>
+      // Seleciona todos os produtos
+      const produtos = document.querySelectorAll(".produto");
+
+      produtos.forEach(produto => {
+        produto.addEventListener("click", () => {
+          const nome = produto.querySelector("h2").innerText;
+          const preco = produto.querySelector(".preco").innerText;
+          const descricao = produto.querySelector(".descricao").innerText;
+          const imagem = produto.querySelector("img").getAttribute("src");
+
+          // Pega o carrinho salvo ou cria um vazio
+          let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+
+          // Adiciona o produto
+          carrinho.push({ nome, preco, descricao, imagem });
+
+          // Salva no localStorage
+          localStorage.setItem("carrinho", JSON.stringify(carrinho));
+
+          // Redireciona para o carrinho
+          window.location.href = "carrinho.html";
+        });
+      });
+    </script>
 
 </body>
 

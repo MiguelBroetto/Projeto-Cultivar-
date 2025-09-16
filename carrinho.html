@@ -46,30 +46,10 @@
 
   <main>
     <h1>Meu Carrinho</h1>
-    <div class="carrinho">
-      <div class="item">
-        <img src="produto1.jpg" alt="Produto 1">
-        <div class="detalhes">
-          <h2>Produto 1</h2>
-          <p>Descrição breve do produto.</p>
-        </div>
-        <span class="preco">R$ 59,90</span>
-        <button class="remover">Remover</button>
-      </div>
-
-      <div class="item">
-        <img src="produto2.jpg" alt="Produto 2">
-        <div class="detalhes">
-          <h2>Produto 2</h2>
-          <p>Descrição breve do produto.</p>
-        </div>
-        <span class="preco">R$ 89,90</span>
-        <button class="remover">Remover</button>
-      </div>
-    </div>
+    <div class="carrinho" id="carrinho"></div>
 
     <div class="resumo">
-      <h3>Total: R$ 149,80</h3>
+      <h3>Total: R$ 0,00</h3>
       <button class="finalizar">Finalizar Compra</button>
     </div>
   </main>
@@ -77,6 +57,67 @@
   <footer>
     <p>&copy; 2025 Minha Loja - Todos os direitos reservados</p>
   </footer>
+
+  <!-- SCRIPT PARA MOSTRAR O CARRINHO -->
+  <script>
+    const carrinhoContainer = document.getElementById("carrinho");
+    let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+
+    function renderCarrinho() {
+      carrinhoContainer.innerHTML = "";
+      let total = 0;
+
+      carrinho.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.classList.add("item");
+        div.innerHTML = `
+          <img src="${item.imagem}" alt="${item.nome}">
+          <div class="detalhes">
+            <h2>${item.nome}</h2>
+            <p>${item.descricao}</p>
+          </div>
+          <span class="preco">${item.preco}</span>
+          <button class="remover" data-index="${index}">Remover</button>
+        `;
+
+        carrinhoContainer.appendChild(div);
+
+        // somando o preço (tirando "R$ ")
+        total += parseFloat(item.preco.replace("R$", "").replace(",", "."));
+      });
+
+      // Atualiza resumo
+      const resumo = document.querySelector(".resumo h3");
+      resumo.innerText = `Total: R$ ${total.toFixed(2).replace(".", ",")}`;
+
+      // Eventos para remover
+      document.querySelectorAll(".remover").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          const i = e.target.getAttribute("data-index");
+          carrinho.splice(i, 1);
+          localStorage.setItem("carrinho", JSON.stringify(carrinho));
+          renderCarrinho();
+        });
+      });
+    }
+
+    renderCarrinho();
+
+    // Evento do botão "Finalizar Compra"
+    document.querySelector(".finalizar").addEventListener("click", () => {
+      const pagamento = localStorage.getItem("formaPagamento");
+
+      if (pagamento) {
+        alert(`Compra finalizada com sucesso!\nForma de pagamento: ${pagamento}`);
+        // opcional: limpar carrinho
+        localStorage.removeItem("carrinho");
+        carrinho = [];
+        renderCarrinho();
+      } else {
+        alert("Nenhuma forma de pagamento cadastrada no perfil. Vá até o perfil e cadastre uma forma de pagamento.");
+      }
+    });
+  </script>
 </body>
 
 </html>
