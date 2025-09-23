@@ -1,4 +1,6 @@
-/* Corpo */
+/* ==============================
+   ESTILO GERAL
+   ============================== */
 html,
 body {
     height: 100%;
@@ -9,16 +11,36 @@ body {
     display: flex;
     flex-direction: column;
 }
-
 /* Cabeçalho */
 header {
     display: flex;
-    justify-content: center;
+    justify-content: center; /* centraliza menu */
     align-items: center;
     background-color: #adbd9c;
-    color: #fff;
+    color: #adbd9c;
     padding: 15px 20px;
     position: relative;
+    width: 100%;
+}
+
+#img_home{
+    height: 30px;
+}
+
+#img_sobre{
+    height: 30px;
+}
+
+#img_carrinho{
+    height: 30px;
+}
+
+#img_contato{
+    height: 30px;
+}
+
+#img_perfil{
+    height: 30px;
 }
 
 /* Logo à esquerda */
@@ -31,6 +53,7 @@ header {
     height: 130px;
 }
 
+/* Menu central */
 /* Menu central */
 nav ul {
     list-style: none;
@@ -50,17 +73,16 @@ nav a:hover {
     text-decoration: underline;
 }
 
-/* Conteúdo principal */
+
+/* ==============================
+   CONTEÚDO PRINCIPAL
+   ============================== */
 main {
-    max-width: 1000px;
+    flex: 1;
+    max-width: 1200px;
     width: 100%;
     margin: 30px auto;
-    padding: 30px;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    border: 10px solid #ffffff; /* borda branca imitando a home */
-    line-height: 1.8;
+    padding: 20px;
 }
 
 /* Caixa de texto */
@@ -87,7 +109,8 @@ footer {
     background-color: #889975;
     color: #fff;
     text-align: center;
-    padding: 10px 20px;
+    padding: 15px 20px;
+    width: 100%;
     margin-top: auto;
 }
 
@@ -115,13 +138,7 @@ footer {
 
     main {
         margin: 15px;
-        padding: 20px;
-        font-size: 16px;
-    }
-
-    .content-box {
         padding: 15px;
-        font-size: 16px;
     }
 
     footer {
@@ -130,13 +147,7 @@ footer {
     }
 }
 
-/* Celulares pequenos */
 @media (max-width: 480px) {
-    main {
-        margin: 10px;
-        padding: 15px;
-    }
-
     .logo img {
         height: 40px;
     }
@@ -149,10 +160,15 @@ footer {
         font-size: 14px;
     }
 
-    .content-box p {
-        font-size: 15px;
+    .produto h2 {
+        font-size: 1em;
+    }
+
+    .produto .descricao {
+        font-size: 0.85em;
     }
 }
+
 
 .carrinho-link img {
   height: 50px; /* mesmo tamanho da logo */

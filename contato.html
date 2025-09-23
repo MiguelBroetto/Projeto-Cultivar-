@@ -9,8 +9,10 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="min-h-screen flex flex-col items-center p-6 bg-green-50">
-
+<body>
+  <!-- ============================== -->
+  <!-- CABEÇALHO -->
+  <!-- ============================== -->
   <header>
     <div class="logo">
       <img src="./imagens/logo cultivar +(sem fundo).png" alt="Logo do Site">
@@ -19,12 +21,12 @@
       <ul>
         <li>
           <a href="index.html" class="inicio-link">
-            <img src="./imagens/home.png" alt="inicio">
+            <img src="./imagens/home.png" alt="Início">
           </a>
         </li>
         <li>
           <a href="sobre.html" class="sobre-link">
-            <img src="./imagens/Sobre (1).png" alt="sobre">
+            <img src="./imagens/Sobre (1).png" alt="Sobre">
           </a>
         </li>
         <li>
@@ -34,19 +36,22 @@
         </li>
         <li>
           <a href="contato.html" class="contato-link">
-            <img src="./imagens/contato (1).png" alt="contato">
+            <img src="./imagens/contato (1).png" alt="Contato">
           </a>
         </li>
         <li>
           <a href="perfil.html" class="perfil-link">
-            <img src="./imagens/perfil (1).png" alt="perfil">
+            <img src="./imagens/perfil (1).png" alt="Perfil">
           </a>
         </li>
       </ul>
     </nav>
   </header>
 
-  <main class="w-full max-w-2xl bg-white/80 rounded-lg p-8 shadow-md">
+  <!-- ============================== -->
+  <!-- CONTEÚDO PRINCIPAL -->
+  <!-- ============================== -->
+  <main>
     <h1 class="text-3xl font-extrabold text-center mb-2">Fale Conosco</h1>
     <div class="underline-limited"></div>
     <p class="mb-6 text-center text-sm text-gray-700">
@@ -54,32 +59,26 @@
       possível.
     </p>
 
-    <form id="contactForm" class="space-y-6" novalidate>
+    <form id="contactForm" novalidate>
       <div>
-        <label for="nome" class="block mb-1">Nome Completo</label>
-        <input type="text" id="nome" name="nome" required placeholder="Seu nome completo"
-          class="w-full rounded-md px-3 py-2 border border-gray-300" />
+        <label for="nome">Nome Completo</label>
+        <input type="text" id="nome" name="nome" required placeholder="Seu nome completo" />
       </div>
       <div>
-        <label for="email" class="block mb-1">E-mail</label>
-        <input type="email" id="email" name="email" required placeholder="seuemail@exemplo.com"
-          class="w-full rounded-md px-3 py-2 border border-gray-300" />
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" required placeholder="seuemail@exemplo.com" />
       </div>
       <div>
-        <label for="telefone" class="block mb-1">Telefone</label>
-        <input type="tel" id="telefone" name="telefone" placeholder="(99) 99999-9999"
-          class="w-full rounded-md px-3 py-2 border border-gray-300" />
+        <label for="telefone">Telefone</label>
+        <input type="tel" id="telefone" name="telefone" placeholder="(99) 99999-9999" />
       </div>
       <div>
-        <label for="mensagem" class="block mb-1">Mensagem</label>
-        <textarea id="mensagem" name="mensagem" rows="5" required placeholder="Escreva sua mensagem aqui..."
-          class="w-full rounded-md px-3 py-2 resize-none border border-gray-300"></textarea>
+        <label for="mensagem">Mensagem</label>
+        <textarea id="mensagem" name="mensagem" rows="5" required
+          placeholder="Escreva sua mensagem aqui..."></textarea>
       </div>
       <div>
-        <button type="submit"
-          class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold rounded-md py-3 transition-colors duration-200">
-          Enviar Mensagem
-        </button>
+        <button type="submit">Enviar Mensagem</button>
       </div>
     </form>
   </main>

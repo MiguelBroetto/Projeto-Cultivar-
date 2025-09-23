@@ -6,14 +6,13 @@ body {
     height: 100%;
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(to bottom right, #e9f5e9, #ffffff);
     color: #2f4f2f;
     display: flex;
     flex-direction: column;
 }
 
 /* ==============================
-   CABEÇALHO
+   CABEÇALHO (padronizado)
    ============================== */
 header {
     display: flex;
@@ -26,6 +25,14 @@ header {
     width: 100%;
 }
 
+#img_home,
+#img_sobre,
+#img_carrinho,
+#img_contato,
+#img_perfil {
+    height: 50px;
+}
+
 /* Logo à esquerda */
 .logo {
     position: absolute;
@@ -33,7 +40,7 @@ header {
 }
 
 .logo img {
-    height: 50px;
+    height: 130px;
 }
 
 /* Menu central */
@@ -55,6 +62,25 @@ nav a:hover {
     text-decoration: underline;
 }
 
+/* Links com ícones */
+.carrinho-link img,
+.perfil-link img,
+.inicio-link img,
+.sobre-link img,
+.contato-link img {
+    height: 50px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.carrinho-link img:hover,
+.perfil-link img:hover,
+.inicio-link img:hover,
+.sobre-link img:hover,
+.contato-link img:hover {
+    transform: scale(1.1);
+}
+
 /* ==============================
    CONTEÚDO PRINCIPAL
    ============================== */
@@ -66,7 +92,7 @@ main {
     padding: 20px;
 }
 
-/* Título */
+/* Títulos */
 h1, h2 {
     text-align: center;
     color: #2c4a1f;
@@ -77,12 +103,6 @@ h1, h2 {
     width: 120px;
     border-bottom: 2px solid #2c4a1f;
     margin: 0.5rem auto 1.5rem auto;
-}
-
-/* Logo container (se houver no corpo do site) */
-.logo-container img {
-    max-width: 150px;
-    filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.1));
 }
 
 /* ==============================
@@ -181,68 +201,12 @@ footer {
     nav a {
         font-size: 14px;
     }
-}
 
-/* ==============================
-   ÍCONE DO CARRINHO
-   ============================== */
-.carrinho-link img {
-  height: 50px; /* mesmo tamanho da logo */
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
+    .produto h2 {
+        font-size: 1em;
+    }
 
-.carrinho-link img:hover {
-  transform: scale(1.1); /* efeito ao passar o mouse */
-}
-
-
-.carrinho-link img {
-  height: 50px; /* mesmo tamanho da logo */
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.carrinho-link img:hover {
-  transform: scale(1.1); /* efeito ao passar o mouse */
-}
-
-.perfil-link img {
-  height: 50px; /* mesmo tamanho da logo */
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.perfil-link img:hover {
-  transform: scale(1.1); /* efeito ao passar o mouse */
-}
-
-.inicio-link img {
-  height: 50px; /* mesmo tamanho da logo */
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.inicio-link img:hover {
-  transform: scale(1.1); /* efeito ao passar o mouse */
-}
-
-.sobre-link img {
-  height: 50px; /* mesmo tamanho da logo */
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.sobre-link img:hover {
-  transform: scale(1.1); /* efeito ao passar o mouse */
-}
-
-.contato-link img {
-  height: 50px; /* mesmo tamanho da logo */
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.contato-link img:hover {
-  transform: scale(1.1); /* efeito ao passar o mouse */
+    .produto .descricao {
+        font-size: 0.85em;
+    }
 }

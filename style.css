@@ -12,6 +12,22 @@ body {
     flex-direction: column;
 }
 
+ h1, h2 {
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    /* ==============================
+   CONTEÚDO PRINCIPAL
+   ============================== */
+main {
+    flex: 1;
+    max-width: 1200px;
+    width: 100%;
+    margin: 30px auto;
+    padding: 20px;
+}
+
 /* ==============================
    CABEÇALHO
    ============================== */
@@ -27,23 +43,23 @@ header {
 }
 
 #img_home{
-    height: 30px;
+    height: 50px;
 }
 
 #img_sobre{
-    height: 30px;
+    height: 50px;
 }
 
 #img_carrinho{
-    height: 30px;
+    height: 50px;
 }
 
 #img_contato{
-    height: 30px;
+    height: 50px;
 }
 
 #img_perfil{
-    height: 30px;
+    height: 50px;
 }
 
 /* Logo à esquerda */
@@ -75,16 +91,6 @@ nav a:hover {
     text-decoration: underline;
 }
 
-/* ==============================
-   CONTEÚDO PRINCIPAL
-   ============================== */
-main {
-    flex: 1;
-    max-width: 1200px;
-    width: 100%;
-    margin: 30px auto;
-    padding: 20px;
-}
 
 /* Grid de produtos */
 .produtos {
