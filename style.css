@@ -13,62 +13,63 @@ body {
 }
 
 /* ==============================
-   CABEÇALHO
+   CABEÇALHO - RESPONSIVO
    ============================== */
 header {
     display: flex;
-    justify-content: center; /* centraliza menu */
+    justify-content: center;
     align-items: center;
     background-color: #adbd9c;
-    color: #adbd9c;
     padding: 15px 20px;
     position: relative;
     width: 100%;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
-#img_home{
+/* Ajuste das imagens do menu */
+#img_home,
+#img_sobre,
+#img_carrinho,
+#img_contato,
+#img_perfil {
     height: 30px;
+    width: auto;
 }
 
-#img_sobre{
-    height: 30px;
-}
-
-#img_carrinho{
-    height: 30px;
-}
-
-#img_contato{
-    height: 30px;
-}
-
-#img_perfil{
-    height: 30px;
-}
-
-/* Logo à esquerda */
+/* Logo responsiva */
 .logo {
     position: absolute;
     left: 20px;
 }
 
 .logo img {
-    height: 130px;
+    height: 80px;
+    /* Reduzido para mobile */
+    width: auto;
+    max-width: 100%;
 }
 
-/* Menu central */
+/* Menu central melhorado */
 nav ul {
     list-style: none;
     display: flex;
-    gap: 20px;
+    gap: 15px;
     margin: 0;
     padding: 0;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 nav a {
     color: #fff;
     text-decoration: none;
     font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
 }
 
 nav a:hover {
@@ -84,17 +85,26 @@ main {
     width: 100%;
     margin: 30px auto;
     padding: 20px;
+    box-sizing: border-box;
 }
 
-/* Grid de produtos */
+/* Remove o center do HTML e centraliza via CSS */
+center {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Grid de produtos responsivo */
 .produtos {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
     margin-top: 20px;
+    width: 100%;
 }
 
-/* Card do produto */
+/* Card do produto melhorado */
 .produto {
     background-color: #ffffff;
     border: 1px solid #ddd;
@@ -103,6 +113,8 @@ main {
     text-align: center;
     transition: transform 0.2s, box-shadow 0.2s;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    box-sizing: border-box;
 }
 
 .produto:hover {
@@ -117,21 +129,21 @@ main {
     margin-bottom: 10px;
 }
 
-/* Nome */
+/* Textos dos produtos */
 .produto h2 {
     font-size: 1.2em;
     margin-bottom: 8px;
     color: #333;
+    word-wrap: break-word;
 }
 
-/* Descrição */
 .produto .descricao {
     font-size: 0.9em;
     color: #666;
     margin-bottom: 10px;
+    line-height: 1.4;
 }
 
-/* Preço */
 .produto .preco {
     font-size: 1.1em;
     font-weight: bold;
@@ -148,31 +160,72 @@ footer {
     padding: 15px 20px;
     width: 100%;
     margin-top: auto;
+    box-sizing: border-box;
 }
 
 /* ==============================
-   RESPONSIVIDADE
+   ESTILOS DOS LINKS DO MENU
    ============================== */
+.carrinho-link img,
+.perfil-link img,
+.inicio-link img,
+.sobre-link img,
+.contato-link img {
+    height: 30px;
+    width: auto;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.carrinho-link img:hover,
+.perfil-link img:hover,
+.inicio-link img:hover,
+.sobre-link img:hover,
+.contato-link img:hover {
+    transform: scale(1.1);
+}
+
+/* ==============================
+   RESPONSIVIDADE - MOBILE FIRST
+   ============================== */
+
+/* Tablets */
 @media (max-width: 768px) {
     header {
         flex-direction: column;
-        padding: 10px;
+        padding: 10px 15px;
         text-align: center;
+        gap: 10px;
     }
 
     .logo {
         position: static;
         margin-bottom: 10px;
+        order: -1;
+        /* Coloca a logo no topo */
+    }
+
+    .logo img {
+        height: 60px;
     }
 
     nav ul {
-        flex-direction: column;
         gap: 10px;
+        justify-content: center;
     }
 
     main {
-        margin: 15px;
+        margin: 15px auto;
         padding: 15px;
+    }
+
+    .produtos {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+    }
+
+    .produto {
+        padding: 12px;
     }
 
     footer {
@@ -181,74 +234,90 @@ footer {
     }
 }
 
+/* Celulares */
 @media (max-width: 480px) {
+    header {
+        padding: 8px 10px;
+    }
+
     .logo img {
-        height: 40px;
+        height: 50px;
     }
 
     nav ul {
         gap: 8px;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding: 5px 0;
     }
 
-    nav a {
-        font-size: 14px;
+    nav li {
+        flex-shrink: 0;
+    }
+
+    #img_home,
+    #img_sobre,
+    #img_carrinho,
+    #img_contato,
+    #img_perfil {
+        height: 25px;
+    }
+
+    .carrinho-link img,
+    .perfil-link img,
+    .inicio-link img,
+    .sobre-link img,
+    .contato-link img {
+        height: 25px;
+    }
+
+    main {
+        margin: 10px auto;
+        padding: 10px;
+    }
+
+    .produtos {
+        grid-template-columns: 1fr;
+        gap: 12px;
     }
 
     .produto h2 {
-        font-size: 1em;
+        font-size: 1.1em;
     }
 
     .produto .descricao {
         font-size: 0.85em;
     }
+
+    .produto .preco {
+        font-size: 1em;
+    }
+
+    h1 {
+        font-size: 1.5em;
+        text-align: center;
+    }
 }
 
-.carrinho-link img {
-  height: 50px; /* mesmo tamanho da logo */
-  cursor: pointer;
-  transition: transform 0.2s ease;
+/* Telas muito pequenas */
+@media (max-width: 320px) {
+    .produtos {
+        grid-template-columns: 1fr;
+    }
+
+    nav ul {
+        gap: 5px;
+    }
+
+    .produto {
+        padding: 10px;
+    }
 }
 
-.carrinho-link img:hover {
-  transform: scale(1.1); /* efeito ao passar o mouse */
-}
-
-.perfil-link img {
-  height: 50px; /* mesmo tamanho da logo */
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.perfil-link img:hover {
-  transform: scale(1.1); /* efeito ao passar o mouse */
-}
-
-.inicio-link img {
-  height: 50px; /* mesmo tamanho da logo */
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.inicio-link img:hover {
-  transform: scale(1.1); /* efeito ao passar o mouse */
-}
-
-.sobre-link img {
-  height: 50px; /* mesmo tamanho da logo */
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.sobre-link img:hover {
-  transform: scale(1.1); /* efeito ao passar o mouse */
-}
-
-.contato-link img {
-  height: 50px; /* mesmo tamanho da logo */
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.contato-link img:hover {
-  transform: scale(1.1); /* efeito ao passar o mouse */
+/* Telas grandes */
+@media (min-width: 1200px) {
+    .produtos {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
 }

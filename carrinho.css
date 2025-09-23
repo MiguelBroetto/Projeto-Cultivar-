@@ -1,4 +1,6 @@
-/* Corpo */
+/* ==============================
+   ESTILO GERAL
+   ============================== */
 html,
 body {
   height: 100%;
@@ -10,47 +12,68 @@ body {
   flex-direction: column;
 }
 
-/* Cabeçalho */
+/* ==============================
+   CABEÇALHO - RESPONSIVO
+   ============================== */
 header {
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #adbd9c;
-  color: #fff;
   padding: 15px 20px;
   position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
-/* Logo */
+/* Logo responsiva */
 .logo {
   position: absolute;
   left: 20px;
 }
 
 .logo img {
-  height: 50px;
+  height: 80px;
+  width: auto;
+  max-width: 100%;
 }
 
-/* Menu */
+/* Menu central melhorado */
 nav ul {
   list-style: none;
   display: flex;
-  gap: 20px;
+  gap: 15px;
   margin: 0;
   padding: 0;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 nav a {
   color: #fff;
   text-decoration: none;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
 }
 
 nav a:hover {
   text-decoration: underline;
 }
 
-/* Conteúdo principal */
+/* Ajuste das imagens do menu */
+#img_home, #img_sobre, #img_carrinho, #img_contato, #img_perfil {
+  height: 30px;
+  width: auto;
+}
+
+/* ==============================
+   CONTEÚDO PRINCIPAL
+   ============================== */
 main {
   max-width: 1000px;
   width: 100%;
@@ -60,15 +83,19 @@ main {
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   flex-grow: 1;
+  box-sizing: border-box;
 }
 
 h1 {
   text-align: center;
   margin-bottom: 20px;
   color: #2f4f2f;
+  word-wrap: break-word;
 }
 
-/* Lista do carrinho */
+/* ==============================
+   LISTA DO CARRINHO
+   ============================== */
 .carrinho {
   display: flex;
   flex-direction: column;
@@ -81,30 +108,42 @@ h1 {
   justify-content: space-between;
   border: 1px solid #ddd;
   border-radius: 8px;
-  padding: 10px 15px;
+  padding: 15px;
   background: #f9f9f9;
+  box-sizing: border-box;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .item img {
   height: 60px;
+  width: auto;
   object-fit: contain;
   margin-right: 15px;
+  flex-shrink: 0;
 }
 
 .detalhes {
   flex-grow: 1;
+  min-width: 0; /* Permite que o texto quebre corretamente */
 }
 
 .detalhes h2 {
   margin: 0;
   font-size: 1.1em;
   color: #333;
+  word-wrap: break-word;
 }
 
 .detalhes p {
   margin: 5px 0;
   font-size: 0.9em;
   color: #666;
+  line-height: 1.4;
 }
 
 .preco {
@@ -112,6 +151,7 @@ h1 {
   font-weight: bold;
   color: #004080;
   margin-right: 15px;
+  white-space: nowrap;
 }
 
 .remover {
@@ -119,23 +159,32 @@ h1 {
   color: #fff;
   border: none;
   border-radius: 6px;
-  padding: 6px 12px;
+  padding: 8px 15px;
   cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+  flex-shrink: 0;
 }
 
 .remover:hover {
   background: #cc0000;
 }
 
-/* Resumo */
+/* ==============================
+   RESUMO DO PEDIDO
+   ============================== */
 .resumo {
   margin-top: 25px;
-  text-align: right;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  text-align: center;
 }
 
 .resumo h3 {
   margin-bottom: 15px;
   color: #2f4f2f;
+  font-size: 1.3em;
 }
 
 .finalizar {
@@ -147,81 +196,258 @@ h1 {
   font-size: 1em;
   cursor: pointer;
   font-weight: bold;
+  transition: background 0.2s;
+  width: 100%;
+  max-width: 250px;
 }
 
 .finalizar:hover {
   background: #3e8e41;
 }
 
-
+/* ==============================
+   RODAPÉ
+   ============================== */
 footer {
   background-color: #889975;
   color: #fff;
   text-align: center;
-  padding: 10px 20px;
+  padding: 15px 20px;
+  width: 100%;
   margin-top: auto;
+  box-sizing: border-box;
 }
 
+/* ==============================
+   ESTILOS DOS LINKS DO MENU
+   ============================== */
+.carrinho-link img,
+.perfil-link img,
+.inicio-link img,
+.sobre-link img,
+.contato-link img {
+  height: 30px;
+  width: auto;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
 
-@media (max-width: 600px) {
+.carrinho-link img:hover,
+.perfil-link img:hover,
+.inicio-link img:hover,
+.sobre-link img:hover,
+.contato-link img:hover {
+  transform: scale(1.1);
+}
+
+/* ==============================
+   RESPONSIVIDADE - MOBILE FIRST
+   ============================== */
+
+/* Tablets */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    padding: 10px 15px;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .logo {
+    position: static;
+    margin-bottom: 10px;
+    order: -1;
+  }
+
+  .logo img {
+    height: 60px;
+  }
+
+  nav ul {
+    gap: 10px;
+    justify-content: center;
+  }
+
+  main {
+    margin: 15px auto;
+    padding: 15px;
+  }
+
+  .item {
+    padding: 12px;
+  }
+
+  .item img {
+    height: 50px;
+    margin-right: 10px;
+  }
+
+  .detalhes h2 {
+    font-size: 1em;
+  }
+
+  .detalhes p {
+    font-size: 0.85em;
+  }
+
+  .preco {
+    font-size: 1em;
+    margin-right: 10px;
+  }
+
+  .remover {
+    padding: 6px 12px;
+    font-size: 0.9em;
+  }
+
+  .resumo {
+    padding: 15px;
+  }
+
+  footer {
+    font-size: 14px;
+    padding: 12px;
+  }
+}
+
+/* Celulares */
+@media (max-width: 480px) {
+  header {
+    padding: 8px 10px;
+  }
+
+  .logo img {
+    height: 50px;
+  }
+
+  nav ul {
+    gap: 8px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding: 5px 0;
+  }
+
+  nav li {
+    flex-shrink: 0;
+  }
+
+  #img_home, #img_sobre, #img_carrinho, #img_contato, #img_perfil {
+    height: 25px;
+  }
+
+  .carrinho-link img,
+  .perfil-link img,
+  .inicio-link img,
+  .sobre-link img,
+  .contato-link img {
+    height: 25px;
+  }
+
+  main {
+    margin: 10px auto;
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 1.5em;
+  }
+
   .item {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
+    text-align: left;
+  }
+
+  .item img {
+    align-self: center;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .detalhes {
+    width: 100%;
+    text-align: center;
   }
 
   .preco {
     margin: 10px 0;
+    align-self: center;
+  }
+
+  .remover {
+    align-self: center;
+    width: 100%;
+    max-width: 200px;
+  }
+
+  .resumo h3 {
+    font-size: 1.1em;
+  }
+
+  .finalizar {
+    padding: 10px 20px;
+    font-size: 0.9em;
   }
 }
 
+/* Telas muito pequenas */
+@media (max-width: 320px) {
+  .item {
+    padding: 10px;
+  }
+  
+  nav ul {
+    gap: 5px;
+  }
+  
+  .resumo {
+    padding: 10px;
+  }
+}
 
-.carrinho-link img {
-  height: 50px; 
+/* Telas grandes */
+@media (min-width: 1200px) {
+  main {
+    max-width: 1100px;
+  }
+  
+  .carrinho {
+    gap: 20px;
+  }
+  
+  .item {
+    padding: 20px;
+  }
+}
+
+/* Estado vazio do carrinho */
+.carrinho-vazio {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+}
+
+.carrinho-vazio p {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+}
+
+.continuar-comprando {
+  background: #4CAF50;
+  color: #fff;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-size: 1em;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.2s;
 }
 
-.carrinho-link img:hover {
-  transform: scale(1.1); 
-}
-
-.perfil-link img {
-  height: 50px; 
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.perfil-link img:hover {
-  transform: scale(1.1); 
-}
-
-.inicio-link img {
-  height: 50px; 
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.inicio-link img:hover {
-  transform: scale(1.1);
-}
-
-.sobre-link img {
-  height: 50px; 
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.sobre-link img:hover {
-  transform: scale(1.1); 
-}
-
-.contato-link img {
-  height: 50px;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.contato-link img:hover {
-  transform: scale(1.1);
+.continuar-comprando:hover {
+  background: #3e8e41;
 }
