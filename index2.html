@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compra - Produto</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Estilo da página de compra */
+    .produto-detalhe {
+      max-width: 1000px;
+      margin: 40px auto;
+      display: flex;
+      gap: 40px;
+      padding: 30px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .produto-detalhe img {
+      width: 350px;
+      border-radius: 12px;
+      border: 4px solid #e9f5e9;
+    }
+
+    .produto-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .produto-info h1 {
+      font-size: 28px;
+      color: #2f4f2f;
+      margin-bottom: 15px;
+    }
+
+    .produto-info p.descricao {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: #444;
+    }
+
+    .produto-info p.preco {
+      font-size: 24px;
+      font-weight: bold;
+      color: #4CAF50;
+      margin-bottom: 20px;
+    }
+
+    .btn-comprar {
+      background: #4CAF50;
+      color: #fff;
+      border: none;
+      padding: 15px 25px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: bold;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-comprar:hover {
+      background: #45a049;
+      transform: scale(1.05);
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      .produto-detalhe {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .produto-detalhe img {
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">
+      <a href="index.html">
+        <img src="./imagens/logo cultivar +(sem fundo).png" alt="Logo do Site">
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <div class="produto-detalhe">
+      <img src="./imagens/adubo.png" alt="Adubo Orgânico Premium">
+
+      <div class="produto-info">
+        <h1>Adubo Orgânico Premium</h1>
+        <p class="descricao">
+          Nosso <strong>Adubo Orgânico Premium</strong> é ideal para fortalecer o crescimento saudável de suas plantas.
+          Produzido com compostagem natural, fornece nutrientes essenciais sem agredir o meio ambiente.
+        </p>
+        <p class="preco">R$ 99,90</p>
+        <button class="btn-comprar" id="btnAdicionarCarrinho">Adicionar ao Carrinho</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Cultivar +</p>
+  </footer>
+
+  <script>
+    document.getElementById("btnAdicionarCarrinho").addEventListener("click", () => {
+      const produto = {
+        nome: "Adubo Orgânico Premium",
+        preco: "R$ 99,90",
+        descricao: "Adubo natural de alta qualidade, ideal para fortalecer o crescimento saudável das plantas.",
+        imagem: "./imagens/adubo.png"
+      };
+
+      // Pega o carrinho salvo ou cria vazio
+      let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+
+      // Adiciona o produto
+      carrinho.push(produto);
+
+      // Salva no localStorage
+      localStorage.setItem("carrinho", JSON.stringify(carrinho));
+
+      alert("Produto adicionado ao carrinho!");
+      window.location.href = "carrinho.html"; // redireciona para o carrinho
+    });
+  </script>
+
+</body>
+</html>
