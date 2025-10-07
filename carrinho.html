@@ -50,7 +50,7 @@
 
     <div class="resumo">
       <h3>Total: R$ 0,00</h3>
-      <button class="finalizar">Finalizar Compra</button>
+      <button class="finalizar" id="finalizarCompra">Finalizar Compra</button>
     </div>
   </main>
 
@@ -58,9 +58,11 @@
     <p>&copy; 2025 Minha Loja - Todos os direitos reservados</p>
   </footer>
 
-  <!-- SCRIPT PARA MOSTRAR O CARRINHO -->
+  <!-- SCRIPT CORRIGIDO PARA O CARRINHO -->
   <script>
     const carrinhoContainer = document.getElementById("carrinho");
+    const finalizarBtn = document.getElementById("finalizarCompra");
+    
     let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
 
     function renderCarrinho() {
@@ -103,8 +105,14 @@
 
     renderCarrinho();
 
-    // Evento do botão "Finalizar Compra"
-    document.querySelector(".finalizar").addEventListener("click", () => {
+    // Evento do botão "Finalizar Compra" - CORREÇÃO PRINCIPAL
+    finalizarBtn.addEventListener("click", () => {
+      // Verifica se o carrinho está vazio
+      if (carrinho.length === 0 || parseFloat(document.querySelector(".resumo h3").innerText.replace("Total: R$ ", "").replace(",", ".")) === 0) {
+        alert("Seu carrinho está vazio. Adicione produtos antes de finalizar a compra.");
+        return;
+      }
+
       const pagamento = localStorage.getItem("formaPagamento");
 
       if (pagamento) {
