@@ -1,111 +1,148 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cultivar +</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cultivar +</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <header>
-        <div class="logo">
-            <img src="./imagens/logo cultivar +(sem fundo).png" alt="Logo do Site">
+  <header>
+    <div class="logo">
+      <img src="./imagens/logo cultivar +(sem fundo).png" alt="Logo do Site">
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html" class="inicio-link"><img id="img_home" src="./imagens/home.png" alt="inicio"></a></li>
+        <li><a href="sobre.html" class="sobre-link"><img id="img_sobre" src="./imagens/Sobre (1).png" alt="sobre"></a></li>
+        <li><a href="carrinho.html" class="carrinho-link"><img id="img_carrinho" src="./imagens/carrinho.png" alt="Carrinho"></a></li>
+        <li><a href="contato.html" class="contato-link"><img id="img_contato" src="./imagens/contato (1).png" alt="contato"></a></li>
+        <li><a href="perfil.html" class="perfil-link"><img id="img_perfil" src="./imagens/perfil (1).png" alt="perfil"></a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <center>
+    <main>
+      <h1>Nossos Produtos</h1>
+
+      <!-- FILTROS -->
+      <div class="filtros">
+        <label for="categoriaFiltro">Categoria:</label>
+        <select id="categoriaFiltro">
+          <option value="">Todas as Categorias</option>
+          <option value="fertilizante">Fertilizantes</option>
+          <option value="irrigacao">Irrigação</option>
+          <option value="construcao">Construção Agrícola</option>
+        </select>
+
+        <label for="precoFiltro">Faixa de Preço:</label>
+        <select id="precoFiltro">
+          <option value="">Todos os Preços</option>
+          <option value="1">Até R$100</option>
+          <option value="2">R$101 - R$200</option>
+          <option value="3">Acima de R$200</option>
+        </select>
+
+        <button class="botao-filtrar" onclick="filtrarProdutos()">Aplicar Filtros</button>
+        <button class="botao-limpar" onclick="limparFiltros()">Limpar Filtros</button>
+      </div>
+
+      <!-- MENSAGEM QUANDO NÃO HÁ PRODUTOS -->
+      <p id="mensagemVazia" class="mensagem-vazia" style="display: none;">
+        Nenhum produto cadastrado com essas condições.
+      </p>
+
+      <!-- LISTA DE PRODUTOS -->
+      <div class="produtos" id="listaProdutos">
+        <div class="produto" data-categoria="fertilizante" data-preco="99.90">
+          <img src="./imagens/adubo.png" alt="Produto 1">
+          <h2>Adubo Orgânico</h2>
+          <p class="descricao">Ideal para cultivo sustentável.</p>
+          <p class="preco">R$ 99,90</p>
         </div>
-        <nav>
-            <ul>
-                <li>
-                    <a href="index.html" class="inicio-link">
-                        <img id="img_home" src="./imagens/home.png" alt="inicio">
-                    </a>
-                </li>
-                <li>
-                    <a href="sobre.html" class="sobre-link">
-                        <img id="img_sobre" src="./imagens/Sobre (1).png" alt="sobre">
-                    </a>
-                </li>
-                <li>
-                    <a href="carrinho.html" class="carrinho-link">
-                        <img id="img_carrinho" src="./imagens/carrinho.png" alt="Carrinho">
-                    </a>
-                </li>
-                <li>
-                    <a href="contato.html" class="contato-link">
-                        <img id="img_contato" src="./imagens/contato (1).png" alt="contato">
-                    </a>
-                </li>
-                 <li>
-                    <a href="perfil.html" class="perfil-link">
-                        <img id="img_perfil" src="./imagens/perfil (1).png" alt="perfil">
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </header>
 
-    <center>
-        <main>
-            <h1>Bem-vindo ao nosso site!</h1>
-            <main>
-                <h1>Nossos Produtos</h1>
-                <div class="produtos">
-                    <div class="produto">
-                        <img src="./imagens/adubo.png" alt="Produto 1">
-                        <h2>Produto 1</h2>
-                        <p class="descricao">Descrição breve do produto 1.</p>
-                        <p class="preco">R$ 99,90</p>
-                    </div>
-                    <div class="produto">
-                        <img src="./imagens/mangueira.png" alt="Produto 2">
-                        <h2>Produto 2</h2>
-                        <p class="descricao">Descrição breve do produto 2.</p>
-                        <p class="preco">R$ 149,90</p>
-                    </div>
-                    <div class="produto">
-                        <img src="./imagens/cano.png" alt="Produto 3">
-                        <h2>Produto 3</h2>
-                        <p class="descricao">Descrição breve do produto 3.</p>
-                        <p class="preco">R$ 199,90</p>
-                    </div>
-                    <!-- pode repetir mais produtos aqui -->
-                </div>
-            </main>
-        </main>
-    </center>
+        <div class="produto" data-categoria="irrigacao" data-preco="149.90">
+          <img src="./imagens/mangueira.png" alt="Produto 2">
+          <h2>Mangueira Flexível</h2>
+          <p class="descricao">Alta durabilidade para irrigação.</p>
+          <p class="preco">R$ 149,90</p>
+        </div>
 
-    <footer>
-        <p>&copy; 2025 Cultivar +</p>
-    </footer>
+        <div class="produto" data-categoria="construcao" data-preco="199.90">
+          <img src="./imagens/cano.png" alt="Produto 3">
+          <h2>Cano PVC Agrícola</h2>
+          <p class="descricao">Resistente e fácil de instalar.</p>
+          <p class="preco">R$ 199,90</p>
+        </div>
 
-    <!-- SCRIPT PARA ADICIONAR AO CARRINHO -->
-    <script>
-      // Seleciona todos os produtos
+        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
+          <img src="./imagens/fertilizante.png" alt="Produto 4">
+          <h2>Fertilizante Premium</h2>
+          <p class="descricao">Alta performance para solo fértil.</p>
+          <p class="preco">R$ 249,90</p>
+        </div>
+      </div>
+    </main>
+  </center>
+
+  <footer>
+    <p>&copy; 2025 Cultivar +</p>
+  </footer>
+
+  <script>
+    function filtrarProdutos() {
+      const categoria = document.getElementById("categoriaFiltro").value;
+      const preco = document.getElementById("precoFiltro").value;
       const produtos = document.querySelectorAll(".produto");
+      const mensagem = document.getElementById("mensagemVazia");
+
+      let produtosVisiveis = 0;
 
       produtos.forEach(produto => {
-        produto.addEventListener("click", () => {
-          const nome = produto.querySelector("h2").innerText;
-          const preco = produto.querySelector(".preco").innerText;
-          const descricao = produto.querySelector(".descricao").innerText;
-          const imagem = produto.querySelector("img").getAttribute("src");
+        const catProduto = produto.dataset.categoria;
+        const precoProduto = parseFloat(produto.dataset.preco);
+        let exibir = true;
 
-          // Pega o carrinho salvo ou cria um vazio
-          let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+        if (categoria && catProduto !== categoria) exibir = false;
+        if (preco === "1" && precoProduto > 100) exibir = false;
+        if (preco === "2" && (precoProduto < 101 || precoProduto > 200)) exibir = false;
+        if (preco === "3" && precoProduto <= 200) exibir = false;
 
-          // Adiciona o produto
-          carrinho.push({ nome, preco, descricao, imagem });
-
-          // Salva no localStorage
-          localStorage.setItem("carrinho", JSON.stringify(carrinho));
-
-          // Redireciona para o carrinho
-          window.location.href = "carrinho.html";
-        });
+        produto.style.display = exibir ? "block" : "none";
+        if (exibir) produtosVisiveis++;
       });
-    </script>
+
+      mensagem.style.display = produtosVisiveis === 0 ? "block" : "none";
+    }
+
+    function limparFiltros() {
+      document.getElementById("categoriaFiltro").value = "";
+      document.getElementById("precoFiltro").value = "";
+      const produtos = document.querySelectorAll(".produto");
+      produtos.forEach(produto => produto.style.display = "block");
+      document.getElementById("mensagemVazia").style.display = "none";
+    }
+
+    // Adicionar ao carrinho
+    const produtos = document.querySelectorAll(".produto");
+    produtos.forEach(produto => {
+      produto.addEventListener("click", () => {
+        const nome = produto.querySelector("h2").innerText;
+        const preco = produto.querySelector(".preco").innerText;
+        const descricao = produto.querySelector(".descricao").innerText;
+        const imagem = produto.querySelector("img").getAttribute("src");
+
+        let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+        carrinho.push({ nome, preco, descricao, imagem });
+        localStorage.setItem("carrinho", JSON.stringify(carrinho));
+
+        window.location.href = "carrinho.html";
+      });
+    });
+  </script>
 
 </body>
-
 </html>
