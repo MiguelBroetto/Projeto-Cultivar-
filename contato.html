@@ -5,52 +5,26 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Contato - Cultivar +</title>
+  <link rel="stylesheet" href="geral.css">
   <link rel="stylesheet" href="contato.css">
-  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body>
-  <!-- ============================== -->
-  <!-- CABEÇALHO -->
-  <!-- ============================== -->
   <header>
     <div class="logo">
       <img src="./imagens/logo cultivar +(sem fundo).png" alt="Logo do Site">
     </div>
     <nav>
       <ul>
-        <li>
-          <a href="index.html" class="inicio-link">
-            <img src="./imagens/home.png" alt="Início">
-          </a>
-        </li>
-        <li>
-          <a href="sobre.html" class="sobre-link">
-            <img src="./imagens/Sobre (1).png" alt="Sobre">
-          </a>
-        </li>
-        <li>
-          <a href="carrinho.html" class="carrinho-link">
-            <img src="./imagens/carrinho.png" alt="Carrinho">
-          </a>
-        </li>
-        <li>
-          <a href="contato.html" class="contato-link">
-            <img src="./imagens/contato (1).png" alt="Contato">
-          </a>
-        </li>
-        <li>
-          <a href="perfil.html" class="perfil-link">
-            <img src="./imagens/perfil (1).png" alt="Perfil">
-          </a>
-        </li>
+        <li><a href="index.html" class="inicio-link"><img id="img_home" src="./imagens/home.png" alt="inicio"></a></li>
+        <li><a href="sobre.html" class="sobre-link"><img id="img_sobre" src="./imagens/Sobre (1).png" alt="sobre"></a></li>
+        <li><a href="carrinho.html" class="carrinho-link"><img id="img_carrinho" src="./imagens/carrinho.png" alt="Carrinho"></a></li>
+        <li><a href="contato.html" class="contato-link"><img id="img_contato" src="./imagens/contato (1).png" alt="contato"></a></li>
+        <li><a href="perfil.html" class="perfil-link"><img id="img_perfil" src="./imagens/perfil (1).png" alt="perfil"></a></li>
       </ul>
     </nav>
   </header>
 
-  <!-- ============================== -->
-  <!-- CONTEÚDO PRINCIPAL -->
-  <!-- ============================== -->
   <main>
     <h1 class="text-3xl font-extrabold text-center mb-2">Fale Conosco</h1>
     <div class="underline-limited"></div>
@@ -86,7 +60,7 @@
   <footer>
     <p>&copy; 2025 Cultivar +</p>
   </footer>
-
+  
   <script>
     const form = document.getElementById('contactForm');
     form.addEventListener('submit', function (e) {

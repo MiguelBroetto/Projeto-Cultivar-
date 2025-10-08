@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cultivar +</title>
+  <link rel="stylesheet" href="geral.css">
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -16,10 +18,14 @@
     <nav>
       <ul>
         <li><a href="index.html" class="inicio-link"><img id="img_home" src="./imagens/home.png" alt="inicio"></a></li>
-        <li><a href="sobre.html" class="sobre-link"><img id="img_sobre" src="./imagens/Sobre (1).png" alt="sobre"></a></li>
-        <li><a href="carrinho.html" class="carrinho-link"><img id="img_carrinho" src="./imagens/carrinho.png" alt="Carrinho"></a></li>
-        <li><a href="contato.html" class="contato-link"><img id="img_contato" src="./imagens/contato (1).png" alt="contato"></a></li>
-        <li><a href="perfil.html" class="perfil-link"><img id="img_perfil" src="./imagens/perfil (1).png" alt="perfil"></a></li>
+        <li><a href="sobre.html" class="sobre-link"><img id="img_sobre" src="./imagens/Sobre (1).png" alt="sobre"></a>
+        </li>
+        <li><a href="carrinho.html" class="carrinho-link" id="linkCarrinho"><img id="img_carrinho"
+              src="./imagens/carrinho.png" alt="Carrinho"></a></li>
+        <li><a href="contato.html" class="contato-link"><img id="img_contato" src="./imagens/contato (1).png"
+              alt="contato"></a></li>
+        <li><a href="perfil.html" class="perfil-link"><img id="img_perfil" src="./imagens/perfil (1).png"
+              alt="perfil"></a></li>
       </ul>
     </nav>
   </header>
@@ -58,32 +64,185 @@
       <!-- LISTA DE PRODUTOS -->
       <div class="produtos" id="listaProdutos">
         <div class="produto" data-categoria="fertilizante" data-preco="99.90">
-          <img src="./imagens/adubo.png" alt="Produto 1">
+          <img src="./imagens/adubo.png" alt="Adubo Orgânico">
           <h2>Adubo Orgânico</h2>
           <p class="descricao">Ideal para cultivo sustentável.</p>
           <p class="preco">R$ 99,90</p>
+          <button class="btn1-descricao">Descrição</button>
+          <button class="btn-comprar">Adicionar ao Carrinho</button>
         </div>
 
         <div class="produto" data-categoria="irrigacao" data-preco="149.90">
-          <img src="./imagens/mangueira.png" alt="Produto 2">
+          <img src="./imagens/mangueira.png" alt="Mangueira Flexível">
           <h2>Mangueira Flexível</h2>
           <p class="descricao">Alta durabilidade para irrigação.</p>
           <p class="preco">R$ 149,90</p>
+          <button class="btn2-descricao">Descrição</button>
+          <button class="btn-comprar">Adicionar ao Carrinho</button>
         </div>
 
         <div class="produto" data-categoria="construcao" data-preco="199.90">
-          <img src="./imagens/cano.png" alt="Produto 3">
+          <img src="./imagens/cano.png" alt="Cano PVC Agrícola">
           <h2>Cano PVC Agrícola</h2>
           <p class="descricao">Resistente e fácil de instalar.</p>
           <p class="preco">R$ 199,90</p>
+          <button class="btn3-descricao">Descrição</button>
+          <button class="btn-comprar">Adicionar ao Carrinho</button>
         </div>
 
         <div class="produto" data-categoria="fertilizante" data-preco="249.90">
-          <img src="./imagens/fertilizante.png" alt="Produto 4">
+          <img src="./imagens/fertilizante.png" alt="Fertilizante Premium">
           <h2>Fertilizante Premium</h2>
           <p class="descricao">Alta performance para solo fértil.</p>
           <p class="preco">R$ 249,90</p>
+          <button class="btn4-descricao">Descrição</button>
+          <button class="btn-comprar">Adicionar ao Carrinho</button>
         </div>
+
+        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
+          <img src="./imagens/PulverizadorAgricola.jpg" alt="Fertilizante Premium">
+          <h2>Fertilizante Premium</h2>
+          <p class="descricao">Alta performance para solo fértil.</p>
+          <p class="preco">R$ 249,90</p>
+          <button class="btn5-descricao">Descrição</button>
+          <button class="btn-comprar">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
+          <img src="./imagens/microaspersor.jpg" alt="Fertilizante Premium">
+          <h2>Fertilizante Premium</h2>
+          <p class="descricao">Alta performance para solo fértil.</p>
+          <p class="preco">R$ 249,90</p>
+          <button class="btn6-descricao">Descrição</button>
+          <button class="btn-comprar">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
+          <img src="./imagens/Irrigador Setorial.jpg" alt="Fertilizante Premium">
+          <h2>Fertilizante Premium</h2>
+          <p class="descricao">Alta performance para solo fértil.</p>
+          <p class="preco">R$ 249,90</p>
+          <button class="btn7-descricao">Descrição</button>
+          <button class="btn-comprar">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
+          <img src="./imagens/Inseticida.jpg" alt="Fertilizante Premium">
+          <h2>Fertilizante Premium</h2>
+          <p class="descricao">Alta performance para solo fértil.</p>
+          <p class="preco">R$ 249,90</p>
+          <button class="btn8-descricao">Descrição</button>
+          <button class="btn-comprar">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
+          <img src="./imagens/Herbicida.jpg" alt="Fertilizante Premium">
+          <h2>Fertilizante Premium</h2>
+          <p class="descricao">Alta performance para solo fértil.</p>
+          <p class="preco">R$ 249,90</p>
+          <button class="btn9-descricao">Descrição</button>
+          <button class="btn-comprar">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
+          <img src="./imagens/AradoDeDisco.jpg" alt="Fertilizante Premium">
+          <h2>Fertilizante Premium</h2>
+          <p class="descricao">Alta performance para solo fértil.</p>
+          <p class="preco">R$ 249,90</p>
+          <button class="btn10-descricao">Descrição</button>
+          <button class="btn-comprar">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
+          <img src="./imagens/bicoDeMngueira.jpg" alt="Fertilizante Premium">
+          <h2>Fertilizante Premium</h2>
+          <p class="descricao">Alta performance para solo fértil.</p>
+          <p class="preco">R$ 249,90</p>
+          <button class="btn11-descricao">Descrição</button>
+          <button class="btn-comprar">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
+          <img src="./imagens/GradeNiveladora.jpg" alt="Fertilizante Premium">
+          <h2>Fertilizante Premium</h2>
+          <p class="descricao">Alta performance para solo fértil.</p>
+          <p class="preco">R$ 249,90</p>
+          <button class="btn12-descricao">Descrição</button>
+          <button class="btn-comprar">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
+          <img src="./imagens/aspersor de impacto.jpg" alt="Fertilizante Premium">
+          <h2>Fertilizante Premium</h2>
+          <p class="descricao">Alta performance para solo fértil.</p>
+          <p class="preco">R$ 249,90</p>
+          <button class="btn13-descricao">Descrição</button>
+          <button class="btn-comprar">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
+          <img src="./imagens/Bactericida.jpg" alt="Fertilizante Premium">
+          <h2>Fertilizante Premium</h2>
+          <p class="descricao">Alta performance para solo fértil.</p>
+          <p class="preco">R$ 249,90</p>
+          <button class="btn14-descricao">Descrição</button>
+          <button class="btn-comprar">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
+          <img src="./imagens/mangueiraPlantio.jpg" alt="Fertilizante Premium">
+          <h2>Fertilizante Premium</h2>
+          <p class="descricao">Alta performance para solo fértil.</p>
+          <p class="preco">R$ 249,90</p>
+          <button class="btn15-descricao">Descrição</button>
+          <button class="btn-comprar">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
+          <img src="./imagens/Cavadeira Articulada.jpg" alt="Fertilizante Premium">
+          <h2>Fertilizante Premium</h2>
+          <p class="descricao">Alta performance para solo fértil.</p>
+          <p class="preco">R$ 249,90</p>
+          <button class="btn16-descricao">Descrição</button>
+          <button class="btn-comprar">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
+          <img src="./imagens/FoiceDentada.jpg" alt="Fertilizante Premium">
+          <h2>Fertilizante Premium</h2>
+          <p class="descricao">Alta performance para solo fértil.</p>
+          <p class="preco">R$ 249,90</p>
+          <button class="btn17-descricao">Descrição</button>
+          <button class="btn-comprar">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
+          <img src="./imagens/enxada.jpg" alt="Fertilizante Premium">
+          <h2>Fertilizante Premium</h2>
+          <p class="descricao">Alta performance para solo fértil.</p>
+          <p class="preco">R$ 249,90</p>
+          <button class="btn18-descricao">Descrição</button>
+          <button class="btn-comprar">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
+          <img src="./imagens/enxadão.jpg" alt="Fertilizante Premium">
+          <h2>Fertilizante Premium</h2>
+          <p class="descricao">Alta performance para solo fértil.</p>
+          <p class="preco">R$ 249,90</p>
+          <button class="btn19-descricao">Descrição</button>
+          <button class="btn-comprar">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
+          <img src="./imagens/Facão.jpg" alt="Fertilizante Premium">
+          <h2>Fertilizante Premium</h2>
+          <p class="descricao">Alta performance para solo fértil.</p>
+          <p class="preco">R$ 249,90</p>
+          <button class="btn20-descricao">Descrição</button>
+          <button class="btn-comprar">Adicionar ao Carrinho</button>
+        </div>
+
       </div>
     </main>
   </center>
@@ -93,12 +252,12 @@
   </footer>
 
   <script>
+    // === FILTROS ===
     function filtrarProdutos() {
       const categoria = document.getElementById("categoriaFiltro").value;
       const preco = document.getElementById("precoFiltro").value;
       const produtos = document.querySelectorAll(".produto");
       const mensagem = document.getElementById("mensagemVazia");
-
       let produtosVisiveis = 0;
 
       produtos.forEach(produto => {
@@ -126,23 +285,56 @@
       document.getElementById("mensagemVazia").style.display = "none";
     }
 
-    // Adicionar ao carrinho
-    const produtos = document.querySelectorAll(".produto");
-    produtos.forEach(produto => {
-      produto.addEventListener("click", () => {
-        const nome = produto.querySelector("h2").innerText;
-        const preco = produto.querySelector(".preco").innerText;
-        const descricao = produto.querySelector(".descricao").innerText;
-        const imagem = produto.querySelector("img").getAttribute("src");
+    // === AÇÕES DOS BOTÕES ===
+    document.querySelectorAll(".produto").forEach((produto, index) => {
+      const btnDescricao = produto.querySelector("button[class*='-descricao']");
+      const btnCarrinho = produto.querySelector(".btn-comprar");
 
-        let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
-        carrinho.push({ nome, preco, descricao, imagem });
-        localStorage.setItem("carrinho", JSON.stringify(carrinho));
+      // --- DESCRIÇÃO ---
+      if (btnDescricao) {
+        btnDescricao.addEventListener("click", () => {
+          const nome = produto.querySelector("h2") ? produto.querySelector("h2").innerText : ("Produto " + (index + 1));
+          const preco = produto.querySelector(".preco") ? produto.querySelector(".preco").innerText : "";
+          const descricao = produto.querySelector(".descricao") ? produto.querySelector(".descricao").innerText : "";
+          const imagem = produto.querySelector("img") ? produto.querySelector("img").getAttribute("src") : "";
 
-        window.location.href = "carrinho.html";
-      });
+          // Salvamos em duas chaves pra compatibilidade com páginas diferentes
+          const produtoDescricao = { nome, preco, descricao, imagem };
+          const produtoSelecionado = { id: index + 1, ...produtoDescricao };
+
+          localStorage.setItem("produtoDescricao", JSON.stringify(produtoDescricao));
+          localStorage.setItem("produtoSelecionado", JSON.stringify(produtoSelecionado));
+
+          // Redireciona para a página de detalhes.
+          // *Se sua página de detalhes se chama "Produto.html", mantém assim.*
+          // *Se chama "produtos.html", troque abaixo para 'produtos.html'.*
+          window.location.href = "Produto.html";
+        });
+      }
+
+      // --- ADICIONAR AO CARRINHO ---
+      if (btnCarrinho) {
+        btnCarrinho.addEventListener("click", () => {
+          const nome = produto.querySelector("h2") ? produto.querySelector("h2").innerText : ("Produto " + (index + 1));
+          const preco = produto.querySelector(".preco") ? produto.querySelector(".preco").innerText : "";
+          const descricao = produto.querySelector(".descricao") ? produto.querySelector(".descricao").innerText : "";
+          const imagem = produto.querySelector("img") ? produto.querySelector("img").getAttribute("src") : "";
+
+          let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+          carrinho.push({ nome, preco, descricao, imagem });
+          localStorage.setItem("carrinho", JSON.stringify(carrinho));
+
+          btnCarrinho.innerText = "Adicionado!";
+          btnCarrinho.disabled = true;
+          setTimeout(() => {
+            btnCarrinho.innerText = "Adicionar ao Carrinho";
+            btnCarrinho.disabled = false;
+          }, 1500);
+        });
+      }
     });
   </script>
 
 </body>
+
 </html>
