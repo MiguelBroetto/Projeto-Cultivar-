@@ -23,6 +23,7 @@ header {
     padding: 15px 20px;
     position: relative;
     width: 100%;
+    box-sizing: border-box;
 }
 
 /* Logo à esquerda */
@@ -33,6 +34,16 @@ header {
 
 .logo img {
     height: 130px;
+    max-width: 100%;
+}
+
+/* Container dos ícones à direita */
+.header-icons {
+    position: absolute;
+    right: 20px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
 }
 
 /* Ícones do menu */
@@ -42,6 +53,7 @@ header {
 #img_contato,
 #img_perfil {
     height: 50px;
+    width: auto;
 }
 
 /* Menu central */
@@ -70,6 +82,7 @@ nav a:hover {
 .sobre-link img,
 .contato-link img {
     height: 50px;
+    width: auto;
     cursor: pointer;
     transition: transform 0.2s ease;
 }
@@ -89,6 +102,7 @@ footer {
     padding: 15px 20px;
     width: 100%;
     margin-top: auto;
+    box-sizing: border-box;
 }
 
 main {
@@ -96,207 +110,326 @@ main {
     max-width: 1200px;
     width: 100%;
     margin: 30px auto;
+    padding: 0 20px;
+    box-sizing: border-box;
 }
-
-/* ==============================
-   RESPONSIVIDADE DO HEADER
-   ============================== */
-@media (max-width: 768px) {
-    header {
-        flex-direction: column;
-        padding: 10px;
-        text-align: center;
-    }
-
-    .logo {
-        position: static;
-        margin-bottom: 10px;
-    }
-
-    nav ul {
-        flex-direction: column;
-        gap: 10px;
-    }
-}
-
-@media (max-width: 480px) {
-    .logo img {
-        height: 40px;
-    }
-
-    nav ul {
-        gap: 8px;
-    }
-
-    nav a {
-        font-size: 14px;
-    }
-}
-
-.carrinho-link img {
-    height: 50px;
-    /* mesmo tamanho da logo */
-    cursor: pointer;
-    transition: transform 0.2s ease;
-}
-
-.carrinho-link img:hover {
-    transform: scale(1.1);
-    /* efeito ao passar o mouse */
-}
-
-.perfil-link img {
-    height: 50px;
-    /* mesmo tamanho da logo */
-    cursor: pointer;
-    transition: transform 0.2s ease;
-}
-
-.perfil-link img:hover {
-    transform: scale(1.1);
-    /* efeito ao passar o mouse */
-}
-
-.inicio-link img {
-    height: 50px;
-    /* mesmo tamanho da logo */
-    cursor: pointer;
-    transition: transform 0.2s ease;
-}
-
-.inicio-link img:hover {
-    transform: scale(1.1);
-    /* efeito ao passar o mouse */
-}
-
-.sobre-link img {
-    height: 50px;
-    /* mesmo tamanho da logo */
-    cursor: pointer;
-    transition: transform 0.2s ease;
-}
-
-.sobre-link img:hover {
-    transform: scale(1.1);
-    /* efeito ao passar o mouse */
-}
-
-.contato-link img {
-    height: 50px;
-    /* mesmo tamanho da logo */
-    cursor: pointer;
-    transition: transform 0.2s ease;
-}
-
-.contato-link img:hover {
-    transform: scale(1.1);
-    /* efeito ao passar o mouse */
-}
-
 
 /* ================================
    BOTÕES GERAIS
    ================================ */
 button {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-weight: 600;
-  border: none;
-  border-radius: 12px;
-  padding: 12px 28px;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 28px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+    box-sizing: border-box;
 }
 
 /* ================================
    BOTÕES DE FILTRO
    ================================ */
 button.botao-filtrar {
-  background: linear-gradient(135deg, #1976D2, #42A5F5);
-  color: #fff;
+    background: linear-gradient(135deg, #1976D2, #42A5F5);
+    color: #fff;
 }
 button.botao-filtrar:hover {
-  background: linear-gradient(135deg, #2196F3, #64B5F6);
-  transform: translateY(-2px);
+    background: linear-gradient(135deg, #2196F3, #64B5F6);
+    transform: translateY(-2px);
 }
 
 /* ================================
    BOTÃO LIMPAR FILTRO
    ================================ */
 button.botao-limpar {
-  background: #e92020;
-  color: #fff;
+    background: #e92020;
+    color: #fff;
 }
 button.botao-limpar:hover {
-  background: #d22424;
-  transform: translateY(-2px);
+    background: #d22424;
+    transform: translateY(-2px);
 }
 
 /* ================================
    BOTÕES DE DESCRIÇÃO/ VOLTAR
    ================================ */
 button[class*="-descricao"] {
-  background: #FFB300;
-  color: #fff;
+    background: #FFB300;
+    color: #fff;
 }
 button[class*="-descricao"]:hover {
-  background: #ea3838;
-  transform: translateY(-2px);
+    background: #ea3838;
+    transform: translateY(-2px);
 }
 
 /* ================================
    BOTÕES ADICIONAR AO CARRINHO
    ================================ */
 button.btn-comprar {
-  background: linear-gradient(135deg, #388E3C, #66BB6A);
-  color: #fff;
+    background: linear-gradient(135deg, #388E3C, #66BB6A);
+    color: #fff;
 }
 button.btn-comprar:hover {
-  background: linear-gradient(135deg, #43A047, #81C784);
-  transform: translateY(-2px);
+    background: linear-gradient(135deg, #43A047, #81C784);
+    transform: translateY(-2px);
 }
 
 /* ================================
    BOTÃO FINALIZAR COMPRA
    ================================ */
 button.finalizar {
-  background: linear-gradient(135deg, #D32F2F, #E53935);
-  color: #fff;
+    background: linear-gradient(135deg, #D32F2F, #E53935);
+    color: #fff;
 }
 button.finalizar:hover {
-  background: linear-gradient(135deg, #F44336, #EF5350);
-  transform: translateY(-2px);
+    background: linear-gradient(135deg, #F44336, #EF5350);
+    transform: translateY(-2px);
 }
 
 /* ================================
    BOTÕES DE FORMULÁRIO (Enviar, Criar, Salvar)
    ================================ */
 button[type="submit"] {
-  background: linear-gradient(135deg,#1976D2, #42A5F5);
-  color: #fff;
+    background: linear-gradient(135deg,#1976D2, #42A5F5);
+    color: #fff;
 }
 button[type="submit"]:hover {
-  background: linear-gradient(135deg,#1976D2, #42A5F5);
-  transform: translateY(-2px);
+    background: linear-gradient(135deg,#1976D2, #42A5F5);
+    transform: translateY(-2px);
 }
 
 /* ================================
    TODOS BOTÕES - CLICK ANIMATION
    ================================ */
 button:active {
-  transform: scale(0.97);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transform: scale(0.97);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
-/* ================================
-   RESPONSIVIDADE
-   ================================ */
+/* ==============================
+   RESPONSIVIDADE - TABLETS (768px - 1024px)
+   ============================== */
+@media (max-width: 1024px) {
+    .logo img {
+        height: 100px;
+    }
+    
+    nav ul {
+        gap: 15px;
+    }
+    
+    .carrinho-link img,
+    .perfil-link img,
+    .inicio-link img,
+    .sobre-link img,
+    .contato-link img {
+        height: 45px;
+    }
+    
+    nav a {
+        font-size: 14px;
+    }
+    
+    main {
+        margin: 20px auto;
+        padding: 0 15px;
+    }
+}
+
+/* ==============================
+   RESPONSIVIDADE - TABLETS PEQUENOS (768px)
+   ============================== */
 @media (max-width: 768px) {
-  button {
-    width: 100%;
-    padding: 10px 20px;
-    font-size: 1rem;
-  }
+    header {
+        flex-direction: column;
+        padding: 10px 15px;
+        gap: 10px;
+    }
+
+    .logo {
+        position: static;
+        margin-bottom: 0;
+    }
+
+    .logo img {
+        height: 80px;
+    }
+
+    .header-icons {
+        position: static;
+        gap: 12px;
+    }
+
+    .carrinho-link img,
+    .perfil-link img,
+    .inicio-link img,
+    .sobre-link img,
+    .contato-link img {
+        height: 40px;
+    }
+
+    nav {
+        width: 100%;
+    }
+
+    nav ul {
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    nav a {
+        font-size: 14px;
+    }
+
+    main {
+        margin: 15px auto;
+        padding: 0 10px;
+    }
+
+    button {
+        width: auto;
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
 }
 
+/* ==============================
+   RESPONSIVIDADE - SMARTPHONES (480px)
+   ============================== */
+@media (max-width: 480px) {
+    header {
+        padding: 8px 10px;
+        gap: 8px;
+    }
 
+    .logo img {
+        height: 60px;
+    }
+
+    .header-icons {
+        gap: 8px;
+    }
+
+    .carrinho-link img,
+    .perfil-link img,
+    .inicio-link img,
+    .sobre-link img,
+    .contato-link img {
+        height: 35px;
+    }
+
+    nav ul {
+        gap: 5px;
+    }
+
+    nav a {
+        font-size: 12px;
+    }
+
+    main {
+        margin: 10px auto;
+        padding: 0 8px;
+    }
+
+    footer {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px 16px;
+        font-size: 0.9rem;
+        margin: 5px 0;
+    }
+}
+
+/* ==============================
+   RESPONSIVIDADE - SMARTPHONES PEQUENOS (320px)
+   ============================== */
+@media (max-width: 320px) {
+    header {
+        padding: 6px 8px;
+        gap: 6px;
+    }
+
+    .logo img {
+        height: 50px;
+    }
+
+    .header-icons {
+        gap: 6px;
+    }
+
+    .carrinho-link img,
+    .perfil-link img,
+    .inicio-link img,
+    .sobre-link img,
+    .contato-link img {
+        height: 30px;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    nav a {
+        font-size: 11px;
+        text-align: center;
+        display: block;
+    }
+
+    main {
+        padding: 0 5px;
+    }
+
+    button {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+    }
+}
+
+/* ==============================
+   ORIENTAÇÃO LANDSCAPE
+   ============================== */
+@media (max-height: 500px) and (orientation: landscape) {
+    header {
+        padding: 6px 15px;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 0;
+    }
+    
+    .logo {
+        position: static;
+    }
+    
+    .logo img {
+        height: 40px;
+    }
+    
+    .header-icons {
+        position: static;
+    }
+    
+    .carrinho-link img,
+    .perfil-link img,
+    .inicio-link img,
+    .sobre-link img,
+    .contato-link img {
+        height: 30px;
+    }
+    
+    nav {
+        display: none;
+    }
+    
+    main {
+        margin: 8px auto;
+    }
+}
