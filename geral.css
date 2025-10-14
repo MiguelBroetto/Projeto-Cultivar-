@@ -210,17 +210,34 @@ button:active {
 }
 
 /* ==============================
+   AJUSTES GERAIS
+   ============================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden; /* evita a barra lateral direita */
+}
+
+/* ==============================
    RESPONSIVIDADE - TABLETS (768px - 1024px)
    ============================== */
 @media (max-width: 1024px) {
     .logo img {
         height: 100px;
     }
-    
+
     nav ul {
         gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
     }
-    
+
     .carrinho-link img,
     .perfil-link img,
     .inicio-link img,
@@ -228,14 +245,16 @@ button:active {
     .contato-link img {
         height: 45px;
     }
-    
+
     nav a {
         font-size: 14px;
     }
-    
+
     main {
         margin: 20px auto;
         padding: 0 15px;
+        max-width: 100%;
+        overflow-x: hidden;
     }
 }
 
@@ -245,8 +264,10 @@ button:active {
 @media (max-width: 768px) {
     header {
         flex-direction: column;
+        align-items: center;
         padding: 10px 15px;
         gap: 10px;
+        width: 100%;
     }
 
     .logo {
@@ -260,7 +281,10 @@ button:active {
 
     .header-icons {
         position: static;
+        display: flex;
+        justify-content: center;
         gap: 12px;
+        width: 100%;
     }
 
     .carrinho-link img,
@@ -288,6 +312,7 @@ button:active {
     main {
         margin: 15px auto;
         padding: 0 10px;
+        width: 100%;
     }
 
     button {
@@ -304,6 +329,7 @@ button:active {
     header {
         padding: 8px 10px;
         gap: 8px;
+        width: 100%;
     }
 
     .logo img {
@@ -312,6 +338,8 @@ button:active {
 
     .header-icons {
         gap: 8px;
+        justify-content: center;
+        width: 100%;
     }
 
     .carrinho-link img,
@@ -324,6 +352,8 @@ button:active {
 
     nav ul {
         gap: 5px;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
     nav a {
@@ -333,11 +363,14 @@ button:active {
     main {
         margin: 10px auto;
         padding: 0 8px;
+        width: 100%;
     }
 
     footer {
         padding: 10px 15px;
         font-size: 0.9rem;
+        text-align: center;
+        width: 100%;
     }
 
     button {
@@ -355,6 +388,7 @@ button:active {
     header {
         padding: 6px 8px;
         gap: 6px;
+        width: 100%;
     }
 
     .logo img {
@@ -375,6 +409,7 @@ button:active {
 
     nav ul {
         flex-direction: column;
+        align-items: center;
         gap: 4px;
     }
 
@@ -382,10 +417,12 @@ button:active {
         font-size: 11px;
         text-align: center;
         display: block;
+        width: 100%;
     }
 
     main {
         padding: 0 5px;
+        width: 100%;
     }
 
     button {
