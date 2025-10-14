@@ -7,7 +7,7 @@ body {
     height: 100%;
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(to bottom right, #e9f5e9, #ffffff);
+    background: #e9f5e9;
     color: #2f4f2f;
     display: flex;
     flex-direction: column;
