@@ -470,3 +470,42 @@ html, body {
         margin: 8px auto;
     }
 }
+
+/* Todas as imagens dentro dos produtos terão o mesmo tamanho */
+.produto-detalhe img {
+  width: 300px;          /* mesmo tamanho do produto 1 */
+  height: 300px;         /* altura fixa para uniformidade */
+  object-fit: contain;   /* mantém a proporção sem cortar */
+  border-radius: 12px;   /* bordas arredondadas (opcional) */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* leve sombra */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Pequena animação ao passar o mouse */
+.produto-detalhe img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Centraliza as imagens de cada produto */
+.produto-detalhe center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+/* Responsividade: ajusta o tamanho das imagens em telas menores */
+@media (max-width: 768px) {
+  .produto-detalhe img {
+    width: 220px;
+    height: 220px;
+  }
+}
+
+@media (max-width: 480px) {
+  .produto-detalhe img {
+    width: 180px;
+    height: 180px;
+  }
+}

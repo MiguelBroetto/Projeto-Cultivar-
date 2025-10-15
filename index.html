@@ -40,226 +40,214 @@
         <select id="categoriaFiltro">
           <option value="">Todas as Categorias</option>
           <option value="fertilizante">Fertilizantes</option>
-          <option value="irrigacao">Irrigação</option>
+          <option value="Inseticida">Inseticida</option>
+          <option value="Sementes">Sementes</option>
           <option value="construcao">Construção Agrícola</option>
+          <option value="Maquinario">Maquinario Agrícola</option>
         </select>
 
         <label for="precoFiltro">Faixa de Preço:</label>
         <select id="precoFiltro">
           <option value="">Todos os Preços</option>
-          <option value="1">Até R$100</option>
-          <option value="2">R$101 - R$200</option>
-          <option value="3">Acima de R$200</option>
+          <option value="1">R$2 - R$100</option>
+          <option value="2">R$101 - R$500</option>
+          <option value="3">R$501 - R$1.000</option>
+          <option value="4">R$1.001 - R$10.000</option>
+          <option value="5">R$10.001 - R$100.000</option>
+          <option value="6">R$100.001 - R$500.000</option>
+          <option value="7">R$500.001 - R$1.000.000</option>
+          <option value="8">R$1.000.001 - R$5.000.000</option>
+          <option value="9">Acima de R$5.000.000</option>
         </select>
+
 
         <button class="botao-filtrar" onclick="filtrarProdutos()">Aplicar Filtros</button>
         <button class="botao-limpar" onclick="limparFiltros()">Limpar Filtros</button>
       </div>
 
       <!-- MENSAGEM QUANDO NÃO HÁ PRODUTOS -->
-      <p id="mensagemVazia" class="mensagem-vazia" style="display: none;">
-        Nenhum produto cadastrado com essas condições.
-      </p>
+      <p id="mensagemVazia" class="mensagem-vazia" style="display: none;"> Nenhum produto cadastrado com essas
+        condições. </p>
 
       <!-- LISTA DE PRODUTOS -->
       <div class="produtos" id="listaProdutos">
         <div class="produto" data-categoria="fertilizante" data-preco="99.90">
           <img src="./imagens/adubo.png" alt="Adubo Orgânico">
-          <h2>Adubo Orgânico</h2>
+          <h2>Komatsu Garden</h2>
           <p class="descricao">Ideal para cultivo sustentável.</p>
           <p class="preco">R$ 99,90</p>
           <button class="btn1-descricao">Descrição</button>
-          <br><br>
           <button class="btn-comprar">Adicionar ao Carrinho</button>
         </div>
 
-        <div class="produto" data-categoria="irrigacao" data-preco="149.90">
-          <img src="./imagens/Inseticida.jpg" alt="Inseticida Fibromix - 1L">
-          <h2>Inseticida Fibromix - 1L</h2>
-          <p class="descricao">Ideal para eliminar e controlar pragas.</p>
-          <p class="preco">R$ 159,90</p>
+        <div class="produto" data-categoria="Inseticida" data-preco="64.90">
+          <img src="./imagens/Inseticida.jpg" alt="Fipromix">
+          <h2>Fipromix </h2>
+          <p class="descricao">Alta durabilidade para irrigação.</p>
+          <p class="preco">R$ 64,90</p>
           <button class="btn2-descricao">Descrição</button>
-          <br><br>
           <button class="btn-comprar">Adicionar ao Carrinho</button>
         </div>
 
-        <div class="produto" data-categoria="construcao" data-preco="199.90">
-          <img src="./imagens/Herbicida.jpg" alt="Herbicida Gramizap - 1L">
-          <h2>Herbicida Gramizap - 1L</h2>
-          <p class="descricao">Ideal para controlar e eliminar o crescimento de plantas daninhas.</p>
-          <p class="preco">R$ 149,90</p>
+        <div class="produto" data-categoria="Inseticida" data-preco="59.90">
+          <img src="./imagens/Herbicida.jpg" alt="Gramizap Herbicida">
+          <h2> Gramizap Herbicida </h2>
+          <p class="descricao">Resistente e fácil de instalar.</p>
+          <p class="preco">R$ 59,90</p>
           <button class="btn3-descricao">Descrição</button>
-          <br><br>
           <button class="btn-comprar">Adicionar ao Carrinho</button>
         </div>
 
-        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
-          <img src="./imagens/fertilizante.png" alt="Fertilizante Premium">
-          <h2>Fertilizante Premium</h2>
+        <div class="produto" data-categoria="fertilizante" data-preco="189.90">
+          <img src="./imagens/fertilizante.png" alt="VeloKelp">
+          <h2>VeloKelp</h2>
           <p class="descricao">Alta performance para solo fértil.</p>
-          <p class="preco">R$ 249,90</p>
+          <p class="preco">R$ 189,90</p>
           <button class="btn4-descricao">Descrição</button>
-          <br><br>
           <button class="btn-comprar">Adicionar ao Carrinho</button>
         </div>
 
-        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
-          <img src="./imagens/Bactericida.jpg" alt="Bactericida - 30L">
-          <h2>Bactericida - 30L</h2>
-          <p class="descricao">Ideal para controlar bactérias causadores de doenças no plantio.</p>
-          <p class="preco">R$ 679,90</p>
+        <div class="produto" data-categoria="Inseticida" data-preco=" 1040.00">
+          <img src="./imagens/Bactericida.jpg" alt=" Bactericida (Cloreto de Benzalcônio 50%)">
+          <h2> Bactericida (Cloreto de Benzalcônio 50%)</h2>
+          <p class="descricao">Alta performance para solo fértil.</p>
+          <p class="preco">R$ 1.040,00</p>
           <button class="btn5-descricao">Descrição</button>
-          <br><br>
           <button class="btn-comprar">Adicionar ao Carrinho</button>
         </div>
 
-        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
-          <img src="./imagens/adubos3em1.webp" alt="Kit adubação completa">
-          <h2>Kit adubação completa</h2>
-          <p class="descricao">Fornece todos os nutrientes essenciais para o plantio.</p>
-          <p class="preco">R$ 150,00</p>
+        <div class="produto" data-categoria="fertilizante" data-preco=" 159.99">
+          <img src="./imagens/adubos3em1.webp" alt="Kit de Adubação">
+          <h2>Kit de Adubação</h2>
+          <p class="descricao">Alta performance para solo fértil.</p>
+          <p class="preco">R$ 159,99</p>
           <button class="btn6-descricao">Descrição</button>
-          <br><br>
           <button class="btn-comprar">Adicionar ao Carrinho</button>
         </div>
 
-        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
-          <img src="./imagens/cafe.webp" alt="Sementes café arábica - 1kg">
-          <h2>Sementes café arábica - 1kg</h2>
-          <p class="descricao">Garantem plantas de alta qualidade, com excelente produtividade.</p>
-          <p class="preco">R$ 879,90</p>
+        <div class="produto" data-categoria="Sementes" data-preco=" 2 ">
+          <img src="./imagens/cafe.webp" alt="Muda de Café Arábica">
+          <h2>Muda de Café Arábica</h2>
+          <p class="descricao">Alta performance para solo fértil.</p>
+          <p class="preco">R$ 2,00 por muda</p>
           <button class="btn7-descricao">Descrição</button>
-          <br><br>
           <button class="btn-comprar">Adicionar ao Carrinho</button>
         </div>
 
-        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
-          <img src="./imagens/soja.jpg" alt="Sementes soja - 1kg">
-          <h2>Sementes soja - 1kg</h2>
-          <p class="descricao">Alto potencial produtivo, excelente germinação.</p>
-          <p class="preco">R$ 29,90</p>
+        <div class="produto" data-categoria="Sementes" data-preco=" 3">
+          <img src="./imagens/soja.jpg" alt="Semente de Soja">
+          <h2>Semente de Soja</h2>
+          <p class="descricao">Alta performance para solo fértil.</p>
+          <p class="preco">R$ 3,00 por muda</p>
           <button class="btn8-descricao">Descrição</button>
-          <br><br>
           <button class="btn-comprar">Adicionar ao Carrinho</button>
         </div>
 
-        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
-          <img src="./imagens/estufa.jpg" alt="Estufa agrícola - 3,20m X 4m">
-          <h2>Estufa agrícola - 3,20m X 4m</h2>
-          <p class="descricao">Proporciona um ambiente controlado para o cultivo.</p>
-          <p class="preco">R$ 6330,90 - R$ 705,52 x 12</p>
+        <div class="produto" data-categoria="construcao" data-preco=" 446.99">
+          <img src="./imagens/estufa.jpg" alt="Estufa de Jardim Portátil (Tipo Viveiro)">
+          <h2>Estufa de Jardim Portátil (Tipo Viveiro)</h2>
+          <p class="descricao">Alta performance para solo fértil.</p>
+          <p class="preco">R$ 446,99</p>
           <button class="btn9-descricao">Descrição</button>
-          <br><br>
           <button class="btn-comprar">Adicionar ao Carrinho</button>
         </div>
 
-        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
-          <img src="./imagens/GradeNiveladora.jpg" alt="Grade Niveladora - Modelo GVA">
-          <h2>Grade Niveladora - Modelo GVA</h2>
-          <p class="descricao">Ideal para preparar o solo de forma uniforme.</p>
-          <p class="preco">R$ 21.990,90 - R$ 2.199,00 x 10</p>
+        <div class="produto" data-categoria="construcao" data-preco="  4600000">
+          <img src="./imagens/GradeNiveladora.jpg" alt="Grade Niveladora">
+          <h2>Grade Niveladora</h2>
+          <p class="descricao">Alta performance para solo fértil.</p>
+          <p class="preco"> R$ 460.000,00</p>
           <button class="btn10-descricao">Descrição</button>
-          <br><br>
           <button class="btn-comprar">Adicionar ao Carrinho</button>
         </div>
 
-        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
-          <img src="./imagens/AradoDeDisco.jpg" alt="Arado de discos - Modelo AR">
-          <h2>Arado de discos - Modelo AR</h2>
-          <p class="descricao">Projetado para revolver e preparar o solo de forma eficiente.</p>
-          <p class="preco">R$ 31.890,90 - R$ 3.189 x 10</p>
+        <div class="produto" data-categoria="construcao" data-preco=" 2500000">
+          <img src="./imagens/AradoDeDisco.jpg" alt="Arado de Disco (Fixo ou Reversível)">
+          <h2>Arado de Disco (Fixo ou Reversível)</h2>
+          <p class="descricao">Alta performance para solo fértil.</p>
+          <p class="preco">R$ 25.000,00</p>
           <button class="btn11-descricao">Descrição</button>
-          <br><br>
           <button class="btn-comprar">Adicionar ao Carrinho</button>
         </div>
 
-        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
-          <img src="./imagens/colheitadeira.webp" alt="Fertilizante Premium">
-          <h2>Fertilizante Premium</h2>
+        <div class="produto" data-categoria="Maquinario" data-preco=" 2000000">
+          <img src="./imagens/colheitadeira.webp" alt="Colheitadeira de Grãos (Automotriz)">
+          <h2>Colheitadeira de Grãos (Automotriz)</h2>
           <p class="descricao">Alta performance para solo fértil.</p>
-          <p class="preco">R$ 249,90</p>
+          <p class="preco">R$ 2.0000.000.00</p>
           <button class="btn12-descricao">Descrição</button>
-          <br><br>
           <button class="btn-comprar">Adicionar ao Carrinho</button>
         </div>
 
-        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
-          <img src="./imagens/mineColheitadeira.jpg" alt="Fertilizante Premium">
-          <h2>Fertilizante Premium</h2>
+        <div class="produto" data-categoria="Maquinario" data-preco=" 500000000">
+          <img src="./imagens/mineColheitadeira.jpg" alt="Minicolheitadeira de Grãos (Automotriz)">
+          <h2>Minicolheitadeira de Grãos (Automotriz)</h2>
           <p class="descricao">Alta performance para solo fértil.</p>
-          <p class="preco">R$ 249,90</p>
+          <p class="preco">R$ 5000.000.00</p>
           <button class="btn13-descricao">Descrição</button>
-          <br><br>
           <button class="btn-comprar">Adicionar ao Carrinho</button>
         </div>
 
-        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
-          <img src="./imagens/trator.webp" alt="Fertilizante Premium">
-          <h2>Fertilizante Premium</h2>
+        <div class="produto" data-categoria="Maquinario" data-preco=" 250000000">
+          <img src="./imagens/trator.webp" alt="Trator Agrícola de Grande Porte (John Deere Série 7R/8R)">
+          <h2>Trator Agrícola de Grande Porte (John Deere Série 7R/8R)</h2>
           <p class="descricao">Alta performance para solo fértil.</p>
-          <p class="preco">R$ 249,90</p>
+          <p class="preco">R$2.500.000.00</p>
           <button class="btn14-descricao">Descrição</button>
-          <br><br>
           <button class="btn-comprar">Adicionar ao Carrinho</button>
         </div>
 
-        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
-          <img src="./imagens/trator2xTrasão.jpg" alt="Fertilizante Premium">
-          <h2>Fertilizante Premium</h2>
+        <div class="produto" data-categoria="Maquinario" data-preco=" 80000000">
+          <img src="./imagens/trator2xTrasão.jpg" alt="Trator Agrícola com Tração nas Quatro Rodas">
+          <h2>Trator Agrícola com Tração nas Quatro Rodas</h2>
           <p class="descricao">Alta performance para solo fértil.</p>
-          <p class="preco">R$ 249,90</p>
+          <p class="preco">R$ 800.000.00</p>
           <button class="btn15-descricao">Descrição</button>
-          <br><br>
           <button class="btn-comprar">Adicionar ao Carrinho</button>
         </div>
 
-        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
-          <img src="./imagens/plantadeira.webp" alt="Fertilizante Premium">
-          <h2>Fertilizante Premium</h2>
+        <div class="produto" data-categoria="construcao" data-preco=" 25000000">
+          <img src="./imagens/plantadeira.webp" alt="Plantadeira em Linha (Semeadeira de Precisão)">
+          <h2>Plantadeira em Linha (Semeadeira de Precisão)</h2>
           <p class="descricao">Alta performance para solo fértil.</p>
-          <p class="preco">R$ 249,90</p>
+          <p class="preco">R$ 250.000.00</p>
           <button class="btn16-descricao">Descrição</button>
-          <br><br>
           <button class="btn-comprar">Adicionar ao Carrinho</button>
         </div>
 
-        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
-          <img src="./imagens/semeadoraHidraulica.jpg" alt="Fertilizante Premium">
-          <h2>Fertilizante Premium</h2>
+        <div class="produto" data-categoria="construcao" data-preco=" 1.00000000">
+          <img src="./imagens/semeadoraHidraulica.jpg" alt="Semeadora/Plantadeira Hidráulica de Arrasto">
+          <h2>Semeadora/Plantadeira Hidráulica de Arrasto</h2>
           <p class="descricao">Alta performance para solo fértil.</p>
-          <p class="preco">R$ 249,90</p>
+          <p class="preco"> R$ 1.000.000.00</p>
           <button class="btn17-descricao">Descrição</button>
-          <br><br>
           <button class="btn-comprar">Adicionar ao Carrinho</button>
         </div>
 
-        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
-          <img src="./imagens/dronePulverizador.jpeg" alt="Fertilizante Premium">
-          <h2>Fertilizante Premium</h2>
+        <div class="produto" data-categoria="Maquinario" data-preco=" 12000000">
+          <img src="./imagens/dronePulverizador.jpeg" alt="Drone Pulverizador Agrícola Multirrotor">
+          <h2>Drone Pulverizador Agrícola Multirrotor</h2>
           <p class="descricao">Alta performance para solo fértil.</p>
-          <p class="preco">R$ 249,90</p>
+          <p class="preco">R$ 120.000,00</p>
           <button class="btn18-descricao">Descrição</button>
-          <br><br>
           <button class="btn-comprar">Adicionar ao Carrinho</button>
         </div>
 
-        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
-          <img src="./imagens/droneVigia.jpg" alt="Fertilizante Premium">
-          <h2>Fertilizante Premium</h2>
+        <div class="produto" data-categoria="Maquinario" data-preco=" 2500000">
+          <img src="./imagens/droneVigia.jpg" alt="Drone de Mapeamento e Vigilância (VANT)">
+          <h2>Drone de Mapeamento e Vigilância (VANT)</h2>
           <p class="descricao">Alta performance para solo fértil.</p>
-          <p class="preco">R$ 249,90</p>
+          <p class="preco">R$ 25.000,00</p>
           <button class="btn19-descricao">Descrição</button>
-          <br><br>
           <button class="btn-comprar">Adicionar ao Carrinho</button>
         </div>
 
-        <div class="produto" data-categoria="fertilizante" data-preco="249.90">
-          <img src="./imagens/aviao.webp" alt="Fertilizante Premium">
-          <h2>Fertilizante Premium</h2>
+        <div class="produto" data-categoria="Maquinario" data-preco=" 700000000">
+          <img src="./imagens/aviao.webp" alt="Avião Agrícola">
+          <h2>Avião Agrícola</h2>
           <p class="descricao">Alta performance para solo fértil.</p>
-          <p class="preco">R$ 249,90</p>
+          <p class="preco">R$ 7000.000,00</p>
           <button class="btn20-descricao">Descrição</button>
-          <br><br>
           <button class="btn-comprar">Adicionar ao Carrinho</button>
         </div>
 
@@ -273,30 +261,49 @@
 
   <script>
     // === FILTROS ===
-    function filtrarProdutos() {
-      const categoria = document.getElementById("categoriaFiltro").value;
-      const preco = document.getElementById("precoFiltro").value;
-      const produtos = document.querySelectorAll(".produto");
-      const mensagem = document.getElementById("mensagemVazia");
-      let produtosVisiveis = 0;
+   function filtrarProdutos() {
+  const categoria = document.getElementById("categoriaFiltro").value;
+  const preco = document.getElementById("precoFiltro").value;
+  const produtos = document.querySelectorAll(".produto");
+  const mensagem = document.getElementById("mensagemVazia");
+  let produtosVisiveis = 0;
 
-      produtos.forEach(produto => {
-        const catProduto = produto.dataset.categoria;
-        const precoProduto = parseFloat(produto.dataset.preco);
-        let exibir = true;
+  produtos.forEach(produto => {
+    const catProduto = produto.dataset.categoria;
+    const precoProduto = Number(produto.dataset.preco); // valor numérico
+    let exibir = true;
 
-        if (categoria && catProduto !== categoria) exibir = false;
-        if (preco === "1" && precoProduto > 100) exibir = false;
-        if (preco === "2" && (precoProduto < 101 || precoProduto > 200)) exibir = false;
-        if (preco === "3" && precoProduto <= 200) exibir = false;
+    // Categoria
+    if (categoria && catProduto !== categoria) exibir = false;
 
-        produto.style.display = exibir ? "block" : "none";
-        if (exibir) produtosVisiveis++;
-      });
-
-      mensagem.style.display = produtosVisiveis === 0 ? "block" : "none";
+    // Faixa de preço
+    if (preco) {
+      switch(preco) {
+        case "1": if (!(precoProduto >= 2 && precoProduto <= 100)) exibir = false; break;
+        case "2": if (!(precoProduto > 100 && precoProduto <= 500)) exibir = false; break;
+        case "3": if (!(precoProduto > 500 && precoProduto <= 1000)) exibir = false; break;
+        case "4": if (!(precoProduto > 1000 && precoProduto <= 10000)) exibir = false; break;
+        case "5": if (!(precoProduto > 10000 && precoProduto <= 100000)) exibir = false; break;
+        case "6": if (!(precoProduto > 100000 && precoProduto <= 500000)) exibir = false; break;
+        case "7": if (!(precoProduto > 500000 && precoProduto <= 1000000)) exibir = false; break;
+        case "8": if (!(precoProduto > 1000000 && precoProduto <= 5000000)) exibir = false; break;
+        case "9": if (!(precoProduto > 5000000)) exibir = false; break;
+      }
     }
 
+    produto.style.display = exibir ? "block" : "none";
+    if (exibir) produtosVisiveis++;
+  });
+
+  if (produtosVisiveis === 0) {
+    mensagem.textContent = "Nenhum produto cadastrado com essas condições.";
+    mensagem.style.display = "block";
+  } else {
+    mensagem.style.display = "none";
+  }
+}
+
+    // Limpar filtros
     function limparFiltros() {
       document.getElementById("categoriaFiltro").value = "";
       document.getElementById("precoFiltro").value = "";
@@ -304,6 +311,17 @@
       produtos.forEach(produto => produto.style.display = "block");
       document.getElementById("mensagemVazia").style.display = "none";
     }
+
+    // Limpar filtros
+    function limparFiltros() {
+      document.getElementById("categoriaFiltro").value = "";
+      document.getElementById("precoFiltro").value = "";
+      const produtos = document.querySelectorAll(".produto");
+      produtos.forEach(produto => produto.style.display = "block");
+      document.getElementById("mensagemVazia").style.display = "none";
+    }
+
+
 
     // === AÇÕES DOS BOTÕES ===
     document.querySelectorAll(".produto").forEach((produto, index) => {
