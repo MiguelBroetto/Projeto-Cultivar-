@@ -33,7 +33,7 @@
       possível.
     </p>
 
-    <form id="contactForm" novalidate>
+     <form id="contactForm" novalidate>
       <div>
         <label for="nome">Nome Completo</label>
         <input type="text" id="nome" name="nome" required placeholder="Seu nome completo" />
@@ -47,9 +47,8 @@
         <input type="tel" id="telefone" name="telefone" placeholder="(99) 99999-9999" />
       </div>
       <div>
-        <label for="mensagem">Mensagem</label>
-        <textarea id="mensagem" name="mensagem" rows="5" required
-          placeholder="Escreva sua mensagem aqui..."></textarea>
+        <label for="mensagem">Enviar Mensagem</label>
+        <textarea id="mensagem" name="mensagem" rows="5" required placeholder="Escreva sua mensagem aqui..."></textarea>
       </div>
       <div>
         <button type="submit">Enviar Mensagem</button>
@@ -61,9 +60,15 @@
     <p>&copy; 2025 Cultivar +</p>
   </footer>
   
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script>
+    (function() {
+      emailjs.init("2oEXG1umxPx3N_u33"); // sua public key do EmailJS
+    })();
+
     const form = document.getElementById('contactForm');
-    form.addEventListener('submit', function (e) {
+
+    form.addEventListener('submit', function(e) {
       e.preventDefault();
 
       if (!form.checkValidity()) {
@@ -71,9 +76,17 @@
         return;
       }
 
-      alert('Mensagem enviada com sucesso! Obrigado pelo contato.');
-      // Redireciona para a página inicial após o envio
-      window.location.href = "index.html";
+      // Envia o formulário via EmailJS
+      emailjs.sendForm('service_vn8hv0g', 'template_6hlurdd', this)
+        .then(() => {
+          alert('Mensagem enviada com sucesso! Obrigado pelo contato.');
+          form.reset();
+          window.location.href = "index.html"; // redirecionar após envio
+        })
+        .catch((error) => {
+          console.error('Erro:', error);
+          alert('Ocorreu um erro ao enviar sua mensagem. Tente novamente mais tarde.');
+        });
     });
   </script>
 </body>
