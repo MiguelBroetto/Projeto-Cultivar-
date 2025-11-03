@@ -40,73 +40,72 @@
   </footer>
 
   <!-- SCRIPT CORRIGIDO PARA O CARRINHO -->
-  <script>
-    const carrinhoContainer = document.getElementById("carrinho");
-    const finalizarBtn = document.getElementById("finalizarCompra");
-    
-    let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+ <script>
+  const carrinhoContainer = document.getElementById("carrinho");
+  const finalizarBtn = document.getElementById("finalizarCompra");
 
-    function renderCarrinho() {
-      carrinhoContainer.innerHTML = "";
-      let total = 0;
+  let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
 
-      carrinho.forEach((item, index) => {
-        const div = document.createElement("div");
-        div.classList.add("item");
-        div.innerHTML = `
-          <img src="${item.imagem}" alt="${item.nome}">
-          <div class="detalhes">
-            <h2>${item.nome}</h2>
-            <p>${item.descricao}</p>
-          </div>
-          <span class="preco">${item.preco}</span>
-          <button class="remover" data-index="${index}">Remover</button>
-        `;
+  function renderCarrinho() {
+    carrinhoContainer.innerHTML = "";
+    let total = 0;
 
-        carrinhoContainer.appendChild(div);
+    carrinho.forEach((item, index) => {
+      const div = document.createElement("div");
+      div.classList.add("item");
+      div.innerHTML = `
+        <img src="${item.imagem}" alt="${item.nome}">
+        <div class="detalhes">
+          <h2>${item.nome}</h2>
+          <p>${item.descricao}</p>
+        </div>
+        <span class="preco">${item.preco}</span>
+        <button class="remover" data-index="${index}">Remover</button>
+      `;
+      carrinhoContainer.appendChild(div);
 
-        // somando o preço (tirando "R$ ")
-        total += parseFloat(item.preco.replace("R$", "").replace(",", "."));
+      let precoNumero = parseFloat(
+        item.preco.replace("R$", "").replace(".", "").replace(",", ".")
+      );
+      total += isNaN(precoNumero) ? 0 : precoNumero;
+    });
+
+    document.querySelector(".resumo h3").innerText = `Total: R$ ${total.toFixed(2).replace(".", ",")}`;
+
+    document.querySelectorAll(".remover").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        const i = e.target.getAttribute("data-index");
+        carrinho.splice(i, 1);
+        localStorage.setItem("carrinho", JSON.stringify(carrinho));
+        renderCarrinho();
       });
+    });
+  }
 
-      // Atualiza resumo
-      const resumo = document.querySelector(".resumo h3");
-      resumo.innerText = `Total: R$ ${total.toFixed(2).replace(".", ",")}`;
+  renderCarrinho();
 
-      // Eventos para remover
-      document.querySelectorAll(".remover").forEach(btn => {
-        btn.addEventListener("click", (e) => {
-          const i = e.target.getAttribute("data-index");
-          carrinho.splice(i, 1);
-          localStorage.setItem("carrinho", JSON.stringify(carrinho));
-          renderCarrinho();
-        });
-      });
+  finalizarBtn.addEventListener("click", () => {
+    if (carrinho.length === 0) {
+      alert("Seu carrinho está vazio. Adicione produtos antes de finalizar a compra.");
+      return;
     }
 
+    const pagamento = localStorage.getItem("formaPagamento");
+    if (!pagamento) {
+      alert("Nenhuma forma de pagamento cadastrada. Vá até o perfil e cadastre uma forma de pagamento.");
+      return;
+    }
+
+    alert(`Compra finalizada com sucesso!\nTotal: ${document.querySelector(".resumo h3").innerText}\nForma de pagamento: ${pagamento}`);
+
+    // Limpa carrinho após finalizar
+    localStorage.removeItem("carrinho");
+    carrinho = [];
     renderCarrinho();
+  });
+</script>
 
-    // Evento do botão "Finalizar Compra" - CORREÇÃO PRINCIPAL
-    finalizarBtn.addEventListener("click", () => {
-      // Verifica se o carrinho está vazio
-      if (carrinho.length === 0 || parseFloat(document.querySelector(".resumo h3").innerText.replace("Total: R$ ", "").replace(",", ".")) === 0) {
-        alert("Seu carrinho está vazio. Adicione produtos antes de finalizar a compra.");
-        return;
-      }
 
-      const pagamento = localStorage.getItem("formaPagamento");
-
-      if (pagamento) {
-        alert(`Compra finalizada com sucesso!\nForma de pagamento: ${pagamento}`);
-        // opcional: limpar carrinho
-        localStorage.removeItem("carrinho");
-        carrinho = [];
-        renderCarrinho();
-      } else {
-        alert("Nenhuma forma de pagamento cadastrada no perfil. Vá até o perfil e cadastre uma forma de pagamento.");
-      }
-    });
-  </script>
 </body>
 
 </html>
