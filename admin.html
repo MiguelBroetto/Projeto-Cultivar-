@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Produtos - Cultivar +</title>
+    <link rel="stylesheet" href="geral.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+       /* ================================
+   BOTÃO REMOVER PRODUTO
+   ================================ */
+.btn-remover {
+    background: linear-gradient(135deg, #D32F2F, #E53935);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-left: 10px;
+    transition: all 0.25s ease;
+}
+
+.btn-remover:hover {
+    background: linear-gradient(135deg, #F44336, #EF5350);
+    transform: translateY(-2px);
+}
+
+.produto-item {
+    background: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border-left: 4px solid #388E3C;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.produto-info {
+    flex: 1;
+}
+
+/* ================================
+   MELHORAR A APARÊNCIA DO TEXTAREA
+   ================================ */
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.5;
+    resize: vertical;
+    min-height: 120px;
+    background: #fafafa;
+}
+
+.form-group textarea:focus {
+    border-color: #388E3C;
+    outline: none;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(56, 142, 60, 0.1);
+}
+
+/* Placeholder mais bonito */
+.form-group textarea::placeholder {
+    color: #888;
+    font-style: italic;
+}
+
+/* Responsividade para mobile */
+@media (max-width: 768px) {
+    .produto-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .btn-remover {
+        margin-left: 0;
+        margin-top: 10px;
+        width: 100%;
+    }
+}
+    </style>
+</head>
+
+<body>
+   <header>
+    <div class="logo">
+        <img src="./imagens/logo cultivar +(sem fundo).png" alt="Logo do Site">
+    </div>
+    <nav>
+        <ul>
+            <li><a href="index.html" class="inicio-link"><img id="img_home" src="./imagens/home.png" alt="inicio"></a></li>
+            <li><a href="sobre.html" class="sobre-link"><img id="img_sobre" src="./imagens/Sobre (1).png" alt="sobre"></a></li>
+            <li><a href="carrinho.html" class="carrinho-link" id="linkCarrinho"><img id="img_carrinho" src="./imagens/carrinho.png" alt="Carrinho"></a></li>
+            <li><a href="contato.html" class="contato-link"><img id="img_contato" src="./imagens/contato (1).png" alt="contato"></a></li>
+            <li><a href="perfil.html" class="perfil-link"><img id="img_perfil" src="/imagens/perfil (1).png" alt="perfil"></a></li>
+            <li><a href="admin.html" class="admin-link"><img id="img_admin" src="./imagens/homem-de-terno-e-gravata.png" alt="Administração"></a></li>
+        </ul>
+    </nav>
+</header>
+
+    <div class="admin-container">
+        <h1 class="admin-title">Cadastro de Produtos</h1>
+
+        <div id="mensagemSucesso" class="mensagem-sucesso">
+            Produto cadastrado com sucesso!
+        </div>
+
+        <form id="formProduto">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="nomeProduto">Nome do Produto:</label>
+                    <input type="text" id="nomeProduto" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="categoriaProduto">Categoria:</label>
+                    <select id="categoriaProduto" required>
+                        <option value="">Selecione uma categoria</option>
+                        <option value="fertilizante">Fertilizantes</option>
+                        <option value="Inseticida">Inseticida</option>
+                        <option value="Sementes">Sementes</option>
+                        <option value="construcao">Construção Agrícola</option>
+                        <option value="Maquinario">Maquinário Agrícola</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="precoProduto">Preço (R$):</label>
+                    <input type="number" id="precoProduto" step="0.01" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="imagemProduto">URL da Imagem:</label>
+                    <input type="url" id="imagemProduto" placeholder="https://exemplo.com/imagem.jpg" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="descricaoProduto">Descrição do Produto:</label>
+                <textarea id="descricaoProduto" required></textarea>
+            </div>
+
+            <button type="submit" class="btn-cadastrar">Cadastrar Produto</button>
+        </form>
+
+        <div class="produtos-cadastrados">
+            <h3>Produtos Cadastrados Recentemente</h3>
+            <div id="listaProdutosCadastrados">
+                <!-- Lista de produtos cadastrados será exibida aqui -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Cultivar + - Área Administrativa</p>
+    </footer>
+
+    <script>
+        // Função para gerar ID único
+function gerarId() {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+}
+
+// Carregar produtos existentes
+function carregarProdutos() {
+    const produtos = JSON.parse(localStorage.getItem('produtosCadastrados')) || [];
+    const lista = document.getElementById('listaProdutosCadastrados');
+    
+    lista.innerHTML = '';
+    
+    if (produtos.length === 0) {
+        lista.innerHTML = '<p>Nenhum produto cadastrado ainda.</p>';
+        return;
+    }
+
+    // Mostrar últimos 10 produtos (mais recentes primeiro)
+    const ultimosProdutos = produtos.slice(-10).reverse();
+    
+    ultimosProdutos.forEach((produto, index) => {
+        const div = document.createElement('div');
+        div.className = 'produto-item';
+        div.innerHTML = `
+            <div class="produto-info">
+                <strong>${produto.nome}</strong> - R$ ${produto.preco.toFixed(2).replace('.', ',')}
+                <br><small>Categoria: ${produto.categoria} | Descrição: ${produto.descricao.substring(0, 50)}...</small>
+            </div>
+            <button class="btn-remover" data-id="${produto.id}">Remover</button>
+        `;
+        lista.appendChild(div);
+    });
+
+    // Adicionar eventos aos botões de remover
+    document.querySelectorAll('.btn-remover').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const produtoId = this.getAttribute('data-id');
+            removerProduto(produtoId);
+        });
+    });
+}
+
+// Cadastrar novo produto
+document.getElementById('formProduto').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const novoProduto = {
+        id: gerarId(),
+        nome: document.getElementById('nomeProduto').value,
+        categoria: document.getElementById('categoriaProduto').value,
+        preco: parseFloat(document.getElementById('precoProduto').value),
+        imagem: document.getElementById('imagemProduto').value,
+        descricao: document.getElementById('descricaoProduto').value, // Descrição curta (será gerada)
+        descricaoCompleta: document.getElementById('descricaoProduto').value, // Descrição COMPLETA
+        dataCadastro: new Date().toISOString()
+    };
+
+    // Carregar produtos existentes
+    let produtos = JSON.parse(localStorage.getItem('produtosCadastrados')) || [];
+    
+    // Adicionar novo produto
+    produtos.push(novoProduto);
+    
+    // Salvar no localStorage
+    localStorage.setItem('produtosCadastrados', JSON.stringify(produtos));
+    
+    // Mostrar mensagem de sucesso
+    const mensagem = document.getElementById('mensagemSucesso');
+    mensagem.textContent = 'Produto cadastrado com sucesso!';
+    mensagem.style.display = 'block';
+    
+    // Limpar formulário
+    document.getElementById('formProduto').reset();
+    
+    // Atualizar lista
+    carregarProdutos();
+    
+    // Esconder mensagem após 3 segundos
+    setTimeout(() => {
+        mensagem.style.display = 'none';
+    }, 3000);
+});
+
+// Remover produto
+function removerProduto(produtoId) {
+    if (!confirm('Tem certeza que deseja remover este produto?')) {
+        return;
+    }
+
+    let produtos = JSON.parse(localStorage.getItem('produtosCadastrados')) || [];
+    
+    // Filtrar o produto a ser removido
+    const produtosAtualizados = produtos.filter(produto => produto.id !== produtoId);
+    
+    // Salvar lista atualizada
+    localStorage.setItem('produtosCadastrados', JSON.stringify(produtosAtualizados));
+    
+    // Mostrar mensagem de sucesso
+    const mensagem = document.getElementById('mensagemSucesso');
+    mensagem.textContent = 'Produto removido com sucesso!';
+    mensagem.style.display = 'block';
+    
+    // Atualizar lista
+    carregarProdutos();
+    
+    // Esconder mensagem após 3 segundos
+    setTimeout(() => {
+        mensagem.style.display = 'none';
+    }, 3000);
+}
+
+// Carregar produtos ao iniciar a página
+document.addEventListener('DOMContentLoaded', carregarProdutos);
+    </script>
+</body>
+
+</html>
