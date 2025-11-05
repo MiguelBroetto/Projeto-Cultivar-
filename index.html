@@ -26,6 +26,9 @@
               alt="contato"></a></li>
         <li><a href="perfil.html" class="perfil-link"><img id="img_perfil" src="./imagens/perfil (1).png"
               alt="perfil"></a></li>
+        <li><a href="hitrorico.html" class="perfil-link"><img id="img_perfil" src="./imagens/historia.png"
+              alt="perfil"></a></li>
+        <img id="img_perfil" src="./imagens/configuracao.png" alt="perfil"></a></li>
       </ul>
     </nav>
   </header>
@@ -118,7 +121,7 @@
 
         <div class="produto" data-categoria="fertilizante" data-preco=" 159.99">
           <img src="./imagens/adubos3em1.webp" alt="Kit de Adubação">
-          <h2>Kit de Adubação</h2>  <br>
+          <h2>Kit de Adubação</h2> <br>
           <p class="descricao">Alta performance para solo fértil.</p>
           <p class="preco">R$ 159,99</p>
           <button class="btn6-descricao">Descrição</button>
@@ -129,7 +132,7 @@
           <img src="./imagens/cafe.webp" alt="Muda de Café Arábica">
           <h2>Muda de Café Arábica</h2>
           <p class="descricao">Alta performance para solo fértil.</p> <br>
-          <p class="preco">R$ 2,00 por muda</p> 
+          <p class="preco">R$ 2,00 por muda</p>
           <button class="btn7-descricao">Descrição</button>
           <button class="btn-comprar">Adicionar ao Carrinho</button>
         </div>
@@ -261,47 +264,47 @@
 
   <script>
     // === FILTROS ===
-   function filtrarProdutos() {
-  const categoria = document.getElementById("categoriaFiltro").value;
-  const preco = document.getElementById("precoFiltro").value;
-  const produtos = document.querySelectorAll(".produto");
-  const mensagem = document.getElementById("mensagemVazia");
-  let produtosVisiveis = 0;
+    function filtrarProdutos() {
+      const categoria = document.getElementById("categoriaFiltro").value;
+      const preco = document.getElementById("precoFiltro").value;
+      const produtos = document.querySelectorAll(".produto");
+      const mensagem = document.getElementById("mensagemVazia");
+      let produtosVisiveis = 0;
 
-  produtos.forEach(produto => {
-    const catProduto = produto.dataset.categoria;
-    const precoProduto = Number(produto.dataset.preco); // valor numérico
-    let exibir = true;
+      produtos.forEach(produto => {
+        const catProduto = produto.dataset.categoria;
+        const precoProduto = Number(produto.dataset.preco); // valor numérico
+        let exibir = true;
 
-    // Categoria
-    if (categoria && catProduto !== categoria) exibir = false;
+        // Categoria
+        if (categoria && catProduto !== categoria) exibir = false;
 
-    // Faixa de preço
-    if (preco) {
-      switch(preco) {
-        case "1": if (!(precoProduto >= 2 && precoProduto <= 100)) exibir = false; break;
-        case "2": if (!(precoProduto > 100 && precoProduto <= 500)) exibir = false; break;
-        case "3": if (!(precoProduto > 500 && precoProduto <= 1000)) exibir = false; break;
-        case "4": if (!(precoProduto > 1000 && precoProduto <= 10000)) exibir = false; break;
-        case "5": if (!(precoProduto > 10000 && precoProduto <= 100000)) exibir = false; break;
-        case "6": if (!(precoProduto > 100000 && precoProduto <= 500000)) exibir = false; break;
-        case "7": if (!(precoProduto > 500000 && precoProduto <= 1000000)) exibir = false; break;
-        case "8": if (!(precoProduto > 1000000 && precoProduto <= 5000000)) exibir = false; break;
-        case "9": if (!(precoProduto > 5000000)) exibir = false; break;
+        // Faixa de preço
+        if (preco) {
+          switch (preco) {
+            case "1": if (!(precoProduto >= 2 && precoProduto <= 100)) exibir = false; break;
+            case "2": if (!(precoProduto > 100 && precoProduto <= 500)) exibir = false; break;
+            case "3": if (!(precoProduto > 500 && precoProduto <= 1000)) exibir = false; break;
+            case "4": if (!(precoProduto > 1000 && precoProduto <= 10000)) exibir = false; break;
+            case "5": if (!(precoProduto > 10000 && precoProduto <= 100000)) exibir = false; break;
+            case "6": if (!(precoProduto > 100000 && precoProduto <= 500000)) exibir = false; break;
+            case "7": if (!(precoProduto > 500000 && precoProduto <= 1000000)) exibir = false; break;
+            case "8": if (!(precoProduto > 1000000 && precoProduto <= 5000000)) exibir = false; break;
+            case "9": if (!(precoProduto > 5000000)) exibir = false; break;
+          }
+        }
+
+        produto.style.display = exibir ? "block" : "none";
+        if (exibir) produtosVisiveis++;
+      });
+
+      if (produtosVisiveis === 0) {
+        mensagem.textContent = "Nenhum produto cadastrado com essas condições.";
+        mensagem.style.display = "block";
+      } else {
+        mensagem.style.display = "none";
       }
     }
-
-    produto.style.display = exibir ? "block" : "none";
-    if (exibir) produtosVisiveis++;
-  });
-
-  if (produtosVisiveis === 0) {
-    mensagem.textContent = "Nenhum produto cadastrado com essas condições.";
-    mensagem.style.display = "block";
-  } else {
-    mensagem.style.display = "none";
-  }
-}
 
     // Limpar filtros
     function limparFiltros() {

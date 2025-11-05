@@ -13,6 +13,8 @@ body {
     flex-direction: column;
 }
 
+
+
 /* Estrutura do cabeçalho */
 header {
     display: flex;
