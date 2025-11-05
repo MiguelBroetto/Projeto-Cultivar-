@@ -511,3 +511,42 @@ html, body {
     height: 180px;
   }
 }
+
+/* ================================
+   ÍCONE DO ADMIN
+   ================================ */
+.admin-link img {
+    height: 50px;
+    width: auto;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.admin-link img:hover {
+    transform: scale(1.1);
+}
+
+/* Ajuste para responsividade */
+@media (max-width: 1024px) {
+    .admin-link img {
+        height: 45px;
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-link img {
+        height: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-link img {
+        height: 35px;
+    }
+}
+
+@media (max-width: 320px) {
+    .admin-link img {
+        height: 30px;
+    }
+}
