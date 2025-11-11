@@ -10,28 +10,42 @@
 </head>
 
 <body>
-  <header>
+  <header class="header">
     <div class="logo">
       <img src="./imagens/logo cultivar +(sem fundo).png" alt="Logo do Site">
     </div>
-    <nav>
-       <ul>
-        <li><a href="index.html" class="inicio-link"><img id="img_home" src="./imagens/home.png" alt="inicio"></a></li>
-        <li><a href="sobre.html" class="sobre-link"><img id="img_sobre" src="./imagens/Sobre (1).png" alt="sobre"></a>
-        </li>
-        <li><a href="carrinho.html" class="carrinho-link" id="linkCarrinho"><img id="img_carrinho"
-              src="./imagens/carrinho.png" alt="Carrinho"></a></li>
-        <li><a href="contato.html" class="contato-link"><img id="img_contato" src="./imagens/contato (1).png"
-              alt="contato"></a></li>
-        <li><a href="perfil.html" class="perfil-link"><img id="img_perfil" src="./imagens/perfil (1).png"
-              alt="perfil"></a></li>
-        <li><a href="hitrorico.html" class="perfil-link"><img id="img_perfil" src="./imagens/historia.png"
-              alt="perfil"></a></li>
-        <img id="img_perfil" src="./imagens/configuracao.png" alt="perfil"></a></li>
-        <li><a href="admin.html" class="admin-link"><img id="img_admin" src="/imagens/homem-de-terno-e-gravata.png"
-              alt="Administração"></a></li>
-        </ul>
+    <nav class="nav-links">
+      <a href="index.html"><img src="./imagens/home.png" alt="Início"></a>
+      <a href="sobre.html"><img src="./imagens/Sobre (1).png" alt="Sobre"></a>
+      <a href="carrinho.html"><img src="./imagens/carrinho.png" alt="Carrinho"></a>
     </nav>
+
+
+    <div class="actions">
+      <button class="settings" id="settingsBtn">
+        <img src="./imagens/configuracao.png" alt="Configurações">
+      </button>
+    </div>
+
+
+    <div class="dropdown" id="dropdownMenu">
+      <a href="perfil.html" class="item">
+        <img src="./imagens/perfil (1).png" alt="Perfil">
+        <span>Perfil</span>
+      </a>
+      <a href="historico.html" class="item">
+        <img src="./imagens/historia.png" alt="Histórico">
+        <span>Histórico</span>
+      </a>
+      <a href="admin.html" class="item">
+        <img src="./imagens/homem-de-terno-e-gravata.png" alt="Admin">
+        <span>Admin</span>
+      </a>
+      <a href="contato.html" class="item">
+        <img src="./imagens/contato (1).png" alt="contato">
+        <span>Contato</span>
+      </a>
+    </div>
   </header>
 
   <main>
@@ -41,6 +55,7 @@
     <div class="resumo">
       <h3>Total: R$ 0,00</h3>
       <button class="finalizar" id="finalizarCompra">Finalizar Compra</button>
+
     </div>
   </main>
 
@@ -49,20 +64,20 @@
   </footer>
 
   <!-- SCRIPT CORRIGIDO PARA O CARRINHO -->
- <script>
-  const carrinhoContainer = document.getElementById("carrinho");
-  const finalizarBtn = document.getElementById("finalizarCompra");
+  <script>
+    const carrinhoContainer = document.getElementById("carrinho");
+    const finalizarBtn = document.getElementById("finalizarCompra");
 
-  let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+    let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
 
-  function renderCarrinho() {
-    carrinhoContainer.innerHTML = "";
-    let total = 0;
+    function renderCarrinho() {
+      carrinhoContainer.innerHTML = "";
+      let total = 0;
 
-    carrinho.forEach((item, index) => {
-      const div = document.createElement("div");
-      div.classList.add("item");
-      div.innerHTML = `
+      carrinho.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.classList.add("item");
+        div.innerHTML = `
         <img src="${item.imagem}" alt="${item.nome}">
         <div class="detalhes">
           <h2>${item.nome}</h2>
@@ -71,49 +86,86 @@
         <span class="preco">${item.preco}</span>
         <button class="remover" data-index="${index}">Remover</button>
       `;
-      carrinhoContainer.appendChild(div);
+        carrinhoContainer.appendChild(div);
 
-      let precoNumero = parseFloat(
-        item.preco.replace("R$", "").replace(".", "").replace(",", ".")
-      );
-      total += isNaN(precoNumero) ? 0 : precoNumero;
-    });
-
-    document.querySelector(".resumo h3").innerText = `Total: R$ ${total.toFixed(2).replace(".", ",")}`;
-
-    document.querySelectorAll(".remover").forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        const i = e.target.getAttribute("data-index");
-        carrinho.splice(i, 1);
-        localStorage.setItem("carrinho", JSON.stringify(carrinho));
-        renderCarrinho();
+        let precoNumero = parseFloat(
+          item.preco.replace("R$", "").replace(".", "").replace(",", ".")
+        );
+        total += isNaN(precoNumero) ? 0 : precoNumero;
       });
-    });
-  }
 
-  renderCarrinho();
+      document.querySelector(".resumo h3").innerText = `Total: R$ ${total.toFixed(2).replace(".", ",")}`;
 
-  finalizarBtn.addEventListener("click", () => {
-    if (carrinho.length === 0) {
-      alert("Seu carrinho está vazio. Adicione produtos antes de finalizar a compra.");
-      return;
+      document.querySelectorAll(".remover").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          const i = e.target.getAttribute("data-index");
+          carrinho.splice(i, 1);
+          localStorage.setItem("carrinho", JSON.stringify(carrinho));
+          renderCarrinho();
+        });
+      });
     }
 
-    const pagamento = localStorage.getItem("formaPagamento");
-    if (!pagamento) {
-      alert("Nenhuma forma de pagamento cadastrada. Vá até o perfil e cadastre uma forma de pagamento.");
-      return;
-    }
-
-    alert(`Compra finalizada com sucesso!\nTotal: ${document.querySelector(".resumo h3").innerText}\nForma de pagamento: ${pagamento}`);
-
-    // Limpa carrinho após finalizar
-    localStorage.removeItem("carrinho");
-    carrinho = [];
     renderCarrinho();
-  });
-</script>
 
+    finalizarBtn.addEventListener("click", () => {
+      if (carrinho.length === 0) {
+        alert("Seu carrinho está vazio. Adicione produtos antes de finalizar a compra.");
+        return;
+      }
+
+      const pagamento = localStorage.getItem("formaPagamento");
+      if (!pagamento) {
+        alert("Nenhuma forma de pagamento cadastrada. Vá até o perfil e cadastre uma forma de pagamento.");
+        return;
+      }
+
+      alert(`Compra finalizada com sucesso!\nTotal: ${document.querySelector(".resumo h3").innerText}\nForma de pagamento: ${pagamento}`);
+
+      // Limpa carrinho após finalizar
+      localStorage.removeItem("carrinho");
+      carrinho = [];
+      renderCarrinho();
+    });
+
+    // icone de configuração 
+
+    const settingsBtn = document.getElementById('settingsBtn');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+
+    settingsBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      dropdownMenu.classList.toggle('active');
+    });
+
+
+    document.addEventListener('click', (e) => {
+      if (!dropdownMenu.contains(e.target) && e.target !== settingsBtn) {
+        dropdownMenu.classList.remove('active');
+      }
+    });
+
+    document.getElementById("finalizarCompra").addEventListener("click", finalizarCompra);
+
+    document.getElementById("finalizarCompra").addEventListener("click", () => {
+    
+    let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+    if (carrinho.length === 0) return;
+
+    let historico = JSON.parse(localStorage.getItem("historicoCompras")) || [];
+
+    carrinho.forEach(item => {
+        historico.push(item);
+    });
+
+    localStorage.setItem("historicoCompras", JSON.stringify(historico));
+
+    localStorage.removeItem("carrinho");
+
+    alert("Compra concluída!");
+});
+  </script>
 
 </body>
 

@@ -26,7 +26,7 @@ input, select, button {
 }
 
 button {
-    background: #2c3e50;
+    background: #ffffff;
     color: #fff;
     cursor: pointer;
     border: none;
@@ -34,7 +34,7 @@ button {
 }
 
 button:hover {
-    background: #1a252f;
+    background: #ffffff;
 }
 
 .logout {
@@ -72,4 +72,65 @@ button:hover {
     padding: 10px;
     margin-top: 10px;
     border-radius: 5px;
+}
+
+.header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 12px 24px;
+background: linear-gradient(90deg, #9db98c, #9db98c);
+box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+position: relative;
+}
+.nav-links a img {
+height: 40px;
+transition: transform 0.2s ease;
+}
+.nav-links a img:hover {
+transform: scale(1.1);
+}
+.nav-links {
+display: flex;
+gap: 100px;
+justify-content: center;
+flex: 1;
+}
+.actions img {
+  height: 22px;   /* tamanho menor */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.actions img:hover {
+transform: rotate(90deg);
+}
+.dropdown {
+position: absolute;
+top: 80px;
+right: 24px;
+background: #ffffff;
+border-radius: 10px;
+box-shadow: 0 4px 12px rgb(255, 255, 255);
+overflow: hidden;
+padding: 10px 0;
+display: none;
+}
+.dropdown.active {
+display: block;
+}
+.dropdown .item {
+display: flex;
+align-items: center;
+gap: 10px;
+padding: 12px 20px;
+text-decoration: none;
+color: #333;
+transition: background 0.2s ease;
+}
+.dropdown .item:hover {
+background: #d9e7cf;
+}
+.dropdown img {
+height: 40px;
+width: auto;
 }

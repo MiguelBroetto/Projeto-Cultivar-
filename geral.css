@@ -127,7 +127,7 @@ button {
     padding: 12px 28px;
     cursor: pointer;
     transition: all 0.25s ease;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
     box-sizing: border-box;
 }
 
@@ -138,6 +138,7 @@ button.botao-filtrar {
     background: linear-gradient(135deg, #1976D2, #42A5F5);
     color: #fff;
 }
+
 button.botao-filtrar:hover {
     background: linear-gradient(135deg, #2196F3, #64B5F6);
     transform: translateY(-2px);
@@ -150,6 +151,7 @@ button.botao-limpar {
     background: #e92020;
     color: #fff;
 }
+
 button.botao-limpar:hover {
     background: #d22424;
     transform: translateY(-2px);
@@ -162,6 +164,7 @@ button[class*="-descricao"] {
     background: #FFB300;
     color: #fff;
 }
+
 button[class*="-descricao"]:hover {
     background: #ea3838;
     transform: translateY(-2px);
@@ -174,6 +177,7 @@ button.btn-comprar {
     background: linear-gradient(135deg, #388E3C, #66BB6A);
     color: #fff;
 }
+
 button.btn-comprar:hover {
     background: linear-gradient(135deg, #43A047, #81C784);
     transform: translateY(-2px);
@@ -186,6 +190,7 @@ button.finalizar {
     background: linear-gradient(135deg, #D32F2F, #E53935);
     color: #fff;
 }
+
 button.finalizar:hover {
     background: linear-gradient(135deg, #F44336, #EF5350);
     transform: translateY(-2px);
@@ -195,11 +200,12 @@ button.finalizar:hover {
    BOTÕES DE FORMULÁRIO (Enviar, Criar, Salvar)
    ================================ */
 button[type="submit"] {
-    background: linear-gradient(135deg,#1976D2, #42A5F5);
+    background: linear-gradient(135deg, #1976D2, #42A5F5);
     color: #fff;
 }
+
 button[type="submit"]:hover {
-    background: linear-gradient(135deg,#1976D2, #42A5F5);
+    background: linear-gradient(135deg, #1976D2, #42A5F5);
     transform: translateY(-2px);
 }
 
@@ -208,7 +214,7 @@ button[type="submit"]:hover {
    ================================ */
 button:active {
     transform: scale(0.97);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* ==============================
@@ -220,10 +226,12 @@ button:active {
     box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     width: 100%;
     max-width: 100%;
-    overflow-x: hidden; /* evita a barra lateral direita */
+    overflow-x: hidden;
+    /* evita a barra lateral direita */
 }
 
 /* ==============================
@@ -443,31 +451,32 @@ html, body {
         justify-content: space-between;
         gap: 0;
     }
-    
+
     .logo {
         position: static;
     }
-    
+
     .logo img {
         height: 40px;
     }
-    
+
     .header-icons {
         position: static;
     }
-    
+
     .carrinho-link img,
     .perfil-link img,
     .inicio-link img,
     .sobre-link img,
-    .contato-link img {
+    .contato-link img,
+    .configuracao-link img {
         height: 30px;
     }
-    
+
     nav {
         display: none;
     }
-    
+
     main {
         margin: 8px auto;
     }
@@ -475,41 +484,46 @@ html, body {
 
 /* Todas as imagens dentro dos produtos terão o mesmo tamanho */
 .produto-detalhe img {
-  width: 300px;          /* mesmo tamanho do produto 1 */
-  height: 300px;         /* altura fixa para uniformidade */
-  object-fit: contain;   /* mantém a proporção sem cortar */
-  border-radius: 12px;   /* bordas arredondadas (opcional) */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* leve sombra */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 300px;
+    /* mesmo tamanho do produto 1 */
+    height: 300px;
+    /* altura fixa para uniformidade */
+    object-fit: contain;
+    /* mantém a proporção sem cortar */
+    border-radius: 12px;
+    /* bordas arredondadas (opcional) */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    /* leve sombra */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Pequena animação ao passar o mouse */
 .produto-detalhe img:hover {
-  transform: scale(1.03);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    transform: scale(1.03);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
 }
 
 /* Centraliza as imagens de cada produto */
 .produto-detalhe center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
 }
 
 /* Responsividade: ajusta o tamanho das imagens em telas menores */
 @media (max-width: 768px) {
-  .produto-detalhe img {
-    width: 220px;
-    height: 220px;
-  }
+    .produto-detalhe img {
+        width: 220px;
+        height: 220px;
+    }
 }
 
 @media (max-width: 480px) {
-  .produto-detalhe img {
-    width: 180px;
-    height: 180px;
-  }
+    .produto-detalhe img {
+        width: 180px;
+        height: 180px;
+    }
 }
 
 /* ================================
@@ -549,4 +563,65 @@ html, body {
     .admin-link img {
         height: 30px;
     }
+}
+
+.header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 12px 24px;
+background: linear-gradient(90deg, #9db98c, #9db98c);
+box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+position: relative;
+}
+.nav-links a img {
+height: 40px;
+transition: transform 0.2s ease;
+}
+.nav-links a img:hover {
+transform: scale(1.1);
+}
+.nav-links {
+display: flex;
+gap: 100px;
+justify-content: center;
+flex: 1;
+}
+.actions img {
+  height: 22px;   /* tamanho menor */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.actions img:hover {
+transform: rotate(90deg);
+}
+.dropdown {
+position: absolute;
+top: 50px;
+right: 24px;
+background: #ffffff;
+border-radius: 10px;
+box-shadow: 0 4px 12px rgb(255, 255, 255);
+overflow: hidden;
+padding: 10px 0;
+display: none;
+}
+.dropdown.active {
+display: block;
+}
+.dropdown .item {
+display: flex;
+align-items: center;
+gap: 10px;
+padding: 12px 20px;
+text-decoration: none;
+color: #333;
+transition: background 0.2s ease;
+}
+.dropdown .item:hover {
+background: #d9e7cf;
+}
+.dropdown img {
+height: 40px;
+width: auto;
 }

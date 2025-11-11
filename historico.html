@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico de Compras</title>
+    <link rel="stylesheet" href="geral.css">
+    <link rel="stylesheet" href="historico.css">
+</head>
+
+<body>
+    
+    <header class="header">
+        <div class="logo">
+            <img src="./imagens/logo cultivar +(sem fundo).png" alt="Logo do Site">
+        </div>
+        <nav class="nav-links">
+            <a href="index.html"><img src="./imagens/home.png" alt="Início"></a>
+            <a href="sobre.html"><img src="./imagens/Sobre (1).png" alt="Sobre"></a>
+            <a href="carrinho.html"><img src="./imagens/carrinho.png" alt="Carrinho"></a>
+        </nav>
+
+        <div class="actions">
+            <button class="settings" id="settingsBtn">
+                <img src="./imagens/configuracao.png" alt="Configurações">
+            </button>
+        </div>
+
+        <div class="dropdown" id="dropdownMenu">
+            <a href="perfil.html" class="item">
+                <img src="./imagens/perfil (1).png" alt="Perfil">
+                <span>Perfil</span>
+            </a>
+            <a href="historico.html" class="item">
+                <img src="./imagens/historia.png" alt="Histórico">
+                <span>Histórico</span>
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <h1>Histórico de Compras</h1>
+
+        <div id="listaHistorico" class="historico-container">
+            <p id="vazio">Nenhuma compra finalizada ainda.</p>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            let historico = JSON.parse(localStorage.getItem("historicoCompras")) || [];
+
+            const lista = document.getElementById("listaHistorico");
+            const vazio = document.getElementById("vazio");
+
+            if (historico.length === 0) {
+                vazio.style.display = "block";
+                return;
+            }
+
+            vazio.style.display = "none";
+
+            historico.forEach(item => {
+                const card = document.createElement("div");
+                card.classList.add("item");
+
+                card.innerHTML = `
+                    <img src="${item.imagem}" alt="${item.nome}">
+                    <h2>${item.nome}</h2>
+                    <p>${item.preco}</p>
+                `;
+
+                lista.appendChild(card);
+            });
+
+        });
+    </script>
+
+</body>
+</html>

@@ -11,29 +11,43 @@
 
 <body>
 
-    <header>
-    <div class="logo">
-      <img src="./imagens/logo cultivar +(sem fundo).png" alt="Logo do Site">
-    </div>
-    <nav>
-       <ul>
-        <li><a href="index.html" class="inicio-link"><img id="img_home" src="./imagens/home.png" alt="inicio"></a></li>
-        <li><a href="sobre.html" class="sobre-link"><img id="img_sobre" src="./imagens/Sobre (1).png" alt="sobre"></a>
-        </li>
-        <li><a href="carrinho.html" class="carrinho-link" id="linkCarrinho"><img id="img_carrinho"
-              src="./imagens/carrinho.png" alt="Carrinho"></a></li>
-        <li><a href="contato.html" class="contato-link"><img id="img_contato" src="./imagens/contato (1).png"
-              alt="contato"></a></li>
-        <li><a href="perfil.html" class="perfil-link"><img id="img_perfil" src="./imagens/perfil (1).png"
-              alt="perfil"></a></li>
-        <li><a href="hitrorico.html" class="perfil-link"><img id="img_perfil" src="./imagens/historia.png"
-              alt="perfil"></a></li>
-        <img id="img_perfil" src="./imagens/configuracao.png" alt="perfil"></a></li>
-        <li><a href="admin.html" class="admin-link"><img id="img_admin" src="/imagens/homem-de-terno-e-gravata.png"
-              alt="Administração"></a></li>
-        </ul>
-    </nav>
-  </header>
+     <header class="header">
+        <div class="logo">
+            <img src="./imagens/logo cultivar +(sem fundo).png" alt="Logo do Site">
+        </div>
+        <nav class="nav-links">
+            <a href="index.html"><img src="./imagens/home.png" alt="Início"></a>
+            <a href="sobre.html"><img src="./imagens/Sobre (1).png" alt="Sobre"></a>
+            <a href="carrinho.html"><img src="./imagens/carrinho.png" alt="Carrinho"></a>
+        </nav>
+
+
+        <div class="actions">
+            <button class="settings" id="settingsBtn">
+                <img src="./imagens/configuracao.png" alt="Configurações">
+            </button>
+        </div>
+
+
+        <div class="dropdown" id="dropdownMenu">
+            <a href="perfil.html" class="item">
+                <img src="./imagens/perfil (1).png" alt="Perfil">
+                <span>Perfil</span>
+            </a>
+            <a href="historico.html" class="item">
+                <img src="./imagens/historia.png" alt="Histórico">
+                <span>Histórico</span>
+            </a>
+            <a href="admin.html" class="item">
+                <img src="./imagens/homem-de-terno-e-gravata.png" alt="Admin">
+                <span>Admin</span>
+            </a>
+            <a href="contato.html" class="item">
+                <img src="./imagens/contato (1).png" alt="contato">
+                <span>Contato</span>
+            </a>
+        </div>
+    </header>
 
     <main>
         <div class="content-box">
@@ -59,9 +73,28 @@
     </main>
 
     <footer>
-    <p>&copy; 2025 Cultivar +</p>
-  </footer>
+        <p>&copy; 2025 Cultivar +</p>
+    </footer>
+    <script>
+        // icone de configuração 
 
+        const settingsBtn = document.getElementById('settingsBtn');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+
+
+        settingsBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdownMenu.classList.toggle('active');
+        });
+
+
+        document.addEventListener('click', (e) => {
+            if (!dropdownMenu.contains(e.target) && e.target !== settingsBtn) {
+                dropdownMenu.classList.remove('active');
+            }
+        });
+
+    </script>
 </body>
 
 </html>
