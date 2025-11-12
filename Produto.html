@@ -11,43 +11,43 @@
 
 <body>
 
-   <header class="header">
-        <div class="logo">
-            <img src="./imagens/logo cultivar +(sem fundo).png" alt="Logo do Site">
-        </div>
-        <nav class="nav-links">
-            <a href="index.html"><img src="./imagens/home.png" alt="Início"></a>
-            <a href="sobre.html"><img src="./imagens/Sobre (1).png" alt="Sobre"></a>
-            <a href="carrinho.html"><img src="./imagens/carrinho.png" alt="Carrinho"></a>
-        </nav>
+  <header class="header">
+    <div class="logo">
+      <img src="./imagens/logo cultivar +(sem fundo).png" alt="Logo do Site">
+    </div>
+    <nav class="nav-links">
+      <a href="index.html"><img src="./imagens/home.png" alt="Início"></a>
+      <a href="sobre.html"><img src="./imagens/Sobre (1).png" alt="Sobre"></a>
+      <a href="carrinho.html"><img src="./imagens/carrinho.png" alt="Carrinho"></a>
+    </nav>
 
 
-        <div class="actions">
-            <button class="settings" id="settingsBtn">
-                <img src="./imagens/configuracao.png" alt="Configurações">
-            </button>
-        </div>
+    <div class="actions">
+      <button class="settings" id="settingsBtn">
+        <img src="./imagens/configuracao.png" alt="Configurações">
+      </button>
+    </div>
 
 
-        <div class="dropdown" id="dropdownMenu">
-            <a href="perfil.html" class="item">
-                <img src="./imagens/perfil (1).png" alt="Perfil">
-                <span>Perfil</span>
-            </a>
-            <a href="historico.html" class="item">
-                <img src="./imagens/historia.png" alt="Histórico">
-                <span>Histórico</span>
-            </a>
-            <a href="admin.html" class="item">
-                <img src="./imagens/homem-de-terno-e-gravata.png" alt="Admin">
-                <span>Admin</span>
-            </a>
-            <a href="contato.html" class="item">
-                <img src="./imagens/contato (1).png" alt="contato">
-                <span>Contato</span>
-            </a>
-        </div>
-    </header>
+    <div class="dropdown" id="dropdownMenu">
+      <a href="perfil.html" class="item">
+        <img src="./imagens/perfil (1).png" alt="Perfil">
+        <span>Perfil</span>
+      </a>
+      <a href="historico.html" class="item">
+        <img src="./imagens/historia.png" alt="Histórico">
+        <span>Histórico</span>
+      </a>
+      <a href="admin.html" class="item">
+        <img src="./imagens/homem-de-terno-e-gravata.png" alt="Admin">
+        <span>Admin</span>
+      </a>
+      <a href="contato.html" class="item">
+        <img src="./imagens/contato (1).png" alt="contato">
+        <span>Contato</span>
+      </a>
+    </div>
+  </header>
 
   <main>
 
@@ -845,68 +845,68 @@
 
   <script>
     window.addEventListener("DOMContentLoaded", () => {
-    // Lê o produto armazenado no localStorage
-    let raw = localStorage.getItem("produtoSelecionado") || localStorage.getItem("produtoDescricao");
+      // Lê o produto armazenado no localStorage
+      let raw = localStorage.getItem("produtoSelecionado") || localStorage.getItem("produtoDescricao");
 
-    if (!raw) {
+      if (!raw) {
         // Se não há produto selecionado, mostra apenas o primeiro produto
         document.querySelectorAll(".produto-detalhe").forEach((d, index) => {
-            d.style.display = index === 0 ? "block" : "none";
+          d.style.display = index === 0 ? "block" : "none";
         });
         return;
-    }
+      }
 
-    let produto = null;
-    try { 
-        produto = JSON.parse(raw); 
-    } catch (e) { 
+      let produto = null;
+      try {
+        produto = JSON.parse(raw);
+      } catch (e) {
         console.error("Erro ao parsear produto:", e);
-        produto = null; 
-    }
+        produto = null;
+      }
 
-    if (!produto || !produto.id) {
+      if (!produto || !produto.id) {
         // Se não conseguiu parsear ou não tem ID, mostra apenas o primeiro produto
         document.querySelectorAll(".produto-detalhe").forEach((d, index) => {
-            d.style.display = index === 0 ? "block" : "none";
+          d.style.display = index === 0 ? "block" : "none";
         });
         return;
-    }
+      }
 
-    // Verifica se é um produto cadastrado (ID maior ou igual a 1000)
-    if (produto.id >= 1000) {
+      // Verifica se é um produto cadastrado (ID maior ou igual a 1000)
+      if (produto.id >= 1000) {
         // É um produto cadastrado - criar dinamicamente
         criarProdutoCadastrado(produto);
-    } else {
+      } else {
         // É um produto fixo - usar os existentes
         mostrarProdutoFixo(produto);
-    }
+      }
 
-    // Configurar eventos dos botões
-    configurarEventos();
-});
-
-function criarProdutoCadastrado(produto) {
-    console.log("Criando produto cadastrado:", produto);
-    
-    // Esconde todos os produtos fixos
-    document.querySelectorAll(".produto-detalhe").forEach(d => {
-        d.style.display = "none";
+      // Configurar eventos dos botões
+      configurarEventos();
     });
 
-    // Cria um container para o produto cadastrado
-    const container = document.createElement('div');
-    container.className = 'produto-detalhe produto-cadastrado';
-    container.style.display = 'block';
-    
-    // Usa a descrição COMPLETA que foi salva no admin
-    const descricaoCompleta = produto.descricaoCompleta || produto.descricao || 'Descrição não disponível.';
-    
-    // Formata a descrição para manter quebras de linha
-    const descricaoFormatada = descricaoCompleta
+    function criarProdutoCadastrado(produto) {
+      console.log("Criando produto cadastrado:", produto);
+
+      // Esconde todos os produtos fixos
+      document.querySelectorAll(".produto-detalhe").forEach(d => {
+        d.style.display = "none";
+      });
+
+      // Cria um container para o produto cadastrado
+      const container = document.createElement('div');
+      container.className = 'produto-detalhe produto-cadastrado';
+      container.style.display = 'block';
+
+      // Usa a descrição COMPLETA que foi salva no admin
+      const descricaoCompleta = produto.descricaoCompleta || produto.descricao || 'Descrição não disponível.';
+
+      // Formata a descrição para manter quebras de linha
+      const descricaoFormatada = descricaoCompleta
         .replace(/\n/g, '<br>')
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
 
-    container.innerHTML = `
+      container.innerHTML = `
         <center>
             <img src="${produto.imagem}" alt="${produto.nome}" onerror="this.src='./imagens/placeholder.jpg'" style="max-width: 300px; max-height: 300px; object-fit: contain;">
         </center>
@@ -921,116 +921,116 @@ function criarProdutoCadastrado(produto) {
         </div>
     `;
 
-    // Adiciona ao main (no início para aparecer primeiro)
-    const main = document.querySelector('main');
-    main.insertBefore(container, main.firstChild);
-    
-    // Remove o produto salvo do localStorage
-    localStorage.removeItem("produtoDescricao");
-    localStorage.removeItem("produtoSelecionado");
-}
+      // Adiciona ao main (no início para aparecer primeiro)
+      const main = document.querySelector('main');
+      main.insertBefore(container, main.firstChild);
 
-function mostrarProdutoFixo(produto) {
-    console.log("Mostrando produto fixo:", produto);
-    
-    // Esconde todos os produtos
-    document.querySelectorAll(".produto-detalhe").forEach(d => {
+      // Remove o produto salvo do localStorage
+      localStorage.removeItem("produtoDescricao");
+      localStorage.removeItem("produtoSelecionado");
+    }
+
+    function mostrarProdutoFixo(produto) {
+      console.log("Mostrando produto fixo:", produto);
+
+      // Esconde todos os produtos
+      document.querySelectorAll(".produto-detalhe").forEach(d => {
         d.style.display = "none";
-    });
+      });
 
-    // Mostra o produto correto (fixo)
-    const el = document.querySelector(".produto" + produto.id);
-    if (el) {
+      // Mostra o produto correto (fixo)
+      const el = document.querySelector(".produto" + produto.id);
+      if (el) {
         el.style.display = "block";
         console.log("Produto encontrado:", el);
-        
+
         // Atualiza informações se necessário
         const img = el.querySelector("img");
         if (img && produto.imagem) {
-            img.src = produto.imagem;
+          img.src = produto.imagem;
         }
-        
+
         const precoEl = el.querySelector(".preco");
         if (precoEl && produto.preco) {
-            precoEl.innerText = produto.preco;
+          precoEl.innerText = produto.preco;
         }
-    } else {
+      } else {
         console.log("Produto não encontrado, ID:", produto.id);
         // Se não encontrou, mostra o primeiro produto
         document.querySelector(".produto1").style.display = "block";
+      }
+
+      // Remove o produto salvo do localStorage
+      localStorage.removeItem("produtoDescricao");
+      localStorage.removeItem("produtoSelecionado");
     }
-    
-    // Remove o produto salvo do localStorage
-    localStorage.removeItem("produtoDescricao");
-    localStorage.removeItem("produtoSelecionado");
-}
 
-function configurarEventos() {
-    // Voltar para todos os botões de voltar
-    document.querySelectorAll(".btn-voltar, [class*='btn'][class*='descricao']").forEach(btn => {
+    function configurarEventos() {
+      // Voltar para todos os botões de voltar
+      document.querySelectorAll(".btn-voltar, [class*='btn'][class*='descricao']").forEach(btn => {
         btn.addEventListener("click", () => {
-            window.location.href = "index.html";
+          window.location.href = "index.html";
         });
-    });
+      });
 
-    // Adicionar ao carrinho para produtos fixos
-    document.querySelectorAll(".btn-comprar").forEach(btn => {
-        btn.addEventListener("click", function(e) {
-            const card = e.target.closest(".produto-detalhe");
-            let nome, preco, imagem;
+      // Adicionar ao carrinho para produtos fixos
+      document.querySelectorAll(".btn-comprar").forEach(btn => {
+        btn.addEventListener("click", function (e) {
+          const card = e.target.closest(".produto-detalhe");
+          let nome, preco, imagem;
 
-            // Tenta diferentes seletores para pegar as informações
-            if (card.querySelector("h2")) {
-                nome = card.querySelector("h2").innerText;
-            } else if (card.querySelector("strong")) {
-                nome = card.querySelector("strong").innerText;
-            } else {
-                nome = "Produto";
-            }
+          // Tenta diferentes seletores para pegar as informações
+          if (card.querySelector("h2")) {
+            nome = card.querySelector("h2").innerText;
+          } else if (card.querySelector("strong")) {
+            nome = card.querySelector("strong").innerText;
+          } else {
+            nome = "Produto";
+          }
 
-            preco = card.querySelector(".preco")?.innerText || "";
-            imagem = card.querySelector("img")?.src || "";
+          preco = card.querySelector(".preco")?.innerText || "";
+          imagem = card.querySelector("img")?.src || "";
 
-            let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
-            carrinho.push({ 
-                nome: nome.substring(0, 100), // Limita o tamanho
-                preco: preco,
-                imagem: imagem
-            });
-            localStorage.setItem("carrinho", JSON.stringify(carrinho));
+          let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+          carrinho.push({
+            nome: nome.substring(0, 100), // Limita o tamanho
+            preco: preco,
+            imagem: imagem
+          });
+          localStorage.setItem("carrinho", JSON.stringify(carrinho));
 
-            // Feedback visual
-            const botao = e.target;
-            const textoOriginal = botao.innerText;
-            botao.innerText = "Adicionado!";
-            botao.disabled = true;
-            setTimeout(() => {
-                botao.innerText = textoOriginal;
-                botao.disabled = false;
-            }, 1500);
+          // Feedback visual
+          const botao = e.target;
+          const textoOriginal = botao.innerText;
+          botao.innerText = "Adicionado!";
+          botao.disabled = true;
+          setTimeout(() => {
+            botao.innerText = textoOriginal;
+            botao.disabled = false;
+          }, 1500);
         });
-    });
+      });
 
-    // === CARREGAR PRODUTOS CADASTRADOS ===
-function carregarProdutosCadastrados() {
-    const produtosCadastrados = JSON.parse(localStorage.getItem('produtosCadastrados')) || [];
-    const listaProdutos = document.getElementById('listaProdutos');
-    
-    console.log("Produtos cadastrados encontrados:", produtosCadastrados.length);
-    
-    if (produtosCadastrados.length === 0) return;
-    
-    produtosCadastrados.forEach((produto, index) => {
-        // Criar elemento do produto
-        const divProduto = document.createElement('div');
-        divProduto.className = 'produto';
-        divProduto.setAttribute('data-categoria', produto.categoria);
-        divProduto.setAttribute('data-preco', produto.preco);
-        
-        // Offset para não conflitar com os IDs existentes
-        const offsetId = 1000 + index;
-        
-        divProduto.innerHTML = `
+      // === CARREGAR PRODUTOS CADASTRADOS ===
+      function carregarProdutosCadastrados() {
+        const produtosCadastrados = JSON.parse(localStorage.getItem('produtosCadastrados')) || [];
+        const listaProdutos = document.getElementById('listaProdutos');
+
+        console.log("Produtos cadastrados encontrados:", produtosCadastrados.length);
+
+        if (produtosCadastrados.length === 0) return;
+
+        produtosCadastrados.forEach((produto, index) => {
+          // Criar elemento do produto
+          const divProduto = document.createElement('div');
+          divProduto.className = 'produto';
+          divProduto.setAttribute('data-categoria', produto.categoria);
+          divProduto.setAttribute('data-preco', produto.preco);
+
+          // Offset para não conflitar com os IDs existentes
+          const offsetId = 1000 + index;
+
+          divProduto.innerHTML = `
             <img src="${produto.imagem}" alt="${produto.nome}" onerror="this.src='./imagens/placeholder.jpg'">
             <h2>${produto.nome}</h2>
             <p class="descricao">${produto.descricao}</p>
@@ -1038,87 +1038,87 @@ function carregarProdutosCadastrados() {
             <button class="btn${offsetId}-descricao">Descrição</button>
             <button class="btn-comprar">Adicionar ao Carrinho</button>
         `;
-        
-        listaProdutos.appendChild(divProduto);
-        
-        // Adicionar eventos aos botões
-        const btnDescricao = divProduto.querySelector(`.btn${offsetId}-descricao`);
-        const btnCarrinho = divProduto.querySelector('.btn-comprar');
-        
-        if (btnDescricao) {
+
+          listaProdutos.appendChild(divProduto);
+
+          // Adicionar eventos aos botões
+          const btnDescricao = divProduto.querySelector(`.btn${offsetId}-descricao`);
+          const btnCarrinho = divProduto.querySelector('.btn-comprar');
+
+          if (btnDescricao) {
             btnDescricao.addEventListener('click', () => {
-                console.log("Clicou em descrição do produto:", produto.nome);
-                
-                const produtoDescricao = {
-                    id: offsetId, // ID único para o produto
-                    nome: produto.nome,
-                    preco: `R$ ${produto.preco.toFixed(2).replace('.', ',')}`,
-                    descricao: produto.descricaoCompleta || produto.descricao,
-                    imagem: produto.imagem
-                };
-                
-                // Salva para o Produto.html
-                localStorage.setItem("produtoDescricao", JSON.stringify(produtoDescricao));
-                localStorage.setItem("produtoSelecionado", JSON.stringify(produtoDescricao));
-                
-                console.log("Redirecionando para Produto.html");
-                // Redireciona para Produto.html
-                window.location.href = "Produto.html";
+              console.log("Clicou em descrição do produto:", produto.nome);
+
+              const produtoDescricao = {
+                id: offsetId, // ID único para o produto
+                nome: produto.nome,
+                preco: `R$ ${produto.preco.toFixed(2).replace('.', ',')}`,
+                descricao: produto.descricaoCompleta || produto.descricao,
+                imagem: produto.imagem
+              };
+
+              // Salva para o Produto.html
+              localStorage.setItem("produtoDescricao", JSON.stringify(produtoDescricao));
+              localStorage.setItem("produtoSelecionado", JSON.stringify(produtoDescricao));
+
+              console.log("Redirecionando para Produto.html");
+              // Redireciona para Produto.html
+              window.location.href = "Produto.html";
             });
-        }
-        
-        if (btnCarrinho) {
+          }
+
+          if (btnCarrinho) {
             btnCarrinho.addEventListener('click', () => {
-                let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
-                carrinho.push({
-                    nome: produto.nome,
-                    preco: `R$ ${produto.preco.toFixed(2).replace('.', ',')}`,
-                    descricao: produto.descricao,
-                    imagem: produto.imagem
-                });
-                localStorage.setItem("carrinho", JSON.stringify(carrinho));
-                
-                btnCarrinho.innerText = "Adicionado!";
-                btnCarrinho.disabled = true;
-                setTimeout(() => {
-                    btnCarrinho.innerText = "Adicionar ao Carrinho";
-                    btnCarrinho.disabled = false;
-                }, 1500);
+              let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+              carrinho.push({
+                nome: produto.nome,
+                preco: `R$ ${produto.preco.toFixed(2).replace('.', ',')}`,
+                descricao: produto.descricao,
+                imagem: produto.imagem
+              });
+              localStorage.setItem("carrinho", JSON.stringify(carrinho));
+
+              btnCarrinho.innerText = "Adicionado!";
+              btnCarrinho.disabled = true;
+              setTimeout(() => {
+                btnCarrinho.innerText = "Adicionar ao Carrinho";
+                btnCarrinho.disabled = false;
+              }, 1500);
             });
-        }
+          }
+        });
+      }
+
+      // Carregar produtos cadastrados quando a página carregar
+      document.addEventListener('DOMContentLoaded', carregarProdutosCadastrados);
+
+      // Formata a descrição para manter quebras de linha e estilos
+      const descricaoFormatada = descricaoCompleta
+        .replace(/\n/g, '<br>')
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/__(.*?)__/g, '<u>$1</u>')
+        .replace(/•/g, '•');
+    }
+
+
+    // icone de configuração 
+
+    const settingsBtn = document.getElementById('settingsBtn');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+
+    settingsBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      dropdownMenu.classList.toggle('active');
     });
-}
-
-// Carregar produtos cadastrados quando a página carregar
-document.addEventListener('DOMContentLoaded', carregarProdutosCadastrados);
-
-// Formata a descrição para manter quebras de linha e estilos
-const descricaoFormatada = descricaoCompleta
-    .replace(/\n/g, '<br>')
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.*?)\*/g, '<em>$1</em>')
-    .replace(/__(.*?)__/g, '<u>$1</u>')
-    .replace(/•/g, '•');
-}
 
 
-// icone de configuração 
-
-        const settingsBtn = document.getElementById('settingsBtn');
-        const dropdownMenu = document.getElementById('dropdownMenu');
-
-
-        settingsBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            dropdownMenu.classList.toggle('active');
-        });
-
-
-        document.addEventListener('click', (e) => {
-            if (!dropdownMenu.contains(e.target) && e.target !== settingsBtn) {
-                dropdownMenu.classList.remove('active');
-            }
-        });
+    document.addEventListener('click', (e) => {
+      if (!dropdownMenu.contains(e.target) && e.target !== settingsBtn) {
+        dropdownMenu.classList.remove('active');
+      }
+    });
   </script>
 
 </body>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +24,7 @@
             background: white;
             padding: 20px;
             border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
             display: flex;
             gap: 15px;
@@ -81,7 +82,7 @@
             background: white;
             padding: 20px;
             border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
 
@@ -99,7 +100,7 @@
         .lista-pedidos {
             background: white;
             border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
 
@@ -148,11 +149,30 @@
             text-transform: uppercase;
         }
 
-        .status-pendente { background: #FFF3CD; color: #856404; }
-        .status-pago { background: #D1ECF1; color: #0C5460; }
-        .status-enviado { background: #D4EDDA; color: #155724; }
-        .status-entregue { background: #E2E3E5; color: #383D41; }
-        .status-cancelado { background: #F8D7DA; color: #721C24; }
+        .status-pendente {
+            background: #FFF3CD;
+            color: #856404;
+        }
+
+        .status-pago {
+            background: #D1ECF1;
+            color: #0C5460;
+        }
+
+        .status-enviado {
+            background: #D4EDDA;
+            color: #155724;
+        }
+
+        .status-entregue {
+            background: #E2E3E5;
+            color: #383D41;
+        }
+
+        .status-cancelado {
+            background: #F8D7DA;
+            color: #721C24;
+        }
 
         .btn-detalhes {
             background: #FFB300;
@@ -182,7 +202,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             z-index: 1000;
         }
 
@@ -268,23 +288,44 @@
         }
     </style>
 </head>
+
 <body>
-    <header>
+    <header class="header">
         <div class="logo">
             <img src="./imagens/logo cultivar +(sem fundo).png" alt="Logo do Site">
         </div>
-        <nav>
-            <ul>
-                <li><a href="index.html" class="inicio-link"><img id="img_home" src="./imagens/home.png" alt="inicio"></a></li>
-                <li><a href="sobre.html" class="sobre-link"><img id="img_sobre" src="./imagens/Sobre (1).png" alt="sobre"></a></li>
-                <li><a href="carrinho.html" class="carrinho-link" id="linkCarrinho"><img id="img_carrinho" src="./imagens/carrinho.png" alt="Carrinho"></a></li>
-                <li><a href="contato.html" class="contato-link"><img id="img_contato" src="./imagens/contato (1).png" alt="contato"></a></li>
-                <li><a href="historico.html" class="perfil-link"><img id="img_perfil" src="./imagens/historia.png"></a></li>
-                <li><a href="perfil.html" class="perfil-link"><img id="img_perfil" src="./imagens/perfil (1).png" alt="perfil"></a></li>
-                <li><img id="img_perfil" src="./imagens/configuracao.png" alt="perfil"></a></li>
-                <li><a href="admin.html" class="admin-link"><img id="img_admin" src="./imagens/homem-de-terno-e-gravata.png" alt="Administração"></a></li>
-            </ul>
+        <nav class="nav-links">
+            <a href="index.html"><img src="./imagens/home.png" alt="Início"></a>
+            <a href="sobre.html"><img src="./imagens/Sobre (1).png" alt="Sobre"></a>
+            <a href="carrinho.html"><img src="./imagens/carrinho.png" alt="Carrinho"></a>
         </nav>
+
+
+        <div class="actions">
+            <button class="settings" id="settingsBtn">
+                <img src="./imagens/configuracao.png" alt="Configurações">
+            </button>
+        </div>
+
+
+        <div class="dropdown" id="dropdownMenu">
+            <a href="perfil.html" class="item">
+                <img src="./imagens/perfil (1).png" alt="Perfil">
+                <span>Perfil</span>
+            </a>
+            <a href="historico.html" class="item">
+                <img src="./imagens/historia.png" alt="Histórico">
+                <span>Histórico</span>
+            </a>
+            <a href="admin.html" class="item">
+                <img src="./imagens/homem-de-terno-e-gravata.png" alt="Admin">
+                <span>Admin</span>
+            </a>
+            <a href="contato.html" class="item">
+                <img src="./imagens/contato (1).png" alt="contato">
+                <span>Contato</span>
+            </a>
+        </div>
     </header>
 
     <div class="pedidos-container">
@@ -363,7 +404,7 @@
         let pedidos = JSON.parse(localStorage.getItem('pedidos')) || [];
 
         // Carregar pedidos ao iniciar
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             carregarPedidos();
             atualizarResumo();
         });
@@ -371,7 +412,7 @@
         // Carregar lista de pedidos
         function carregarPedidos() {
             const listaPedidos = document.getElementById('listaPedidos');
-            
+
             if (pedidos.length === 0) {
                 listaPedidos.innerHTML = `
                     <div class="sem-pedidos">
@@ -409,7 +450,7 @@
                 const matchStatus = !status || pedido.status === status;
                 const matchData = !data || pedido.data.split('T')[0] === data;
                 const matchCliente = !cliente || pedido.cliente.nome.toLowerCase().includes(cliente);
-                
+
                 return matchStatus && matchData && matchCliente;
             });
 
@@ -492,7 +533,7 @@
                 pedidos[pedidoIndex].status = novoStatus;
                 localStorage.setItem('pedidos', JSON.stringify(pedidos));
                 carregarPedidos();
-                
+
                 // Feedback visual
                 alert(`Status do pedido #${pedidoId} alterado para ${novoStatus}`);
             }
@@ -504,49 +545,49 @@
         }
 
         // Atualizar resumo de vendas - VERSÃO CORRIGIDA
-function atualizarResumo() {
-    console.log("=== ATUALIZANDO RESUMO ===");
-    console.log("Pedidos para calcular:", pedidos);
-    
-    const hoje = new Date().toISOString().split('T')[0];
-    const mesAtual = new Date().getMonth();
-    const anoAtual = new Date().getFullYear();
+        function atualizarResumo() {
+            console.log("=== ATUALIZANDO RESUMO ===");
+            console.log("Pedidos para calcular:", pedidos);
 
-    const pedidosHoje = pedidos.filter(p => {
-        const dataPedido = p.data.split('T')[0];
-        console.log("Data pedido:", dataPedido, "Hoje:", hoje);
-        return dataPedido === hoje;
-    });
-    
-    const pedidosMes = pedidos.filter(p => {
-        const dataPedido = new Date(p.data);
-        const mesmoMes = dataPedido.getMonth() === mesAtual;
-        const mesmoAno = dataPedido.getFullYear() === anoAtual;
-        console.log("Pedido mês:", p.id, mesmoMes, mesmoAno);
-        return mesmoMes && mesmoAno;
-    });
+            const hoje = new Date().toISOString().split('T')[0];
+            const mesAtual = new Date().getMonth();
+            const anoAtual = new Date().getFullYear();
 
-    const totalVendas = pedidos.reduce((sum, p) => {
-        console.log("Somando pedido:", p.id, "valor:", p.total);
-        return sum + (p.total || 0);
-    }, 0);
-    
-    const ticketMedio = pedidos.length > 0 ? totalVendas / pedidos.length : 0;
+            const pedidosHoje = pedidos.filter(p => {
+                const dataPedido = p.data.split('T')[0];
+                console.log("Data pedido:", dataPedido, "Hoje:", hoje);
+                return dataPedido === hoje;
+            });
 
-    console.log("Resultados:");
-    console.log("Total vendas:", totalVendas);
-    console.log("Pedidos hoje:", pedidosHoje.length);
-    console.log("Pedidos mês:", pedidosMes.length);
-    console.log("Ticket médio:", ticketMedio);
+            const pedidosMes = pedidos.filter(p => {
+                const dataPedido = new Date(p.data);
+                const mesmoMes = dataPedido.getMonth() === mesAtual;
+                const mesmoAno = dataPedido.getFullYear() === anoAtual;
+                console.log("Pedido mês:", p.id, mesmoMes, mesmoAno);
+                return mesmoMes && mesmoAno;
+            });
 
-    // Atualizar a interface
-    document.getElementById('totalVendas').textContent = `R$ ${totalVendas.toFixed(2).replace('.', ',')}`;
-    document.getElementById('pedidosHoje').textContent = pedidosHoje.length;
-    document.getElementById('pedidosMes').textContent = pedidosMes.length;
-    document.getElementById('ticketMedio').textContent = `R$ ${ticketMedio.toFixed(2).replace('.', ',')}`;
-    
-    console.log("=== FIM ATUALIZAÇÃO RESUMO ===");
-}
+            const totalVendas = pedidos.reduce((sum, p) => {
+                console.log("Somando pedido:", p.id, "valor:", p.total);
+                return sum + (p.total || 0);
+            }, 0);
+
+            const ticketMedio = pedidos.length > 0 ? totalVendas / pedidos.length : 0;
+
+            console.log("Resultados:");
+            console.log("Total vendas:", totalVendas);
+            console.log("Pedidos hoje:", pedidosHoje.length);
+            console.log("Pedidos mês:", pedidosMes.length);
+            console.log("Ticket médio:", ticketMedio);
+
+            // Atualizar a interface
+            document.getElementById('totalVendas').textContent = `R$ ${totalVendas.toFixed(2).replace('.', ',')}`;
+            document.getElementById('pedidosHoje').textContent = pedidosHoje.length;
+            document.getElementById('pedidosMes').textContent = pedidosMes.length;
+            document.getElementById('ticketMedio').textContent = `R$ ${ticketMedio.toFixed(2).replace('.', ',')}`;
+
+            console.log("=== FIM ATUALIZAÇÃO RESUMO ===");
+        }
 
         // Formatar data
         function formatarData(dataString) {
@@ -555,7 +596,7 @@ function atualizarResumo() {
         }
 
         // Fechar modal clicando fora
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             const modal = document.getElementById('modalDetalhes');
             if (event.target === modal) {
                 fecharModal();
@@ -563,36 +604,55 @@ function atualizarResumo() {
         }
 
         // === DEBUG - VERIFICAR PEDIDOS ===
-function debugPedidos() {
-    console.log("=== DEBUG PEDIDOS ===");
-    const pedidosStorage = JSON.parse(localStorage.getItem('pedidos')) || [];
-    console.log("Pedidos no localStorage:", pedidosStorage);
-    console.log("Número de pedidos:", pedidosStorage.length);
-    
-    if (pedidosStorage.length > 0) {
-        pedidosStorage.forEach((pedido, index) => {
-            console.log(`Pedido ${index + 1}:`, {
-                id: pedido.id,
-                total: pedido.total,
-                status: pedido.status,
-                cliente: pedido.cliente.nome
-            });
-        });
-        
-        const totalCalculado = pedidosStorage.reduce((sum, p) => sum + (p.total || 0), 0);
-        console.log("Total calculado:", totalCalculado);
-    } else {
-        console.log("Nenhum pedido encontrado no localStorage");
-    }
-    console.log("=====================");
-}
+        function debugPedidos() {
+            console.log("=== DEBUG PEDIDOS ===");
+            const pedidosStorage = JSON.parse(localStorage.getItem('pedidos')) || [];
+            console.log("Pedidos no localStorage:", pedidosStorage);
+            console.log("Número de pedidos:", pedidosStorage.length);
 
-// Chama o debug quando a página carregar
-document.addEventListener('DOMContentLoaded', function() {
-    debugPedidos(); // Adiciona esta linha
-    carregarPedidos();
-    atualizarResumo();
-});
+            if (pedidosStorage.length > 0) {
+                pedidosStorage.forEach((pedido, index) => {
+                    console.log(`Pedido ${index + 1}:`, {
+                        id: pedido.id,
+                        total: pedido.total,
+                        status: pedido.status,
+                        cliente: pedido.cliente.nome
+                    });
+                });
+
+                const totalCalculado = pedidosStorage.reduce((sum, p) => sum + (p.total || 0), 0);
+                console.log("Total calculado:", totalCalculado);
+            } else {
+                console.log("Nenhum pedido encontrado no localStorage");
+            }
+            console.log("=====================");
+        }
+
+        // Chama o debug quando a página carregar
+        document.addEventListener('DOMContentLoaded', function () {
+            debugPedidos(); // Adiciona esta linha
+            carregarPedidos();
+            atualizarResumo();
+        });
+
+         // icone de configuração 
+
+        const settingsBtn = document.getElementById('settingsBtn');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+
+
+        settingsBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdownMenu.classList.toggle('active');
+        });
+
+
+        document.addEventListener('click', (e) => {
+            if (!dropdownMenu.contains(e.target) && e.target !== settingsBtn) {
+                dropdownMenu.classList.remove('active');
+            }
+        });
     </script>
 </body>
+
 </html>
