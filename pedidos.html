@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos - Cultivar +</title>
+    <link rel="stylesheet" href="geral.css">
+    <style>
+        .pedidos-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .pedidos-title {
+            text-align: center;
+            color: #2f4f2f;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+
+        .filtros-pedidos {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: end;
+        }
+
+        .filtro-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filtro-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #2f4f2f;
+        }
+
+        .filtro-group select,
+        .filtro-group input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .btn-filtrar {
+            background: linear-gradient(135deg, #1976D2, #42A5F5);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .btn-limpar {
+            background: #e92020;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .resumo-vendas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card-resumo {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .card-resumo h3 {
+            color: #2f4f2f;
+            margin-bottom: 10px;
+        }
+
+        .card-resumo .valor {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #388E3C;
+        }
+
+        .lista-pedidos {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .pedido-item {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: grid;
+            grid-template-columns: 100px 1fr auto auto;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .pedido-item:last-child {
+            border-bottom: none;
+        }
+
+        .pedido-item:hover {
+            background: #f9f9f9;
+        }
+
+        .pedido-id {
+            font-weight: bold;
+            color: #1976D2;
+        }
+
+        .pedido-cliente {
+            font-weight: bold;
+        }
+
+        .pedido-data {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .pedido-valor {
+            font-weight: bold;
+            color: #388E3C;
+            font-size: 1.1rem;
+        }
+
+        .pedido-status {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-pendente { background: #FFF3CD; color: #856404; }
+        .status-pago { background: #D1ECF1; color: #0C5460; }
+        .status-enviado { background: #D4EDDA; color: #155724; }
+        .status-entregue { background: #E2E3E5; color: #383D41; }
+        .status-cancelado { background: #F8D7DA; color: #721C24; }
+
+        .btn-detalhes {
+            background: #FFB300;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .btn-detalhes:hover {
+            background: #F57C00;
+        }
+
+        .sem-pedidos {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        /* Modal de detalhes */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .modal-title {
+            color: #2f4f2f;
+            margin: 0;
+        }
+
+        .btn-fechar {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .produto-pedido {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .produto-pedido:last-child {
+            border-bottom: none;
+        }
+
+        .produto-pedido img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-right: 15px;
+        }
+
+        .info-produto {
+            flex: 1;
+        }
+
+        .total-pedido {
+            text-align: right;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2f4f2f;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px solid #eee;
+        }
+
+        @media (max-width: 768px) {
+            .pedido-item {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .filtros-pedidos {
+                flex-direction: column;
+            }
+
+            .filtro-group {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="./imagens/logo cultivar +(sem fundo).png" alt="Logo do Site">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="inicio-link"><img id="img_home" src="./imagens/home.png" alt="inicio"></a></li>
+                <li><a href="sobre.html" class="sobre-link"><img id="img_sobre" src="./imagens/Sobre (1).png" alt="sobre"></a></li>
+                <li><a href="carrinho.html" class="carrinho-link" id="linkCarrinho"><img id="img_carrinho" src="./imagens/carrinho.png" alt="Carrinho"></a></li>
+                <li><a href="contato.html" class="contato-link"><img id="img_contato" src="./imagens/contato (1).png" alt="contato"></a></li>
+                <li><a href="historico.html" class="perfil-link"><img id="img_perfil" src="./imagens/historia.png"></a></li>
+                <li><a href="perfil.html" class="perfil-link"><img id="img_perfil" src="./imagens/perfil (1).png" alt="perfil"></a></li>
+                <li><img id="img_perfil" src="./imagens/configuracao.png" alt="perfil"></a></li>
+                <li><a href="admin.html" class="admin-link"><img id="img_admin" src="./imagens/homem-de-terno-e-gravata.png" alt="Administração"></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="pedidos-container">
+        <h1 class="pedidos-title">Painel de Pedidos</h1>
+
+        <!-- Resumo de Vendas -->
+        <div class="resumo-vendas">
+            <div class="card-resumo">
+                <h3>Total de Vendas</h3>
+                <div class="valor" id="totalVendas">R$ 0,00</div>
+            </div>
+            <div class="card-resumo">
+                <h3>Pedidos Hoje</h3>
+                <div class="valor" id="pedidosHoje">0</div>
+            </div>
+            <div class="card-resumo">
+                <h3>Pedidos do Mês</h3>
+                <div class="valor" id="pedidosMes">0</div>
+            </div>
+            <div class="card-resumo">
+                <h3>Ticket Médio</h3>
+                <div class="valor" id="ticketMedio">R$ 0,00</div>
+            </div>
+        </div>
+
+        <!-- Filtros -->
+        <div class="filtros-pedidos">
+            <div class="filtro-group">
+                <label for="filtroStatus">Status:</label>
+                <select id="filtroStatus">
+                    <option value="">Todos os Status</option>
+                    <option value="pendente">Pendente</option>
+                    <option value="pago">Pago</option>
+                    <option value="enviado">Enviado</option>
+                    <option value="entregue">Entregue</option>
+                    <option value="cancelado">Cancelado</option>
+                </select>
+            </div>
+            <div class="filtro-group">
+                <label for="filtroData">Data:</label>
+                <input type="date" id="filtroData">
+            </div>
+            <div class="filtro-group">
+                <label for="filtroCliente">Cliente:</label>
+                <input type="text" id="filtroCliente" placeholder="Nome do cliente">
+            </div>
+            <button class="btn-filtrar" onclick="filtrarPedidos()">Filtrar</button>
+            <button class="btn-limpar" onclick="limparFiltros()">Limpar</button>
+        </div>
+
+        <!-- Lista de Pedidos -->
+        <div class="lista-pedidos" id="listaPedidos">
+            <!-- Os pedidos serão carregados aqui -->
+        </div>
+    </div>
+
+    <!-- Modal de Detalhes do Pedido -->
+    <div id="modalDetalhes" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Detalhes do Pedido</h2>
+                <button class="btn-fechar" onclick="fecharModal()">&times;</button>
+            </div>
+            <div id="detalhesPedido">
+                <!-- Conteúdo do modal será preenchido aqui -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Cultivar + - Painel Administrativo</p>
+    </footer>
+
+    <script>
+        // Estrutura de dados para pedidos
+        let pedidos = JSON.parse(localStorage.getItem('pedidos')) || [];
+
+        // Carregar pedidos ao iniciar
+        document.addEventListener('DOMContentLoaded', function() {
+            carregarPedidos();
+            atualizarResumo();
+        });
+
+        // Carregar lista de pedidos
+        function carregarPedidos() {
+            const listaPedidos = document.getElementById('listaPedidos');
+            
+            if (pedidos.length === 0) {
+                listaPedidos.innerHTML = `
+                    <div class="sem-pedidos">
+                        <h3>Nenhum pedido encontrado</h3>
+                        <p>Ainda não há pedidos realizados na loja.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Ordenar por data (mais recente primeiro)
+            pedidos.sort((a, b) => new Date(b.data) - new Date(a.data));
+
+            listaPedidos.innerHTML = pedidos.map(pedido => `
+                <div class="pedido-item" data-id="${pedido.id}">
+                    <div class="pedido-id">#${pedido.id}</div>
+                    <div>
+                        <div class="pedido-cliente">${pedido.cliente.nome}</div>
+                        <div class="pedido-data">${formatarData(pedido.data)}</div>
+                    </div>
+                    <div class="pedido-valor">R$ ${pedido.total.toFixed(2).replace('.', ',')}</div>
+                    <div class="pedido-status status-${pedido.status}">${pedido.status}</div>
+                    <button class="btn-detalhes" onclick="verDetalhes('${pedido.id}')">Ver Detalhes</button>
+                </div>
+            `).join('');
+        }
+
+        // Filtrar pedidos
+        function filtrarPedidos() {
+            const status = document.getElementById('filtroStatus').value;
+            const data = document.getElementById('filtroData').value;
+            const cliente = document.getElementById('filtroCliente').value.toLowerCase();
+
+            const pedidosFiltrados = pedidos.filter(pedido => {
+                const matchStatus = !status || pedido.status === status;
+                const matchData = !data || pedido.data.split('T')[0] === data;
+                const matchCliente = !cliente || pedido.cliente.nome.toLowerCase().includes(cliente);
+                
+                return matchStatus && matchData && matchCliente;
+            });
+
+            // Atualizar lista com filtros
+            const listaPedidos = document.getElementById('listaPedidos');
+            listaPedidos.innerHTML = pedidosFiltrados.map(pedido => `
+                <div class="pedido-item" data-id="${pedido.id}">
+                    <div class="pedido-id">#${pedido.id}</div>
+                    <div>
+                        <div class="pedido-cliente">${pedido.cliente.nome}</div>
+                        <div class="pedido-data">${formatarData(pedido.data)}</div>
+                    </div>
+                    <div class="pedido-valor">R$ ${pedido.total.toFixed(2).replace('.', ',')}</div>
+                    <div class="pedido-status status-${pedido.status}">${pedido.status}</div>
+                    <button class="btn-detalhes" onclick="verDetalhes('${pedido.id}')">Ver Detalhes</button>
+                </div>
+            `).join('');
+        }
+
+        // Limpar filtros
+        function limparFiltros() {
+            document.getElementById('filtroStatus').value = '';
+            document.getElementById('filtroData').value = '';
+            document.getElementById('filtroCliente').value = '';
+            carregarPedidos();
+        }
+
+        // Ver detalhes do pedido
+        function verDetalhes(pedidoId) {
+            const pedido = pedidos.find(p => p.id === pedidoId);
+            if (!pedido) return;
+
+            const modal = document.getElementById('modalDetalhes');
+            const detalhes = document.getElementById('detalhesPedido');
+
+            detalhes.innerHTML = `
+                <div style="margin-bottom: 20px;">
+                    <h3>Informações do Cliente</h3>
+                    <p><strong>Nome:</strong> ${pedido.cliente.nome}</p>
+                    <p><strong>Email:</strong> ${pedido.cliente.email}</p>
+                    <p><strong>Telefone:</strong> ${pedido.cliente.telefone || 'Não informado'}</p>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <h3>Produtos</h3>
+                    ${pedido.produtos.map(produto => `
+                        <div class="produto-pedido">
+                            <img src="${produto.imagem}" alt="${produto.nome}" onerror="this.src='./imagens/placeholder.jpg'">
+                            <div class="info-produto">
+                                <strong>${produto.nome}</strong>
+                                <div>${produto.preco}</div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div class="total-pedido">
+                    Total: R$ ${pedido.total.toFixed(2).replace('.', ',')}
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <h3>Status do Pedido</h3>
+                    <select id="alterarStatus" onchange="alterarStatus('${pedido.id}', this.value)" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+                        <option value="pendente" ${pedido.status === 'pendente' ? 'selected' : ''}>Pendente</option>
+                        <option value="pago" ${pedido.status === 'pago' ? 'selected' : ''}>Pago</option>
+                        <option value="enviado" ${pedido.status === 'enviado' ? 'selected' : ''}>Enviado</option>
+                        <option value="entregue" ${pedido.status === 'entregue' ? 'selected' : ''}>Entregue</option>
+                        <option value="cancelado" ${pedido.status === 'cancelado' ? 'selected' : ''}>Cancelado</option>
+                    </select>
+                </div>
+            `;
+
+            modal.style.display = 'block';
+        }
+
+        // Alterar status do pedido
+        function alterarStatus(pedidoId, novoStatus) {
+            const pedidoIndex = pedidos.findIndex(p => p.id === pedidoId);
+            if (pedidoIndex !== -1) {
+                pedidos[pedidoIndex].status = novoStatus;
+                localStorage.setItem('pedidos', JSON.stringify(pedidos));
+                carregarPedidos();
+                
+                // Feedback visual
+                alert(`Status do pedido #${pedidoId} alterado para ${novoStatus}`);
+            }
+        }
+
+        // Fechar modal
+        function fecharModal() {
+            document.getElementById('modalDetalhes').style.display = 'none';
+        }
+
+        // Atualizar resumo de vendas - VERSÃO CORRIGIDA
+function atualizarResumo() {
+    console.log("=== ATUALIZANDO RESUMO ===");
+    console.log("Pedidos para calcular:", pedidos);
+    
+    const hoje = new Date().toISOString().split('T')[0];
+    const mesAtual = new Date().getMonth();
+    const anoAtual = new Date().getFullYear();
+
+    const pedidosHoje = pedidos.filter(p => {
+        const dataPedido = p.data.split('T')[0];
+        console.log("Data pedido:", dataPedido, "Hoje:", hoje);
+        return dataPedido === hoje;
+    });
+    
+    const pedidosMes = pedidos.filter(p => {
+        const dataPedido = new Date(p.data);
+        const mesmoMes = dataPedido.getMonth() === mesAtual;
+        const mesmoAno = dataPedido.getFullYear() === anoAtual;
+        console.log("Pedido mês:", p.id, mesmoMes, mesmoAno);
+        return mesmoMes && mesmoAno;
+    });
+
+    const totalVendas = pedidos.reduce((sum, p) => {
+        console.log("Somando pedido:", p.id, "valor:", p.total);
+        return sum + (p.total || 0);
+    }, 0);
+    
+    const ticketMedio = pedidos.length > 0 ? totalVendas / pedidos.length : 0;
+
+    console.log("Resultados:");
+    console.log("Total vendas:", totalVendas);
+    console.log("Pedidos hoje:", pedidosHoje.length);
+    console.log("Pedidos mês:", pedidosMes.length);
+    console.log("Ticket médio:", ticketMedio);
+
+    // Atualizar a interface
+    document.getElementById('totalVendas').textContent = `R$ ${totalVendas.toFixed(2).replace('.', ',')}`;
+    document.getElementById('pedidosHoje').textContent = pedidosHoje.length;
+    document.getElementById('pedidosMes').textContent = pedidosMes.length;
+    document.getElementById('ticketMedio').textContent = `R$ ${ticketMedio.toFixed(2).replace('.', ',')}`;
+    
+    console.log("=== FIM ATUALIZAÇÃO RESUMO ===");
+}
+
+        // Formatar data
+        function formatarData(dataString) {
+            const data = new Date(dataString);
+            return data.toLocaleDateString('pt-BR') + ' às ' + data.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        // Fechar modal clicando fora
+        window.onclick = function(event) {
+            const modal = document.getElementById('modalDetalhes');
+            if (event.target === modal) {
+                fecharModal();
+            }
+        }
+
+        // === DEBUG - VERIFICAR PEDIDOS ===
+function debugPedidos() {
+    console.log("=== DEBUG PEDIDOS ===");
+    const pedidosStorage = JSON.parse(localStorage.getItem('pedidos')) || [];
+    console.log("Pedidos no localStorage:", pedidosStorage);
+    console.log("Número de pedidos:", pedidosStorage.length);
+    
+    if (pedidosStorage.length > 0) {
+        pedidosStorage.forEach((pedido, index) => {
+            console.log(`Pedido ${index + 1}:`, {
+                id: pedido.id,
+                total: pedido.total,
+                status: pedido.status,
+                cliente: pedido.cliente.nome
+            });
+        });
+        
+        const totalCalculado = pedidosStorage.reduce((sum, p) => sum + (p.total || 0), 0);
+        console.log("Total calculado:", totalCalculado);
+    } else {
+        console.log("Nenhum pedido encontrado no localStorage");
+    }
+    console.log("=====================");
+}
+
+// Chama o debug quando a página carregar
+document.addEventListener('DOMContentLoaded', function() {
+    debugPedidos(); // Adiciona esta linha
+    carregarPedidos();
+    atualizarResumo();
+});
+    </script>
+</body>
+</html>
