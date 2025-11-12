@@ -90,6 +90,7 @@
 </head>
 
 <body>
+<<<<<<< HEAD
     <header class="header">
         <div class="logo">
             <img src="./imagens/logo cultivar +(sem fundo).png" alt="Logo do Site">
@@ -126,6 +127,32 @@
                 <span>Contato</span>
             </a>
         </div>
+=======
+    <header>
+        <div class="logo">
+            <img src="./imagens/logo cultivar +(sem fundo).png" alt="Logo do Site">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="inicio-link"><img id="img_home" src="./imagens/home.png"
+                            alt="inicio"></a></li>
+                <li><a href="sobre.html" class="sobre-link"><img id="img_sobre" src="./imagens/Sobre (1).png"
+                            alt="sobre"></a>
+                </li>
+                <li><a href="carrinho.html" class="carrinho-link" id="linkCarrinho"><img id="img_carrinho"
+                            src="./imagens/carrinho.png" alt="Carrinho"></a></li>
+                <li><a href="contato.html" class="contato-link"><img id="img_contato" src="./imagens/contato (1).png"
+                            alt="contato"></a></li>
+                <li><a href="perfil.html" class="perfil-link"><img id="img_perfil" src="./imagens/perfil (1).png"
+                            alt="perfil"></a></li>
+                <li><a href="historico.html" class="perfil-link"><img id="img_perfil" src="./imagens/historia.png"
+                            alt="perfil"></a></li>
+                <img id="img_perfil" src="./imagens/configuracao.png" alt="perfil"></a></li>
+                <li><a href="admin.html" class="admin-link"><img id="img_admin"
+                            src="/imagens/homem-de-terno-e-gravata.png" alt="Administração"></a></li>
+            </ul>
+        </nav>
+>>>>>>> origin/iss010
     </header>
     <div class="admin-container">
         <h1 class="admin-title">Cadastro de Produtos</h1>
@@ -173,6 +200,14 @@
 
             <button type="submit" class="btn-cadastrar">Cadastrar Produto</button>
         </form>
+
+         <div style="text-align: center; margin: 20px 0;">
+            <a href="pedidos.html"
+                style="background: #1976D2; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; display: inline-block;">
+                Ver Pedidos da Loja
+            </a>
+        </div>
+
 
         <div class="produtos-cadastrados">
             <h3>Produtos Cadastrados Recentemente</h3>
@@ -321,6 +356,23 @@
             }
         });
 
+
+            // Mostrar mensagem de sucesso
+            const mensagem = document.getElementById('mensagemSucesso');
+            mensagem.textContent = 'Produto removido com sucesso!';
+            mensagem.style.display = 'block';
+
+            // Atualizar lista
+            carregarProdutos();
+
+            // Esconder mensagem após 3 segundos
+            setTimeout(() => {
+                mensagem.style.display = 'none';
+            }, 3000);
+        
+
+        // Carregar produtos ao iniciar a página
+        document.addEventListener('DOMContentLoaded', carregarProdutos);
     </script>
 </body>
 
