@@ -89,7 +89,7 @@
         condições. </p>
 
       <!-- LISTA DE PRODUTOS -->
-      <div class="produtos" id="listaProdutos">
+      <di class="produtos" id="listaProdutos">
         <div class="produto" data-categoria="fertilizante" data-preco="99.90">
           <img src="./imagens/adubo.png" alt="Adubo Orgânico">
           <h2>Komatsu Garden</h2>
@@ -268,9 +268,18 @@
           <p class="preco">R$ 7000.000,00</p>
           <button class="btn20-descricao">Descrição</button>
           <button class="btn-comprar">Adicionar ao Carrinho</button>
+        </div> <!-- Fecha a lista de produtos principal -->
+
+        <!-- CATÁLOGO DE PRODUTOS RELACIONADOS -->
+        <div id="catalogoRelacionado" style="display: none; margin-top: 50px;">
+          <h2 style="text-align: center; color: #2f4f2f; margin-bottom: 30px;">
+            💡 Produtos que podem te interessar
+          </h2>
+          <div class="produtos-relacionados" id="listaProdutosRelacionados">
+            <!-- Produtos relacionados serão carregados aqui -->
+          </div>
         </div>
 
-      </div>
     </main>
   </center>
 
@@ -281,55 +290,66 @@
   <script>
     // === FILTROS ===
     function filtrarProdutos() {
-      const categoria = document.getElementById("categoriaFiltro").value;
-      const preco = document.getElementById("precoFiltro").value;
-      const produtos = document.querySelectorAll(".produto");
-      const mensagem = document.getElementById("mensagemVazia");
-      let produtosVisiveis = 0;
+  const categoria = document.getElementById("categoriaFiltro").value;
+  const preco = document.getElementById("precoFiltro").value;
+  const produtos = document.querySelectorAll(".produto");
+  const mensagem = document.getElementById("mensagemVazia");
+  let produtosVisiveis = 0;
 
-      produtos.forEach(produto => {
-        const catProduto = produto.dataset.categoria;
-        const precoProduto = Number(produto.dataset.preco); // valor numérico
-        let exibir = true;
+  produtos.forEach(produto => {
+    const catProduto = produto.dataset.categoria;
+    const precoProduto = Number(produto.dataset.preco);
+    let exibir = true;
 
-        // Categoria
-        if (categoria && catProduto !== categoria) exibir = false;
+    // Categoria
+    if (categoria && catProduto !== categoria) exibir = false;
 
-        // Faixa de preço
-        if (preco) {
-          switch (preco) {
-            case "1": if (!(precoProduto >= 2 && precoProduto <= 100)) exibir = false; break;
-            case "2": if (!(precoProduto > 100 && precoProduto <= 500)) exibir = false; break;
-            case "3": if (!(precoProduto > 500 && precoProduto <= 1000)) exibir = false; break;
-            case "4": if (!(precoProduto > 1000 && precoProduto <= 10000)) exibir = false; break;
-            case "5": if (!(precoProduto > 10000 && precoProduto <= 100000)) exibir = false; break;
-            case "6": if (!(precoProduto > 100000 && precoProduto <= 500000)) exibir = false; break;
-            case "7": if (!(precoProduto > 500000 && precoProduto <= 1000000)) exibir = false; break;
-            case "8": if (!(precoProduto > 1000000 && precoProduto <= 5000000)) exibir = false; break;
-            case "9": if (!(precoProduto > 5000000)) exibir = false; break;
-          }
-        }
-
-        produto.style.display = exibir ? "block" : "none";
-        if (exibir) produtosVisiveis++;
-      });
-
-      if (produtosVisiveis === 0) {
-        mensagem.textContent = "Nenhum produto cadastrado com essas condições.";
-        mensagem.style.display = "block";
-      } else {
-        mensagem.style.display = "none";
+    // Faixa de preço
+    if (preco) {
+      switch(preco) {
+        case "1": if (!(precoProduto >= 2 && precoProduto <= 100)) exibir = false; break;
+        case "2": if (!(precoProduto > 100 && precoProduto <= 500)) exibir = false; break;
+        case "3": if (!(precoProduto > 500 && precoProduto <= 1000)) exibir = false; break;
+        case "4": if (!(precoProduto > 1000 && precoProduto <= 10000)) exibir = false; break;
+        case "5": if (!(precoProduto > 10000 && precoProduto <= 100000)) exibir = false; break;
+        case "6": if (!(precoProduto > 100000 && precoProduto <= 500000)) exibir = false; break;
+        case "7": if (!(precoProduto > 500000 && precoProduto <= 1000000)) exibir = false; break;
+        case "8": if (!(precoProduto > 1000000 && precoProduto <= 5000000)) exibir = false; break;
+        case "9": if (!(precoProduto > 5000000)) exibir = false; break;
       }
     }
 
+    produto.style.display = exibir ? "block" : "none";
+    if (exibir) produtosVisiveis++;
+  });
+
+  // Mostra/oculta mensagem de produtos não encontrados
+  if (produtosVisiveis === 0) {
+    mensagem.textContent = "Nenhum produto cadastrado com essas condições.";
+    mensagem.style.display = "block";
+    document.getElementById("catalogoRelacionado").style.display = "none";
+  } else {
+    mensagem.style.display = "none";
+    
+    // MOSTRA PRODUTOS RELACIONADOS se filtrou por categoria
+    if (categoria) {
+      mostrarProdutosRelacionados(categoria);
+    } else {
+      document.getElementById("catalogoRelacionado").style.display = "none";
+    }
+  }
+}
     // Limpar filtros
     function limparFiltros() {
-      document.getElementById("categoriaFiltro").value = "";
-      document.getElementById("precoFiltro").value = "";
-      const produtos = document.querySelectorAll(".produto");
-      produtos.forEach(produto => produto.style.display = "block");
-      document.getElementById("mensagemVazia").style.display = "none";
-    }
+  document.getElementById("categoriaFiltro").value = "";
+  document.getElementById("precoFiltro").value = "";
+  const produtos = document.querySelectorAll(".produto");
+  produtos.forEach(produto => produto.style.display = "block");
+  document.getElementById("mensagemVazia").style.display = "none";
+  
+  // ESCONDE produtos relacionados quando limpa filtros
+  document.getElementById("catalogoRelacionado").style.display = "none";
+}
 
     // Limpar filtros
     function limparFiltros() {
@@ -393,7 +413,6 @@
   </script>
 
   <script>
-    // === CARREGAR PRODUTOS CADASTRADOS ===
     // === CARREGAR PRODUTOS CADASTRADOS ===
     function carregarProdutosCadastrados() {
       const produtosCadastrados = JSON.parse(localStorage.getItem('produtosCadastrados')) || [];
@@ -527,7 +546,6 @@
       }
     });
   </script>
-
+  <script src="prodRelacionados.js"></script>
 </body>
-
 </html>
