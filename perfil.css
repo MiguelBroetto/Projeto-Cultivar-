@@ -1,4 +1,5 @@
-h1, h2 {
+h1,
+h2 {
     text-align: center;
     color: #2c3e50;
 }
@@ -16,13 +17,25 @@ form {
 
 label {
     font-weight: bold;
+    color: #2d5016;
+    margin-bottom: 5px;
 }
 
-input, select, button {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+input,
+select,
+button {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
     font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+input:focus,
+select:focus {
+    border-color: #4a90e2;
+    outline: none;
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
 }
 
 button {
@@ -30,19 +43,79 @@ button {
     color: #fff;
     cursor: pointer;
     border: none;
-    transition: background 0.3s;
+    font-weight: 600;
+    transition: all 0.3s ease;
 }
 
 button:hover {
     background: #ffffff;
+    transform: translateY(-2px);
 }
 
 .logout {
-    background: #c0392b;
+    background: #e74c3c;
 }
 
 .logout:hover {
-    background: #a93226;
+    background: #c0392b;
+}
+
+.reset-password-btn {
+    background-color: #f39c12;
+    margin-top: 15px;
+}
+
+.reset-password-btn:hover {
+    background-color: #e67e22;
+}
+
+/* ==============================
+   BOTÕES DE LOGIN E TROCAR CONTA
+   ============================== */
+#loginBtn, #trocarContaBtn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: white;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+#loginBtn:hover, #trocarContaBtn:hover {
+    transform: translateY(-2px);
+}
+
+#loginBtn {
+    background-color: #27ae60;
+}
+
+#loginBtn:hover {
+    background-color: #219a52;
+}
+
+#trocarContaBtn {
+    background-color: #95a5a6;
+    margin-left: 10px;
+}
+
+#trocarContaBtn:hover {
+    background-color: #7f8c8d;
+}
+
+/* Container para os botões de ação do perfil */
+.perfil-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.perfil-actions button {
+    flex: 1;
+    min-width: 120px;
 }
 
 /* ==============================
@@ -51,11 +124,19 @@ button:hover {
 .perfil-info {
     text-align: left;
     margin: 20px;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .perfil-info p {
     font-size: 18px;
-    margin: 8px 0;
+    margin: 12px 0;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #4a90e2;
 }
 
 /* ==============================
@@ -63,74 +144,361 @@ button:hover {
    ============================== */
 .pagamentos {
     margin-top: 30px;
-    padding: 15px;
-    border-top: 2px solid #ccc;
+    padding: 20px;
+    border-top: 2px solid #e9ecef;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+.pagamentos h2 {
+    color: #2d5016;
+    margin-bottom: 20px;
+    font-size: 1.5em;
 }
 
 .pagamento-item {
-    background: #ecf0f1;
-    padding: 10px;
+    background: #ffffff;
+    padding: 15px;
     margin-top: 10px;
-    border-radius: 5px;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
+/* ==============================
+   CONTAINERS PRINCIPAIS
+   ============================== */
+#form-container,
+#perfil-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    border: 1px solid #e9ecef;
+}
+
+/* ==============================
+   SISTEMA DE REDEFINIÇÃO DE SENHA
+   ============================== */
+.reset-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+
+.reset-container {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 450px;
+    padding: 30px;
+    position: relative;
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.reset-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #6c757d;
+    transition: color 0.3s;
+}
+
+.reset-close:hover {
+    color: #495057;
+}
+
+.reset-step {
+    display: none;
+}
+
+.reset-step.active {
+    display: block;
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.reset-step h2 {
+    color: #2d5016;
+    margin-bottom: 15px;
+}
+
+.reset-step p {
+    color: #6c757d;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.reset-message {
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+    display: none;
+    font-weight: 500;
+}
+
+.reset-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.reset-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.reset-back {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.reset-back a {
+    color: #4a90e2;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.reset-back a:hover {
+    color: #3a7bc8;
+    text-decoration: underline;
+}
+
+/* ==============================
+   BOTÃO DE CRIAR CONTA NO FORMULÁRIO
+   ============================== */
+#cadastroForm button[type="submit"] {
+    background: #27ae60;
+}
+
+#cadastroForm button[type="submit"]:hover {
+    background: #219a52;
+}
+
+/* ==============================
+   RESPONSIVIDADE
+   ============================== */
+@media (max-width: 768px) {
+    main {
+        padding: 0 15px;
+        margin: 20px auto;
+    }
+    
+    #form-container,
+    #perfil-container {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .perfil-info {
+        margin: 10px;
+        padding: 20px;
+    }
+    
+    .reset-container {
+        padding: 20px;
+        margin: 20px;
+    }
+    
+    form {
+        max-width: 100%;
+    }
+    
+    .perfil-actions {
+        flex-direction: column;
+    }
+    
+    .perfil-actions button {
+        width: 100%;
+        margin-left: 0;
+    }
+    
+    #trocarContaBtn {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .perfil-info p {
+        font-size: 16px;
+        padding: 12px;
+    }
+    
+    .pagamentos {
+        padding: 15px;
+    }
+    
+    #form-container,
+    #perfil-container {
+        padding: 15px;
+    }
+}
+
+/* ==============================
+   ANIMAÇÕES E ESTADOS
+   ============================== */
+input:invalid {
+    border-color: #e74c3c;
+}
+
+input:valid {
+    border-color: #27ae60;
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* Estilo para o formulário de redefinição dentro do modal */
+#resetRequestForm,
+#verifyCodeForm,
+#newPasswordForm {
+    margin: 0;
+    gap: 15px;
+}
+
+#resetRequestForm div,
+#verifyCodeForm div,
+#newPasswordForm div {
+    margin-bottom: 0;
+}
+
+/* Melhorias visuais para os botões do sistema de redefinição */
+.reset-container button[type="submit"] {
+    margin-top: 10px;
+    width: 100%;
+}
+
+/* Destaque visual para a senha atual */
+#senha {
+    background-color: #f8f9fa;
+}
+
+/* Indicador de força da senha (opcional) */
+.password-strength {
+    height: 5px;
+    border-radius: 5px;
+    margin-top: 5px;
+    background: #e9ecef;
+    overflow: hidden;
+}
+
+.password-strength::after {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 0%;
+    background: #27ae60;
+    transition: width 0.3s;
+}
+
+/* ==============================
+   ESTILOS PARA O HEADER (mantidos do original)
+   ============================== */
 .header {
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 12px 24px;
-background: linear-gradient(90deg, #9db98c, #9db98c);
-box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 24px;
+    background: linear-gradient(90deg, #9db98c, #9db98c);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    position: relative;
 }
+
 .nav-links a img {
-height: 40px;
-transition: transform 0.2s ease;
+    height: 40px;
+    transition: transform 0.2s ease;
 }
+
 .nav-links a img:hover {
-transform: scale(1.1);
+    transform: scale(1.1);
 }
+
 .nav-links {
-display: flex;
-gap: 100px;
-justify-content: center;
-flex: 1;
+    display: flex;
+    gap: 100px;
+    justify-content: center;
+    flex: 1;
 }
+
 .actions img {
-  height: 22px;   /* tamanho menor */
-  cursor: pointer;
-  transition: transform 0.2s ease;
+    height: 22px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
 }
+
 .actions img:hover {
-transform: rotate(90deg);
+    transform: rotate(90deg);
 }
+
 .dropdown {
-position: absolute;
-top: 80px;
-right: 24px;
-background: #ffffff;
-border-radius: 10px;
-box-shadow: 0 4px 12px rgb(255, 255, 255);
-overflow: hidden;
-padding: 10px 0;
-display: none;
+    position: absolute;
+    top: 80px;
+    right: 24px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgb(255, 255, 255);
+    overflow: hidden;
+    padding: 10px 0;
+    display: none;
 }
+
 .dropdown.active {
-display: block;
+    display: block;
 }
+
 .dropdown .item {
-display: flex;
-align-items: center;
-gap: 10px;
-padding: 12px 20px;
-text-decoration: none;
-color: #333;
-transition: background 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: #333;
+    transition: background 0.2s ease;
 }
+
 .dropdown .item:hover {
-background: #d9e7cf;
+    background: #d9e7cf;
 }
+
 .dropdown img {
-height: 40px;
-width: auto;
+    height: 40px;
+    width: auto;
 }
