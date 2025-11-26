@@ -625,3 +625,116 @@ background: #d9e7cf;
 height: 40px;
 width: auto;
 }
+
+/* ==============================
+   ESTILOS GERAIS COMPARTILHADOS
+   ============================== */
+
+/* Tipografia */
+h1,
+h2 {
+    text-align: center;
+    color: #2c3e50;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 24px;
+    background: linear-gradient(90deg, #9db98c, #9db98c);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.nav-links a img {
+    height: 40px;
+    transition: transform 0.2s ease;
+}
+
+.nav-links a img:hover {
+    transform: scale(1.1);
+}
+
+.nav-links {
+    display: flex;
+    gap: 100px;
+    justify-content: center;
+    flex: 1;
+}
+
+.actions img {
+    height: 22px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.actions img:hover {
+    transform: rotate(90deg);
+}
+
+.dropdown {
+    position: absolute;
+    top: 80px;
+    right: 24px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    padding: 10px 0;
+    display: none;
+}
+
+.dropdown.active {
+    display: block;
+}
+
+.dropdown .item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: #333;
+    transition: background 0.2s ease;
+}
+
+.dropdown .item:hover {
+    background: #d9e7cf;
+}
+
+.dropdown img {
+    height: 40px;
+    width: auto;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #889975;
+    color: white;
+    margin-top: 50px;
+}
+
+/* Main content */
+main {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+}

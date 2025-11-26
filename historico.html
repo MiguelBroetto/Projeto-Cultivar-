@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
 
 <head>
@@ -20,14 +19,11 @@
             <a href="sobre.html"><img src="./imagens/Sobre (1).png" alt="Sobre"></a>
             <a href="carrinho.html"><img src="./imagens/carrinho.png" alt="Carrinho"></a>
         </nav>
-
-
         <div class="actions">
             <button class="settings" id="settingsBtn">
                 <img src="./imagens/configuracao.png" alt="Configurações">
             </button>
         </div>
-
 
         <div class="dropdown" id="dropdownMenu">
             <a href="perfil.html" class="item">
@@ -48,70 +44,320 @@
             </a>
         </div>
     </header>
-    <main>
-        <h1>Histórico de Compras</h1>
 
-        <div id="listaHistorico" class="historico-container">
-            <p id="vazio">Nenhuma compra finalizada ainda.</p>
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">📋 Meu Histórico de Compras</h1>
+            <p class="page-subtitle">Acompanhe todos os seus pedidos realizados</p>
         </div>
-    </main>
 
+        <div class="main-content">
+            <!-- Avisos -->
+            <div id="usuarioNaoLogado" class="aviso" style="display: none;">
+                <div class="aviso-conteudo">
+                    <h2>🔒 Acesso Restrito</h2>
+                    <p>Você precisa estar logado para ver seu histórico de compras.</p>
+                    <a href="perfil.html" class="btn-login">Fazer Login</a>
+                </div>
+            </div>
+
+            <div id="historicoVazio" class="aviso" style="display: none;">
+                <div class="aviso-conteudo">
+                    <h2>📭 Nenhuma Compra Encontrada</h2>
+                    <p>Você ainda não realizou nenhuma compra.</p>
+                    <a href="index.html" class="btn-comprar">Fazer Minha Primeira Compra</a>
+                </div>
+            </div>
+
+            <!-- Filtros -->
+            <div class="filtros">
+                <div class="filtro-grupo">
+                    <label class="filtro-label" for="filtroStatus">Filtrar por status:</label>
+                    <select class="filtro-select" id="filtroStatus">
+                        <option value="todos">Todos os pedidos</option>
+                        <option value="confirmado">Confirmados</option>
+                        <option value="entregue">Entregues</option>
+                        <option value="cancelado">Cancelados</option>
+                    </select>
+                </div>
+                <div class="filtro-grupo">
+                    <label class="filtro-label" for="filtroData">Ordenar por:</label>
+                    <select class="filtro-select" id="filtroData">
+                        <option value="recentes">Mais recentes</option>
+                        <option value="antigos">Mais antigos</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Lista de Pedidos -->
+            <div id="historicoCompras">
+                <div class="lista-pedidos" id="listaPedidos">
+                    <!-- Os pedidos serão carregados aqui dinamicamente -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Detalhes do Pedido - CENTRALIZADO -->
+    <div id="modalDetalhes" class="modal-pagamento">
+        <div class="modal-conteudo modal-grande">
+            <div class="detalhes-header">
+                <h2>📦 Detalhes do Pedido</h2>
+                <div class="detalhes-info">
+                    <p><strong>Número:</strong> <span id="modalPedidoNumero">CV-2023-0012</span></p>
+                    <p><strong>Data:</strong> <span id="modalPedidoData">15/11/2023</span></p>
+                    <p><strong>Status:</strong> <span class="status entregue" id="modalPedidoStatus">Entregue</span></p>
+                </div>
+            </div>
+            <div id="detalhesPedidoConteudo">
+                <!-- Conteúdo dos detalhes será carregado aqui -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Cultivar +</p>
+    </footer>
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
+        // ===============================
+// ELEMENTOS PRINCIPAIS
+// ===============================
+const usuarioNaoLogado = document.getElementById('usuarioNaoLogado');
+const historicoVazio = document.getElementById('historicoVazio');
+const historicoCompras = document.getElementById('historicoCompras');
+const listaPedidos = document.getElementById('listaPedidos');
+const modalDetalhes = document.getElementById('modalDetalhes');
+const fecharDetalhes = document.getElementById('fecharDetalhes');
+const detalhesPedidoConteudo = document.getElementById('detalhesPedidoConteudo');
+const filtroStatus = document.getElementById('filtroStatus');
+const filtroData = document.getElementById('filtroData');
 
-            let historico = JSON.parse(localStorage.getItem("historicoCompras")) || [];
+// ===============================
+// INÍCIO
+// ===============================
+window.onload = function () {
+    carregarHistorico();
+    configurarEventos();
+};
 
-            const lista = document.getElementById("listaHistorico");
-            const vazio = document.getElementById("vazio");
+// ===============================
+// CARREGAR HISTÓRICO
+// ===============================
+function carregarHistorico() {
+    const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
 
-            if (historico.length === 0) {
-                vazio.style.display = "block";
-                return;
-            }
+    if (!usuarioLogado) {
+        usuarioNaoLogado.style.display = 'block';
+        historicoCompras.style.display = 'none';
+        historicoVazio.style.display = 'none';
+        return;
+    }
 
-            vazio.style.display = "none";
+    let pedidos = [];
 
-            historico.forEach(item => {
-                const card = document.createElement("div");
-                card.classList.add("item");
+    if (usuarioLogado.pedidos) {
+        pedidos = usuarioLogado.pedidos;
+    }
 
-                card.innerHTML = `
-                    <img src="${item.imagem}" alt="${item.nome}">
-                    <h2>${item.nome}</h2>
-                    <p>${item.preco}</p>
-                `;
+    if (pedidos.length === 0) {
+        const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+        const user = usuarios.find(u => u.email === usuarioLogado.email);
+        if (user && user.pedidos) pedidos = user.pedidos;
+    }
 
-                lista.appendChild(card);
-            });
+    if (pedidos.length === 0) {
+        const todosPedidos = JSON.parse(localStorage.getItem('todosPedidos') || '[]');
+        pedidos = todosPedidos.filter(p => p.usuarioEmail === usuarioLogado.email);
+    }
 
-        });
+    if (pedidos.length === 0) {
+        historicoVazio.style.display = 'block';
+        historicoCompras.style.display = 'none';
+        usuarioNaoLogado.style.display = 'none';
+        return;
+    }
 
-        // icone de configuração 
+    usuarioNaoLogado.style.display = 'none';
+    historicoVazio.style.display = 'none';
+    historicoCompras.style.display = 'block';
 
-        const settingsBtn = document.getElementById('settingsBtn');
-        const dropdownMenu = document.getElementById('dropdownMenu');
+    pedidos.sort((a, b) => new Date(b.data) - new Date(a.data));
 
+    exibirPedidos(pedidos);
+}
 
-        settingsBtn.addEventListener('click', (e) => {
+// ===============================
+// EXIBIR PEDIDOS
+// ===============================
+function exibirPedidos(pedidos) {
+    listaPedidos.innerHTML = '';
+
+    pedidos.forEach(pedido => {
+        const pedidoElement = document.createElement('div');
+        pedidoElement.className = `pedido-item status-${(pedido.status || 'Confirmado').toLowerCase()}`;
+
+        const totalFormatado = `R$ ${(pedido.total || 0).toFixed(2).replace('.', ',')}`;
+        const itensQtd = pedido.itens ? pedido.itens.reduce((t, i) => t + (i.quantidade || 1), 0) : 0;
+        const dataFormatada = pedido.dataFormatada || new Date(pedido.data).toLocaleDateString('pt-BR');
+
+        pedidoElement.innerHTML = `
+            <div class="pedido-header">
+                <div class="pedido-info">
+                    <h3>Pedido ${pedido.id}</h3>
+                    <span class="pedido-data">${dataFormatada}</span>
+                </div>
+                <div class="pedido-status ${(pedido.status || 'Confirmado').toLowerCase()}">
+                    ${getIconeStatus(pedido.status)} ${pedido.status}
+                </div>
+            </div>
+
+            <div class="pedido-detalhes">
+                <div class="detalhes-item"><span class="detalhes-label">Itens:</span> ${itensQtd}</div>
+                <div class="detalhes-item"><span class="detalhes-label">Total:</span> ${totalFormatado}</div>
+                <div class="detalhes-item"><span class="detalhes-label">Pagamento:</span> ${getIconePagamento(pedido.metodoPagamento)} ${pedido.metodoPagamento}</div>
+            </div>
+
+            <div class="pedido-acoes">
+                <button onclick="verDetalhesPedido('${pedido.id}')">📋 Ver Detalhes</button>
+            </div>
+        `;
+
+        listaPedidos.appendChild(pedidoElement);
+    });
+}
+
+// ===============================
+// DETALHES DO PEDIDO
+// ===============================
+function verDetalhesPedido(pedidoId) {
+    const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
+    let pedido = null;
+
+    if (usuarioLogado.pedidos)
+        pedido = usuarioLogado.pedidos.find(p => p.id === pedidoId);
+
+    if (!pedido) {
+        const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+        const user = usuarios.find(u => u.email === usuarioLogado.email);
+        if (user && user.pedidos)
+            pedido = user.pedidos.find(p => p.id === pedidoId);
+    }
+
+    if (!pedido) {
+        const todosPedidos = JSON.parse(localStorage.getItem('todosPedidos') || '[]');
+        pedido = todosPedidos.find(p => p.id === pedidoId && p.usuarioEmail === usuarioLogado.email);
+    }
+
+    detalhesPedidoConteudo.innerHTML = montarHTMLDetalhes(pedido);
+    modalDetalhes.style.display = 'flex';
+}
+
+function montarHTMLDetalhes(pedido) {
+    const itensHTML = pedido.itens.map(item => `
+        <div class="item-detalhe">
+            <img src="${item.imagem}" class="item-imagem">
+            <div>
+                <h4>${item.nome}</h4>
+                <p>Qtd: ${item.quantidade}</p>
+                <p>R$ ${parseFloat(item.preco.replace("R$", "")).toFixed(2)}</p>
+            </div>
+        </div>
+    `).join('');
+
+    return `
+        <h2>Pedido ${pedido.id}</h2>
+        <p><strong>Status:</strong> ${getIconeStatus(pedido.status)} ${pedido.status}</p>
+        <p><strong>Data:</strong> ${pedido.dataFormatada}</p>
+        <h3>Itens</h3>
+        ${itensHTML}
+    `;
+}
+
+// ===============================
+// ÍCONES
+// ===============================
+function getIconeStatus(s) {
+    if (s === 'Confirmado') return '✅';
+    if (s === 'Entregue') return '📦';
+    if (s === 'Cancelado') return '❌';
+    return '📋';
+}
+
+function getIconePagamento(m) {
+    if (m === 'Pix') return '🏦';
+    if (m === 'Boleto') return '📄';
+    if (m === 'Cartão de Crédito') return '💳';
+    return '💰';
+}
+
+// ===============================
+// EVENTOS (MODAL + FILTROS + MENU)
+// ===============================
+function configurarEventos() {
+
+    // ---- FECHAR MODAL ----
+    fecharDetalhes?.addEventListener('click', () => {
+        modalDetalhes.style.display = 'none';
+    });
+
+    modalDetalhes?.addEventListener('click', e => {
+        if (e.target === modalDetalhes) modalDetalhes.style.display = 'none';
+    });
+
+    // ---- FILTROS ----
+    filtroStatus?.addEventListener('change', aplicarFiltros);
+    filtroData?.addEventListener('change', aplicarFiltros);
+
+    // ============================
+    // MENU DE CONFIGURAÇÕES — CORRIGIDO ✔
+    // ============================
+    const settingsBtn = document.getElementById('settingsBtn');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+    if (settingsBtn && dropdownMenu) {
+
+        // Abrir / Fechar o menu
+        settingsBtn.addEventListener('click', e => {
             e.stopPropagation();
             dropdownMenu.classList.toggle('active');
         });
 
-
-        document.addEventListener('click', (e) => {
-            if (!dropdownMenu.contains(e.target) && e.target !== settingsBtn) {
+        // Fechar clicando fora
+        document.addEventListener('click', e => {
+            if (!dropdownMenu.contains(e.target) && !settingsBtn.contains(e.target)) {
                 dropdownMenu.classList.remove('active');
             }
         });
+
+        // Fechar com ESC
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') dropdownMenu.classList.remove('active');
+        });
+    }
+}
+
+// ===============================
+// APLICAR FILTROS
+// ===============================
+function aplicarFiltros() {
+    const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
+    let pedidos = usuarioLogado.pedidos || [];
+
+    const statusSelecionado = filtroStatus.value;
+    if (statusSelecionado !== "todos")
+        pedidos = pedidos.filter(p => p.status === statusSelecionado);
+
+    const ordem = filtroData.value;
+    pedidos.sort((a, b) =>
+        ordem === "recentes"
+            ? new Date(b.data) - new Date(a.data)
+            : new Date(a.data) - new Date(b.data)
+    );
+
+    exibirPedidos(pedidos);
+}
     </script>
 
-</body>
-
-</html>
-
-<footer>
-    <p>&copy; 2025 Cultivar +</p>
-</footer>
 </body>
 
 </html>

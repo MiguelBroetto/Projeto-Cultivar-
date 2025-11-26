@@ -1,0 +1,336 @@
+/* ================================================
+   RESET / BASE
+================================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+    background: #e9f5e9;
+    color: #2f4f2f;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ================================================
+   HEADER / MENU SUPERIOR
+================================================ */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 24px;
+    background: linear-gradient(90deg, #9db98c, #9db98c);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 100;
+}
+
+.logo img {
+    height: 155px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-links a img {
+    height: 35px;
+    transition: transform 0.2s ease;
+}
+
+.nav-links a img:hover {
+    transform: scale(1.12);
+}
+
+/* Botão de configurações */
+.actions {
+    display: flex;
+    align-items: center;
+}
+
+.settings {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.settings img {
+    width: 32px;
+    height: 32px;
+    transition: transform 0.2s ease;
+}
+
+.settings img:hover {
+    transform: rotate(90deg);
+}
+
+/* ================================================
+   DROPDOWN DE CONFIGURAÇÕES — CORRIGIDO
+================================================ */
+.dropdown {
+    position: absolute;
+    top: 80px;
+    right: 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    padding: 12px 0;
+    width: 200px;
+
+    display: none;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: .25s ease-in-out;
+    z-index: 9999;
+}
+
+/* Quando abrir */
+.dropdown.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Itens */
+.dropdown .item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    color: #333;
+    text-decoration: none;
+    font-size: 15px;
+    transition: .2s;
+}
+
+.dropdown .item img {
+    width: 22px;
+    height: 22px;
+}
+
+.dropdown .item:hover {
+    background: #f0f0f0;
+}
+
+/* ================================================
+   CONTAINER PRINCIPAL
+================================================ */
+.container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.page-title {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.page-subtitle {
+    font-size: 16px;
+    opacity: 0.8;
+}
+
+/* ================================================
+   AVISOS
+================================================ */
+.aviso {
+    background: #ffffffcc;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.aviso-conteudo h2 {
+    margin-bottom: 10px;
+}
+
+.btn-login,
+.btn-comprar {
+    margin-top: 15px;
+    display: inline-block;
+    padding: 10px 16px;
+    background: #7faa72;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background .2s;
+}
+
+.btn-login:hover,
+.btn-comprar:hover {
+    background: #6d9662;
+}
+
+/* ================================================
+   FILTROS
+================================================ */
+.filtros {
+    display: flex;
+    justify-content: space-between;
+    margin: 25px 0;
+    background: #ffffffb8;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.filtro-grupo {
+    display: flex;
+    flex-direction: column;
+}
+
+.filtro-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.filtro-select {
+    padding: 7px 10px;
+    border-radius: 8px;
+    border: 1px solid #7faa72;
+}
+
+/* ================================================
+   LISTA DE PEDIDOS
+================================================ */
+.lista-pedidos {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.pedido-item {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-left: 6px solid #7faa72;
+}
+
+.pedido-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.pedido-info h3 {
+    font-size: 20px;
+}
+
+.pedido-status {
+    font-weight: bold;
+}
+
+/* Cores */
+.pedido-status.confirmado { color: #2e7d32; }
+.pedido-status.entregue { color: #1e88e5; }
+.pedido-status.cancelado { color: #c62828; }
+
+.pedido-detalhes {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.detalhes-item {
+    font-size: 14px;
+}
+
+.pedido-acoes button {
+    margin-top: 15px;
+    width: 100%;
+    padding: 10px 0;
+    background: #7faa72;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background .2s;
+}
+
+.pedido-acoes button:hover {
+    background: #6c975f;
+}
+
+/* ================================================
+   MODAL DETALHES DO PEDIDO
+================================================ */
+.modal-pagamento {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.6);
+    z-index: 999;
+}
+
+.modal-grande {
+    width: 95%;
+    max-width: 650px;
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+}
+
+.detalhes-header h2 {
+    margin-bottom: 15px;
+}
+
+.item-detalhe {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.item-detalhe img {
+    height: 65px;
+    width: 65px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* ================================================
+   FOOTER
+================================================ */
+footer {
+    margin-top: auto;
+    background: #9db98c;
+    color: white;
+    padding: 12px;
+    text-align: center;
+}
+
+/* ================================================
+   RESPONSIVO
+================================================ */
+@media (max-width: 700px) {
+
+    .filtros {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .pedido-detalhes {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
