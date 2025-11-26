@@ -1,0 +1,220 @@
+/* ============================================
+   ADMIN - CADASTRO DE PRODUTOS
+   ============================================ */
+
+/* Container principal */
+.admin-container {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.admin-title {
+    text-align: center;
+    color: #2f4f2f;
+    margin-bottom: 30px;
+    font-size: 2rem;
+}
+
+/* Formulário */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #2f4f2f;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #388E3C;
+    outline: none;
+}
+
+.form-group textarea {
+    height: 100px;
+    resize: vertical;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.5;
+    background: #fafafa;
+}
+
+.form-group textarea:focus {
+    background: white;
+    box-shadow: 0 0 0 3px rgba(56, 142, 60, 0.1);
+}
+
+.form-group textarea::placeholder {
+    color: #888;
+    font-style: italic;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+/* Botões */
+.btn-cadastrar {
+    background: linear-gradient(135deg, #388E3C, #66BB6A);
+    color: white;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    width: 100%;
+    margin-top: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-cadastrar:hover {
+    background: linear-gradient(135deg, #43A047, #81C784);
+    transform: translateY(-2px);
+}
+
+.link-pedidos {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.btn-pedidos {
+    background: #1976D2;
+    color: white;
+    padding: 12px 24px;
+    text-decoration: none;
+    border-radius: 8px;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.btn-pedidos:hover {
+    background: #1565C0;
+    transform: translateY(-2px);
+}
+
+/* Lista de produtos cadastrados */
+.produtos-cadastrados {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 2px solid #ddd;
+}
+
+.produtos-cadastrados h3 {
+    color: #2f4f2f;
+    margin-bottom: 20px;
+}
+
+.produto-item {
+    background: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border-left: 4px solid #388E3C;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.produto-info {
+    flex: 1;
+}
+
+.produto-info strong {
+    color: #2f4f2f;
+}
+
+.produto-info small {
+    color: #666;
+}
+
+/* Botão remover */
+.btn-remover {
+    background: linear-gradient(135deg, #D32F2F, #E53935);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-left: 10px;
+    transition: all 0.3s ease;
+}
+
+.btn-remover:hover {
+    background: linear-gradient(135deg, #F44336, #EF5350);
+    transform: translateY(-2px);
+}
+
+/* Mensagem de sucesso */
+.mensagem-sucesso {
+    background: #4CAF50;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+    display: none;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .admin-container {
+        margin: 20px;
+        padding: 15px;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .produto-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .btn-remover {
+        margin-left: 0;
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    .admin-title {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-container {
+        margin: 10px;
+        padding: 10px;
+    }
+
+    .btn-cadastrar {
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+}

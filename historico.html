@@ -56,62 +56,12 @@
         </div>
     </main>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-
-            let historico = JSON.parse(localStorage.getItem("historicoCompras")) || [];
-
-            const lista = document.getElementById("listaHistorico");
-            const vazio = document.getElementById("vazio");
-
-            if (historico.length === 0) {
-                vazio.style.display = "block";
-                return;
-            }
-
-            vazio.style.display = "none";
-
-            historico.forEach(item => {
-                const card = document.createElement("div");
-                card.classList.add("item");
-
-                card.innerHTML = `
-                    <img src="${item.imagem}" alt="${item.nome}">
-                    <h2>${item.nome}</h2>
-                    <p>${item.preco}</p>
-                `;
-
-                lista.appendChild(card);
-            });
-
-        });
-
-        // icone de configuração 
-
-        const settingsBtn = document.getElementById('settingsBtn');
-        const dropdownMenu = document.getElementById('dropdownMenu');
+    <script src="historico.js"></script>
 
 
-        settingsBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            dropdownMenu.classList.toggle('active');
-        });
-
-
-        document.addEventListener('click', (e) => {
-            if (!dropdownMenu.contains(e.target) && e.target !== settingsBtn) {
-                dropdownMenu.classList.remove('active');
-            }
-        });
-    </script>
-
-</body>
-
-</html>
-
-<footer>
-    <p>&copy; 2025 Cultivar +</p>
-</footer>
+    <footer>
+        <p>&copy; 2025 Cultivar +</p>
+    </footer>
 </body>
 
 </html>
