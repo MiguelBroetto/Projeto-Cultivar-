@@ -1,378 +1,296 @@
-// ============================================
-// LOGIN - SISTEMA DE AUTENTICAÇÃO
-// ============================================
+  // Elementos principais
+        const loginForm = document.getElementById("loginForm");
+        const errorMessage = document.getElementById("errorMessage");
+        const successMessage = document.getElementById("successMessage");
+        const avisoCarrinho = document.getElementById("avisoCarrinho");
 
-// Elementos do DOM
-const loginForm = document.getElementById("loginForm");
-const errorMessage = document.getElementById("errorMessage");
-const forgotPassword = document.getElementById("forgotPassword");
-const resetOverlay = document.getElementById("resetOverlay");
-const resetClose = document.getElementById("resetClose");
+        // Elementos do sistema de redefinição
+        const resetOverlay = document.getElementById("resetOverlay");
+        const resetClose = document.getElementById("resetClose");
+        const forgotPassword = document.getElementById("forgotPassword");
+        const resetStep1 = document.getElementById("resetStep1");
+        const resetStep2 = document.getElementById("resetStep2");
+        const resetStep3 = document.getElementById("resetStep3");
+        const resetRequestForm = document.getElementById("resetRequestForm");
+        const verifyCodeForm = document.getElementById("verifyCodeForm");
+        const newPasswordForm = document.getElementById("newPasswordForm");
+        const resetMessage1 = document.getElementById("resetMessage1");
+        const resetMessage2 = document.getElementById("resetMessage2");
+        const resetMessage3 = document.getElementById("resetMessage3");
+        const backToResetStep1 = document.getElementById("backToResetStep1");
+        const backToResetStep2 = document.getElementById("backToResetStep2");
 
-// Elementos do sistema de reset
-const resetStep1 = document.getElementById("resetStep1");
-const resetStep2 = document.getElementById("resetStep2");
-const resetStep3 = document.getElementById("resetStep3");
-const resetRequestForm = document.getElementById("resetRequestForm");
-const verifyCodeForm = document.getElementById("verifyCodeForm");
-const newPasswordForm = document.getElementById("newPasswordForm");
+        // Variáveis para armazenar dados entre etapas
+        let resetUserEmail = '';
+        let resetToken = '';
+        let veioDoCarrinho = false;
 
-// Estado do sistema de reset
-let resetData = {
-    email: '',
-    resetCode: '',
-    generatedCode: ''
-};
+        // Verificar se veio do carrinho ao carregar a página
+        window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            veioDoCarrinho = urlParams.get('fromCarrinho') === 'true';
 
-// ============================================
-// SISTEMA DE LOGIN
-// ============================================
+            // Mostrar aviso se veio do carrinho
+            if (veioDoCarrinho) {
+                avisoCarrinho.style.display = 'block';
+            }
 
-/**
- * Processa o formulário de login
- * @param {Event} event - Evento de submit do formulário
- */
-function processarLogin(event) {
-    event.preventDefault();
+            // Verificar se já está logado
+            const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
+            if (usuarioLogado) {
+                // Se já está logado e veio do carrinho, redirecionar para perfil
+                if (veioDoCarrinho) {
+                    window.location.href = 'perfil.html?fromCarrinho=true';
+                } else {
+                    window.location.href = 'perfil.html';
+                }
+            }
 
-    const email = document.getElementById("loginEmail").value;
-    const password = document.getElementById("loginPassword").value;
+            // Sistema do menu de configuração
+            const settingsBtn = document.getElementById('settingsBtn');
+            const dropdownMenu = document.getElementById('dropdownMenu');
 
-    // Validação básica
-    if (!validarEmail(email) || !validarSenha(password)) {
-        mostrarErro("Por favor, preencha todos os campos corretamente.");
-        return;
-    }
+            settingsBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dropdownMenu.classList.toggle('active');
+            });
 
-    // Verificar credenciais
-    const loginValido = verificarCredenciais(email, password);
+            document.addEventListener('click', (e) => {
+                if (!dropdownMenu.contains(e.target) && e.target !== settingsBtn) {
+                    dropdownMenu.classList.remove('active');
+                }
+            });
+        };
 
-    if (loginValido) {
-        redirecionarAposLogin();
-    } else {
-        mostrarErro("E-mail ou senha incorretos!");
-    }
-}
+        // Sistema de Login
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
 
-/**
- * Valida formato de e-mail
- * @param {string} email - E-mail a ser validado
- * @returns {boolean} True se o e-mail é válido
- */
-function validarEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
+            const email = document.getElementById("loginEmail").value;
+            const password = document.getElementById("loginPassword").value;
 
-/**
- * Valida senha (mínimo 6 caracteres)
- * @param {string} senha - Senha a ser validada
- * @returns {boolean} True se a senha é válida
- */
-function validarSenha(senha) {
-    return senha.length >= 6;
-}
+            // Verificar credenciais
+            const usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
+            const usuario = usuarios.find(u => u.email === email && u.senha === password);
 
-/**
- * Verifica as credenciais do usuário
- * @param {string} email - E-mail do usuário
- * @param {string} senha - Senha do usuário
- * @returns {boolean} True se as credenciais são válidas
- */
-function verificarCredenciais(email, senha) {
-    const usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
-    const usuario = usuarios.find(u => u.email === email && u.senha === senha);
+            if (usuario) {
+                // Login bem-sucedido
+                localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
 
-    if (usuario) {
-        // Salvar usuário logado (sem a senha por segurança)
-        const usuarioSeguro = { ...usuario };
-        delete usuarioSeguro.senha;
-        localStorage.setItem("usuarioLogado", JSON.stringify(usuarioSeguro));
-        return true;
-    }
+                // Mostrar mensagem de sucesso
+                successMessage.textContent = "Login realizado com sucesso! Redirecionando...";
+                successMessage.style.display = "block";
+                errorMessage.style.display = "none";
 
-    return false;
-}
+                // Redirecionar após breve delay
+                setTimeout(() => {
+                    if (veioDoCarrinho) {
+                        window.location.href = "perfil.html?fromCarrinho=true";
+                    } else {
+                        window.location.href = "perfil.html";
+                    }
+                }, 1500);
+            } else {
+                // Login falhou
+                errorMessage.textContent = "E-mail ou senha incorretos!";
+                errorMessage.style.display = "block";
+                successMessage.style.display = "none";
 
-/**
- * Redireciona após login bem-sucedido
- */
-function redirecionarAposLogin() {
-    // Feedback visual
-    const botaoLogin = loginForm.querySelector('button[type="submit"]');
-    const textoOriginal = botaoLogin.textContent;
-    botaoLogin.textContent = "Entrando...";
-    botaoLogin.classList.add('btn-loading');
-    botaoLogin.disabled = true;
+                // Esconder mensagem após 5 segundos
+                setTimeout(() => {
+                    errorMessage.style.display = "none";
+                }, 5000);
+            }
+        });
 
-    setTimeout(() => {
-        window.location.href = "perfil.html";
-    }, 1000);
-}
+        // ========== SISTEMA DE REDEFINIÇÃO DE SENHA ==========
 
-/**
- * Exibe mensagem de erro no login
- * @param {string} mensagem - Mensagem de erro
- */
-function mostrarErro(mensagem) {
-    errorMessage.textContent = mensagem;
-    errorMessage.style.display = "block";
+        // Abrir modal de redefinição
+        forgotPassword.addEventListener('click', () => {
+            resetOverlay.style.display = 'flex';
+            resetToStep(1);
+        });
 
-    // Esconder mensagem após 5 segundos
-    setTimeout(() => {
-        errorMessage.style.display = "none";
-    }, 5000);
-}
+        // Fechar modal de redefinição
+        resetClose.addEventListener('click', () => {
+            resetOverlay.style.display = 'none';
+        });
 
-// ============================================
-// SISTEMA DE REDEFINIÇÃO DE SENHA
-// ============================================
+        // Fechar modal ao clicar fora
+        resetOverlay.addEventListener('click', (e) => {
+            if (e.target === resetOverlay) {
+                resetOverlay.style.display = 'none';
+            }
+        });
 
-/**
- * Abre o modal de redefinição de senha
- */
-function abrirRedefinicaoSenha() {
-    resetOverlay.style.display = "flex";
-    resetStep1.classList.add("active");
-    resetStep2.classList.remove("active");
-    resetStep3.classList.remove("active");
+        // Função para mostrar mensagens
+        function showResetMessage(element, message, type) {
+            element.textContent = message;
+            element.className = `reset-message reset-${type}`;
+            element.style.display = 'block';
 
-    // Limpar dados anteriores
-    resetData = { email: '', resetCode: '', generatedCode: '' };
-    limparMensagensReset();
-}
-
-/**
- * Fecha o modal de redefinição de senha
- */
-function fecharRedefinicaoSenha() {
-    resetOverlay.style.display = "none";
-    limparMensagensReset();
-}
-
-/**
- * Limpa todas as mensagens do sistema de reset
- */
-function limparMensagensReset() {
-    const mensagens = document.querySelectorAll('.reset-message');
-    mensagens.forEach(msg => {
-        msg.style.display = 'none';
-        msg.className = 'reset-message';
-    });
-}
-
-/**
- * Processa solicitação de redefinição de senha
- * @param {Event} event - Evento de submit do formulário
- */
-function solicitarRedefinicaoSenha(event) {
-    event.preventDefault();
-
-    const email = document.getElementById("resetEmail").value;
-    const mensagem = document.getElementById("resetMessage1");
-
-    if (!validarEmail(email)) {
-        mostrarMensagemReset(mensagem, "Por favor, insira um e-mail válido.", "error");
-        return;
-    }
-
-    // Verificar se o e-mail existe
-    const usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
-    const usuarioExiste = usuarios.some(u => u.email === email);
-
-    if (!usuarioExiste) {
-        mostrarMensagemReset(mensagem, "E-mail não encontrado em nosso sistema.", "error");
-        return;
-    }
-
-    // Simular envio de código (em sistema real, enviaria por e-mail)
-    resetData.email = email;
-    resetData.generatedCode = gerarCodigoVerificacao();
-
-    console.log(`Código de verificação para ${email}: ${resetData.generatedCode}`); // Para testes
-
-    mostrarMensagemReset(mensagem, `Código enviado para ${email} (verifique o console para testes)`, "info");
-
-    // Avançar para próximo passo após 2 segundos
-    setTimeout(() => {
-        resetStep1.classList.remove("active");
-        resetStep2.classList.add("active");
-    }, 2000);
-}
-
-/**
- * Gera código de verificação aleatório
- * @returns {string} Código de 6 dígitos
- */
-function gerarCodigoVerificacao() {
-    return Math.floor(100000 + Math.random() * 900000).toString();
-}
-
-/**
- * Verifica o código de redefinição
- * @param {Event} event - Evento de submit do formulário
- */
-function verificarCodigoRedefinicao(event) {
-    event.preventDefault();
-
-    const codigo = document.getElementById("resetCode").value;
-    const mensagem = document.getElementById("resetMessage2");
-
-    if (codigo === resetData.generatedCode) {
-        resetData.resetCode = codigo;
-        resetStep2.classList.remove("active");
-        resetStep3.classList.add("active");
-        limparMensagensReset();
-    } else {
-        mostrarMensagemReset(mensagem, "Código inválido. Tente novamente.", "error");
-    }
-}
-
-/**
- * Define nova senha
- * @param {Event} event - Evento de submit do formulário
- */
-function definirNovaSenha(event) {
-    event.preventDefault();
-
-    const novaSenha = document.getElementById("newPassword").value;
-    const confirmarSenha = document.getElementById("confirmPassword").value;
-    const mensagem = document.getElementById("resetMessage3");
-
-    if (novaSenha.length < 6) {
-        mostrarMensagemReset(mensagem, "A senha deve ter pelo menos 6 caracteres.", "error");
-        return;
-    }
-
-    if (novaSenha !== confirmarSenha) {
-        mostrarMensagemReset(mensagem, "As senhas não coincidem.", "error");
-        return;
-    }
-
-    // Atualizar senha no localStorage
-    const usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
-    const usuarioIndex = usuarios.findIndex(u => u.email === resetData.email);
-
-    if (usuarioIndex !== -1) {
-        usuarios[usuarioIndex].senha = novaSenha;
-        localStorage.setItem("usuarios", JSON.stringify(usuarios));
-
-        mostrarMensagemReset(mensagem, "Senha redefinida com sucesso!", "success");
-
-        // Fechar modal após 2 segundos
-        setTimeout(() => {
-            fecharRedefinicaoSenha();
-
-            // Preencher automaticamente o login
-            document.getElementById("loginEmail").value = resetData.email;
-            document.getElementById("loginPassword").value = novaSenha;
-
-            // Mostrar mensagem de sucesso no login
-            const successMessage = document.createElement('div');
-            successMessage.className = 'success-message';
-            successMessage.textContent = 'Senha redefinida com sucesso! Você já pode fazer login.';
-            successMessage.style.display = 'block';
-            loginForm.appendChild(successMessage);
-
-            setTimeout(() => {
-                successMessage.style.display = 'none';
-            }, 5000);
-        }, 2000);
-    } else {
-        mostrarMensagemReset(mensagem, "Erro ao redefinir senha. Tente novamente.", "error");
-    }
-}
-
-/**
- * Exibe mensagem no sistema de reset
- * @param {HTMLElement} elemento - Elemento da mensagem
- * @param {string} texto - Texto da mensagem
- * @param {string} tipo - Tipo da mensagem (success, error, info)
- */
-function mostrarMensagemReset(elemento, texto, tipo) {
-    elemento.textContent = texto;
-    elemento.className = `reset-message reset-${tipo}`;
-    elemento.style.display = "block";
-}
-
-// ============================================
-// NAVEGAÇÃO DO SISTEMA DE RESET
-// ============================================
-
-/**
- * Volta para o passo 1 do reset
- */
-function voltarParaPasso1() {
-    resetStep2.classList.remove("active");
-    resetStep3.classList.remove("active");
-    resetStep1.classList.add("active");
-    limparMensagensReset();
-}
-
-/**
- * Volta para o passo 2 do reset
- */
-function voltarParaPasso2() {
-    resetStep3.classList.remove("active");
-    resetStep2.classList.add("active");
-    limparMensagensReset();
-}
-
-// ============================================
-// CONFIGURAÇÃO DE EVENTOS
-// ============================================
-
-/**
- * Configura todos os eventos da página de login
- */
-function configurarEventosLogin() {
-    // Eventos do formulário de login
-    loginForm.addEventListener('submit', processarLogin);
-
-    // Eventos do sistema de redefinição
-    forgotPassword.addEventListener('click', abrirRedefinicaoSenha);
-    resetClose.addEventListener('click', fecharRedefinicaoSenha);
-    resetRequestForm.addEventListener('submit', solicitarRedefinicaoSenha);
-    verifyCodeForm.addEventListener('submit', verificarCodigoRedefinicao);
-    newPasswordForm.addEventListener('submit', definirNovaSenha);
-
-    // Eventos de navegação do reset
-    document.getElementById('backToResetStep1').addEventListener('click', voltarParaPasso1);
-    document.getElementById('backToResetStep2').addEventListener('click', voltarParaPasso2);
-
-    // Fechar modal clicando fora
-    resetOverlay.addEventListener('click', (e) => {
-        if (e.target === resetOverlay) {
-            fecharRedefinicaoSenha();
+            // Auto-esconder mensagens de sucesso após 5 segundos
+            if (type === 'success') {
+                setTimeout(() => {
+                    element.style.display = 'none';
+                }, 5000);
+            }
         }
-    });
 
-    // Fechar modal com ESC
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && resetOverlay.style.display === 'flex') {
-            fecharRedefinicaoSenha();
+        // Função para mudar entre etapas
+        function resetToStep(stepNumber) {
+            resetStep1.classList.remove('active');
+            resetStep2.classList.remove('active');
+            resetStep3.classList.remove('active');
+
+            if (stepNumber === 1) {
+                resetStep1.classList.add('active');
+            } else if (stepNumber === 2) {
+                resetStep2.classList.add('active');
+            } else if (stepNumber === 3) {
+                resetStep3.classList.add('active');
+            }
         }
-    });
-}
 
-// ============================================
-// INICIALIZAÇÃO
-// ============================================
+        // Evento: Solicitar redefinição de senha
+        resetRequestForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-/**
- * Inicializa todas as funcionalidades da página de login
- */
-function inicializarLogin() {
-    configurarEventosLogin();
+            const email = document.getElementById("resetEmail").value;
+            resetUserEmail = email;
 
-    // Verificar se há usuário logado (redirecionar se já estiver logado)
-    const usuarioLogado = localStorage.getItem("usuarioLogado");
-    if (usuarioLogado) {
-        window.location.href = "perfil.html";
-    }
+            try {
+                // Verificar se o e-mail existe no sistema
+                const usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
+                const usuarioExiste = usuarios.some(usuario => usuario.email === email);
 
-    console.log("Sistema de login inicializado");
-}
+                if (usuarioExiste) {
+                    // Simulação de chamada à API
+                    const response = await mockApiRequestReset(email);
 
-// Inicia quando o DOM estiver carregado
-document.addEventListener('DOMContentLoaded', inicializarLogin);
+                    if (response.success) {
+                        showResetMessage(resetMessage1, 'Código de verificação enviado para o seu e-mail!', 'success');
+                        setTimeout(() => {
+                            resetToStep(2);
+                        }, 2000);
+                    } else {
+                        showResetMessage(resetMessage1, response.message || 'Erro ao enviar código.', 'error');
+                    }
+                } else {
+                    showResetMessage(resetMessage1, 'E-mail não encontrado em nosso sistema.', 'error');
+                }
+            } catch (error) {
+                showResetMessage(resetMessage1, 'Erro de conexão. Tente novamente.', 'error');
+            }
+        });
+
+        // Evento: Verificar código
+        verifyCodeForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const code = document.getElementById("resetCode").value;
+
+            try {
+                // Simulação de chamada à API
+                const response = await mockApiVerifyCode(resetUserEmail, code);
+
+                if (response.success) {
+                    resetToken = response.token;
+                    showResetMessage(resetMessage2, 'Código verificado com sucesso!', 'success');
+                    setTimeout(() => {
+                        resetToStep(3);
+                    }, 1000);
+                } else {
+                    showResetMessage(resetMessage2, response.message || 'Código inválido.', 'error');
+                }
+            } catch (error) {
+                showResetMessage(resetMessage2, 'Erro de conexão. Tente novamente.', 'error');
+            }
+        });
+
+        // Evento: Definir nova senha
+        newPasswordForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const newPassword = document.getElementById("newPassword").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (newPassword !== confirmPassword) {
+                showResetMessage(resetMessage3, 'As senhas não coincidem.', 'error');
+                return;
+            }
+
+            if (newPassword.length < 6) {
+                showResetMessage(resetMessage3, 'A senha deve ter pelo menos 6 caracteres.', 'error');
+                return;
+            }
+
+            try {
+                // Simulação de chamada à API
+                const response = await mockApiResetPassword(resetUserEmail, resetToken, newPassword);
+
+                if (response.success) {
+                    showResetMessage(resetMessage3, 'Senha redefinida com sucesso!', 'success');
+
+                    // Atualizar senha no localStorage
+                    const usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
+                    const usuarioIndex = usuarios.findIndex(usuario => usuario.email === resetUserEmail);
+
+                    if (usuarioIndex !== -1) {
+                        usuarios[usuarioIndex].senha = newPassword;
+                        localStorage.setItem("usuarios", JSON.stringify(usuarios));
+                    }
+
+                    // Fechar modal após 3 segundos
+                    setTimeout(() => {
+                        resetOverlay.style.display = 'none';
+                        alert('Senha atualizada com sucesso! Faça login com sua nova senha.');
+                    }, 3000);
+                } else {
+                    showResetMessage(resetMessage3, response.message || 'Erro ao redefinir senha.', 'error');
+                }
+            } catch (error) {
+                showResetMessage(resetMessage3, 'Erro de conexão. Tente novamente.', 'error');
+            }
+        });
+
+        // Eventos para voltar entre etapas
+        backToResetStep1.addEventListener('click', (e) => {
+            e.preventDefault();
+            resetToStep(1);
+        });
+
+        backToResetStep2.addEventListener('click', (e) => {
+            e.preventDefault();
+            resetToStep(2);
+        });
+
+        // Funções mock para simular chamadas à API
+        function mockApiRequestReset(email) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve({ success: true, message: 'Código enviado com sucesso' });
+                }, 1000);
+            });
+        }
+
+        function mockApiVerifyCode(email, code) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    // Simulação: código válido é "123456"
+                    if (code === '123456') {
+                        resolve({ success: true, token: 'mock_reset_token_' + Date.now() });
+                    } else {
+                        resolve({ success: false, message: 'Código inválido' });
+                    }
+                }, 1000);
+            });
+        }
+
+        function mockApiResetPassword(email, token, newPassword) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve({ success: true, message: 'Senha alterada com sucesso' });
+                }, 1000);
+            });
+        }

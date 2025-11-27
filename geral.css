@@ -674,41 +674,6 @@ h2 {
     transform: rotate(90deg);
 }
 
-.dropdown {
-    position: absolute;
-    top: 80px;
-    right: 24px;
-    background: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
-    padding: 10px 0;
-    display: none;
-}
-
-.dropdown.active {
-    display: block;
-}
-
-.dropdown .item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 20px;
-    text-decoration: none;
-    color: #333;
-    transition: background 0.2s ease;
-}
-
-.dropdown .item:hover {
-    background: #d9e7cf;
-}
-
-.dropdown img {
-    height: 40px;
-    width: auto;
-}
-
 /* Footer */
 footer {
     text-align: center;

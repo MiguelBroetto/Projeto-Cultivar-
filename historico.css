@@ -1,6 +1,6 @@
-/* ================================================
+/* ==========================================================
    RESET / BASE
-================================================ */
+   ========================================================== */
 * {
     margin: 0;
     padding: 0;
@@ -16,116 +16,113 @@ body {
     flex-direction: column;
 }
 
-/* ================================================
-   HEADER / MENU SUPERIOR
-================================================ */
+/* ==========================================================
+   HEADER
+   ========================================================== */
+
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 24px;
+    padding: 14px 26px;
     background: linear-gradient(90deg, #9db98c, #9db98c);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-bottom: 2px solid #7da173;
     position: relative;
     z-index: 100;
 }
 
 .logo img {
-    height: 155px;
+    height: 140px;
 }
 
 .nav-links {
     display: flex;
-    gap: 25px;
+    gap: 100px;
+    justify-content: center;
+    flex: 1;
 }
 
 .nav-links a img {
-    height: 35px;
+    height: 40px;
     transition: transform 0.2s ease;
 }
 
 .nav-links a img:hover {
-    transform: scale(1.12);
+    transform: scale(1.1);
 }
 
-/* Botão de configurações */
-.actions {
-    display: flex;
-    align-items: center;
+/* Ícones do lado direito */
+.actions img {
+    height: 22px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
 }
 
+.actions img:hover {
+    transform: rotate(90deg);
+}
+
+/* Botão */
 .settings {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0;
 }
 
-.settings img {
-    width: 32px;
-    height: 32px;
-    transition: transform 0.2s ease;
-}
+/* ==========================================================
+   DROPDOWN MENU
+   ========================================================== */
 
-.settings img:hover {
-    transform: rotate(90deg);
-}
-
-/* ================================================
-   DROPDOWN DE CONFIGURAÇÕES — CORRIGIDO
-================================================ */
 .dropdown {
     position: absolute;
-    top: 80px;
-    right: 20px;
+    top: 100px;
+    right: 24px;
     background: #ffffff;
     border-radius: 12px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-    padding: 12px 0;
-    width: 200px;
-
+    box-shadow: 0 4px 12px rgb(198, 187, 187);
+    overflow: hidden;
+    padding: 10px 0;
     display: none;
     opacity: 0;
     transform: translateY(-10px);
-    transition: .25s ease-in-out;
-    z-index: 9999;
+    transition: .25s ease;
+    z-index: 999;
 }
 
-/* Quando abrir */
 .dropdown.active {
     display: block;
     opacity: 1;
     transform: translateY(0);
 }
 
-/* Itens */
 .dropdown .item {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 10px 16px;
-    color: #333;
+    gap: 10px;
+    padding: 12px 20px;
     text-decoration: none;
-    font-size: 15px;
-    transition: .2s;
+    color: #333;
+    transition: background 0.2s ease, padding-left 0.2s;
 }
 
 .dropdown .item img {
-    width: 22px;
-    height: 22px;
+    height: 40px;
 }
 
 .dropdown .item:hover {
-    background: #f0f0f0;
+    background: #d9e7cf;
+    padding-left: 25px;
 }
 
-/* ================================================
-   CONTAINER PRINCIPAL
-================================================ */
+/* ==========================================================
+   CONTAINER / TÍTULOS
+   ========================================================== */
+
 .container {
     width: 100%;
     max-width: 1100px;
-    margin: 30px auto;
+    margin: 40px auto;
     padding: 20px;
 }
 
@@ -137,77 +134,88 @@ body {
 .page-title {
     font-size: 32px;
     font-weight: bold;
+    color: #2c3e50;
 }
 
 .page-subtitle {
     font-size: 16px;
-    opacity: 0.8;
+    opacity: 0.7;
 }
 
-/* ================================================
+/* ==========================================================
    AVISOS
-================================================ */
+   ========================================================== */
+
 .aviso {
-    background: #ffffffcc;
-    padding: 30px;
+    background: #ffffffed;
+    padding: 32px;
     border-radius: 12px;
     text-align: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-.aviso-conteudo h2 {
-    margin-bottom: 10px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+    margin-top: 20px;
 }
 
 .btn-login,
 .btn-comprar {
-    margin-top: 15px;
+    margin-top: 18px;
     display: inline-block;
-    padding: 10px 16px;
-    background: #7faa72;
+    padding: 11px 20px;
+    background: #ffffff;
     color: white;
     border-radius: 8px;
+    font-weight: bold;
     text-decoration: none;
-    transition: background .2s;
+    transition: 0.22s;
 }
 
 .btn-login:hover,
 .btn-comprar:hover {
-    background: #6d9662;
+    background: #6e9c65;
 }
 
-/* ================================================
-   FILTROS
-================================================ */
+/* ==========================================================
+   FILTROS — baseado no CSS que você enviou
+   ========================================================== */
+
 .filtros {
     display: flex;
-    justify-content: space-between;
-    margin: 25px 0;
-    background: #ffffffb8;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    background-color: #f3f8f3;
     padding: 15px;
     border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-}
-
-.filtro-grupo {
-    display: flex;
-    flex-direction: column;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    margin: 20px auto;
+    flex-wrap: wrap;
+    width: fit-content;
 }
 
 .filtro-label {
     font-weight: bold;
-    margin-bottom: 5px;
+    color: #2f4f2f;
 }
 
 .filtro-select {
-    padding: 7px 10px;
-    border-radius: 8px;
-    border: 1px solid #7faa72;
+    padding: 8px 12px;
+    border: 1px solid #ffffff;
+    border-radius: 6px;
+    background-color: #ffffff;
+    font-size: 0.95em;
+    color: #2f4f2f;
+    transition: 0.2s;
 }
 
-/* ================================================
-   LISTA DE PEDIDOS
-================================================ */
+.filtro-select:focus {
+    outline: none;
+    border-color: #ffffff;
+    box-shadow: 0 0 4px #ffffff;
+}
+
+/* ==========================================================
+   LISTA DE PEDIDOS — completa e moderna
+   ========================================================== */
+
 .lista-pedidos {
     display: flex;
     flex-direction: column;
@@ -215,11 +223,17 @@ body {
 }
 
 .pedido-item {
-    background: #fff;
-    padding: 18px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    border-left: 6px solid #7faa72;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 5px 16px rgba(0,0,0,0.18);
+    border-left: 7px solid #7faa72;
+    transition: 0.22s;
+    cursor: pointer;
+}
+
+.pedido-item:hover {
+    transform: translateY(-3px);
 }
 
 .pedido-header {
@@ -230,15 +244,16 @@ body {
 
 .pedido-info h3 {
     font-size: 20px;
+    font-weight: 600;
 }
 
 .pedido-status {
+    font-size: 15px;
     font-weight: bold;
 }
 
-/* Cores */
 .pedido-status.confirmado { color: #2e7d32; }
-.pedido-status.entregue { color: #1e88e5; }
+.pedido-status.entregue  { color: #1976d2; }
 .pedido-status.cancelado { color: #c62828; }
 
 .pedido-detalhes {
@@ -249,27 +264,31 @@ body {
 
 .detalhes-item {
     font-size: 14px;
+    opacity: 0.85;
 }
 
+/* botão */
 .pedido-acoes button {
     margin-top: 15px;
     width: 100%;
-    padding: 10px 0;
+    padding: 11px;
     background: #7faa72;
     border: none;
     color: white;
     border-radius: 8px;
+    font-size: 16px;
     cursor: pointer;
-    transition: background .2s;
+    transition: 0.22s;
 }
 
 .pedido-acoes button:hover {
-    background: #6c975f;
+    background: #6e9a63;
 }
 
-/* ================================================
-   MODAL DETALHES DO PEDIDO
-================================================ */
+/* ==========================================================
+   MODAL DETALHES — Premium
+   ========================================================== */
+
 .modal-pagamento {
     position: fixed;
     top: 0;
@@ -279,7 +298,8 @@ body {
     display: none;
     align-items: center;
     justify-content: center;
-    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+    background: rgba(0,0,0,0.55);
     z-index: 999;
 }
 
@@ -287,50 +307,60 @@ body {
     width: 95%;
     max-width: 650px;
     background: white;
-    padding: 25px;
-    border-radius: 16px;
+    padding: 28px;
+    border-radius: 18px;
+    box-shadow: 0 6px 22px rgba(0,0,0,0.25);
+    animation: abrirModal .25s ease;
 }
 
-.detalhes-header h2 {
-    margin-bottom: 15px;
+@keyframes abrirModal {
+    from {
+        opacity: 0;
+        transform: scale(0.92);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .item-detalhe {
     display: flex;
-    gap: 15px;
-    margin-bottom: 15px;
+    gap: 16px;
+    margin-bottom: 16px;
 }
 
 .item-detalhe img {
-    height: 65px;
-    width: 65px;
+    height: 70px;
+    width: 70px;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 10px;
 }
 
-/* ================================================
+/* ==========================================================
    FOOTER
-================================================ */
+   ========================================================== */
+
 footer {
     margin-top: auto;
-    background: #9db98c;
+    background: #8fb685;
     color: white;
-    padding: 12px;
+    padding: 14px;
     text-align: center;
+    font-weight: 500;
 }
 
-/* ================================================
+/* ==========================================================
    RESPONSIVO
-================================================ */
-@media (max-width: 700px) {
+   ========================================================== */
 
+@media (max-width: 720px) {
     .filtros {
         flex-direction: column;
-        gap: 15px;
     }
 
     .pedido-detalhes {
         flex-direction: column;
-        gap: 8px;
+        gap: 10px;
     }
 }

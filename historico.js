@@ -1,257 +1,273 @@
-// ============================================
-// HISTÓRICO DE COMPRAS
-// ============================================
+// historico.js - versão unificada e robusta (mantém o menu de configurações)
 
-// Elementos do DOM
-const listaHistorico = document.getElementById("listaHistorico");
-const mensagemVazio = document.getElementById("vazio");
+// ELEMENTOS PRINCIPAIS
+const usuarioNaoLogado = document.getElementById('usuarioNaoLogado');
+const historicoVazio = document.getElementById('historicoVazio');
+const historicoComprasDiv = document.getElementById('historicoCompras'); // div que contém lista
+const listaPedidos = document.getElementById('listaPedidos'); // onde os cards vão
+const modalDetalhes = document.getElementById('modalDetalhes');
+const detalhesPedidoConteudo = document.getElementById('detalhesPedidoConteudo');
+const filtroStatus = document.getElementById('filtroStatus');
+const filtroData = document.getElementById('filtroData');
+
+// elementos do menu de configurações (NÃO ALTERAR A LÓGICA)
 const settingsBtn = document.getElementById('settingsBtn');
 const dropdownMenu = document.getElementById('dropdownMenu');
 
-// Estado do histórico
-let historicoCompras = JSON.parse(localStorage.getItem("historicoCompras")) || [];
+// Estado interno
+let pedidosCache = []; // array combinado de pedidos que exibimos
 
-// ============================================
-// FUNÇÕES PRINCIPAIS
-// ============================================
+// INICIALIZAÇÃO
+window.addEventListener('DOMContentLoaded', () => {
+    configurarMenuDropdown();   // mantém a fórmula do menu exatamente como antes
+    configurarEventos();
+    carregarHistorico();
+});
 
-/**
- * Carrega e exibe o histórico de compras
- * Ordena por data (mais recente primeiro)
- */
+// -----------------------------
+// CARREGAR / SINCRONIZAR HISTÓRICO
+// -----------------------------
 function carregarHistorico() {
-    console.log("Carregando histórico de compras...");
+    // vamos juntar pedidos de várias fontes para garantir que o que o carrinho salvou apareça aqui
+    const historicoLocal = JSON.parse(localStorage.getItem('historicoCompras') || '[]'); // possivelmente existente
+    const todosPedidos = JSON.parse(localStorage.getItem('todosPedidos') || '[]'); // onde o finalize do carrinho costuma salvar
+    const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado') || 'null');
+    const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
 
-    // Limpa a lista antes de recarregar
-    listaHistorico.innerHTML = '';
+    // 1) pedidos do usuário logado (se existir)
+    let pedidosDoUsuario = [];
+    if (usuarioLogado) {
+        if (Array.isArray(usuarioLogado.pedidos)) pedidosDoUsuario = usuarioLogado.pedidos.slice();
+        else {
+            // procurar em usuarios[] por segurança
+            const u = usuarios.find(x => x.email === usuarioLogado.email);
+            if (u && Array.isArray(u.pedidos)) pedidosDoUsuario = u.pedidos.slice();
+        }
+    }
 
-    // Verifica se há compras no histórico
-    if (historicoCompras.length === 0) {
-        mostrarMensagemVazio();
+    // 2) pedidos vindos de todosPedidos (filtrados pelo email do usuário, quando possível)
+    let pedidosFiltradosTodos = [];
+    if (Array.isArray(todosPedidos) && todosPedidos.length) {
+        if (usuarioLogado && usuarioLogado.email) {
+            pedidosFiltradosTodos = todosPedidos.filter(p => p.usuarioEmail === usuarioLogado.email);
+        } else {
+            // se não há usuário logado, pegamos todos - mas preferimos mostrar só os do usuário quando houver login
+            pedidosFiltradosTodos = todosPedidos.slice();
+        }
+    }
+
+    // 3) historicoLocal (pode ter vindo de versões antigas)
+    const pedidosHistoricoLocal = Array.isArray(historicoLocal) ? historicoLocal.slice() : [];
+
+    // Unir todas as fontes e evitar duplicatas (por id quando presente)
+    const combined = mergePedidos([...pedidosDoUsuario, ...pedidosFiltradosTodos, ...pedidosHistoricoLocal]);
+
+    // Atualizar cache
+    pedidosCache = combined;
+
+    // Se houver algo, exibir; senão mostrar aviso
+    if (!pedidosCache || pedidosCache.length === 0) {
+        // exibe mensagem de histórico vazio
+        if (usuarioLogado) {
+            // se usuário logado mas sem pedidos
+            mostrarHistoricoVazio();
+        } else {
+            // sem usuário logado
+            mostrarUsuarioNaoLogado();
+        }
         return;
     }
 
-    // Oculta mensagem de vazio
-    mensagemVazio.style.display = "none";
+    // Se chegou aqui: ocultar avisos e renderizar
+    if (usuarioNaoLogado) usuarioNaoLogado.style.display = 'none';
+    if (historicoVazio) historicoVazio.style.display = 'none';
+    if (historicoComprasDiv) historicoComprasDiv.style.display = 'block';
 
-    // Ordena por data (mais recente primeiro)
-    const historicoOrdenado = ordenarHistoricoPorData();
-
-    // Renderiza cada compra
-    historicoOrdenado.forEach((compra, index) => {
-        const cardCompra = criarCardCompra(compra, index);
-        listaHistorico.appendChild(cardCompra);
+    // ordenar por data (mais recente primeiro)
+    pedidosCache.sort((a, b) => {
+        const da = parseDateForSort(a);
+        const db = parseDateForSort(b);
+        return db - da;
     });
 
-    console.log(`Histórico carregado: ${historicoCompras.length} compras`);
-}
+    exibirPedidos(pedidosCache);
 
-/**
- * Ordena o histórico por data (mais recente primeiro)
- * @returns {Array} Histórico ordenado
- */
-function ordenarHistoricoPorData() {
-    return historicoCompras.sort((a, b) => {
-        const dataA = new Date(a.data || a.timestamp || Date.now());
-        const dataB = new Date(b.data || b.timestamp || Date.now());
-        return dataB - dataA; // Mais recente primeiro
-    });
-}
-
-/**
- * Cria um card para exibir uma compra no histórico
- * @param {Object} compra - Dados da compra
- * @param {number} index - Índice da compra no array
- * @returns {HTMLElement} Elemento do card da compra
- */
-function criarCardCompra(compra, index) {
-    const card = document.createElement("div");
-    card.classList.add("item");
-    card.setAttribute('data-index', index);
-
-    // Formata a data da compra
-    const dataFormatada = formatarDataCompra(compra.data || compra.timestamp);
-
-    // Verifica se é uma compra antiga (formato simples) ou nova (formato completo)
-    if (compra.itens && Array.isArray(compra.itens)) {
-        // Compra nova (com múltiplos itens e dados completos)
-        card.innerHTML = criarHTMLCompraCompleta(compra, dataFormatada);
-    } else {
-        // Compra antiga (formato simples com um item)
-        card.innerHTML = criarHTMLCompraSimples(compra, dataFormatada);
+    // sincroniza para manter uma única fonte de verdade (opcional)
+    // gravamos no localStorage.historicoCompras para facilitar futuras leituras
+    try {
+        localStorage.setItem('historicoCompras', JSON.stringify(pedidosCache));
+    } catch (err) {
+        // se falhar (quota), não é fatal
+        console.warn('Não foi possível salvar historicoCompras no localStorage:', err);
     }
-
-    return card;
 }
 
-/**
- * Cria o HTML para uma compra completa (múltiplos itens)
- * @param {Object} compra - Dados completos da compra
- * @param {string} dataFormatada - Data formatada
- * @returns {string} HTML da compra
- */
-function criarHTMLCompraCompleta(compra, dataFormatada) {
-    const itensHTML = compra.itens.map(item => `
-        <div class="item-compra">
-            <img src="${item.imagem}" alt="${item.nome}" onerror="this.src='./imagens/placeholder.jpg'">
-            <div class="info-item">
-                <h3>${item.nome}</h3>
-                <span class="preco-item">${item.preco}</span>
+// Mescla arrays de pedidos evitando duplicatas (usa id quando disponível, senão gera key)
+function mergePedidos(arrs) {
+    const map = new Map();
+    arrs.forEach(p => {
+        if (!p) return;
+        // preferir usar p.id quando existir
+        const key = p.id != null ? String(p.id) : (
+            p.timestamp ? `ts:${p.timestamp}` : (
+                p.data ? `d:${p.data}` : JSON.stringify(p)
+            )
+        );
+        if (!map.has(key)) {
+            map.set(key, p);
+        } else {
+            // se já existe, podemos tentar mesclar campos faltantes
+            const existing = map.get(key);
+            map.set(key, Object.assign({}, existing, p));
+        }
+    });
+    return Array.from(map.values());
+}
+
+// parsea data para sort (fallback para Date.now)
+function parseDateForSort(p) {
+    const s = p?.data ?? p?.timestamp ?? p?.createdAt ?? null;
+    const d = s ? new Date(s) : null;
+    if (d && !isNaN(d)) return d.getTime();
+    return 0;
+}
+
+// -----------------------------
+// RENDER / INTERAÇÃO
+// -----------------------------
+function exibirPedidos(pedidos) {
+    if (!listaPedidos) return;
+    listaPedidos.innerHTML = '';
+
+    pedidos.forEach(pedido => {
+        const pedidoElement = document.createElement('div');
+        pedidoElement.className = `pedido-item status-${(pedido.status || 'Confirmado').toLowerCase()}`;
+
+        const totalNum = Number(pedido.total) || 0;
+        const totalFormatado = `R$ ${totalNum.toFixed(2).replace('.', ',')}`;
+
+        const itensQtd = Array.isArray(pedido.itens) ? pedido.itens.reduce((t, i) => t + (Number(i.quantidade) || 1), 0) : (pedido.itensQnt || 1);
+        const dataFormatada = pedido.dataFormatada || (pedido.data ? new Date(pedido.data).toLocaleDateString('pt-BR') : '');
+
+        pedidoElement.innerHTML = `
+            <div class="pedido-header">
+                <div class="pedido-info">
+                    <h3>Pedido ${pedido.id || pedido.codigo || ''}</h3>
+                    <span class="pedido-data">${dataFormatada}</span>
+                </div>
+                <div class="pedido-status ${(pedido.status || 'Confirmado').toLowerCase()}">
+                    ${getIconeStatus(pedido.status)} ${pedido.status || 'Confirmado'}
+                </div>
+            </div>
+
+            <div class="pedido-detalhes">
+                <div class="detalhes-item"><span class="detalhes-label">Itens:</span> ${itensQtd}</div>
+                <div class="detalhes-item"><span class="detalhes-label">Total:</span> ${totalFormatado}</div>
+                <div class="detalhes-item"><span class="detalhes-label">Pagamento:</span> ${getIconePagamento(pedido.metodoPagamento)} ${pedido.metodoPagamento || '-'}</div>
+            </div>
+
+            <div class="pedido-acoes">
+                <button class="btn-detalhes" onclick="verDetalhesPedido('${pedido.id || ''}')">📋 Ver Detalhes</button>
+            </div>
+        `;
+
+        listaPedidos.appendChild(pedidoElement);
+    });
+}
+
+function verDetalhesPedido(pedidoId) {
+    if (!pedidoId) return alert('Pedido sem ID disponível para exibir detalhes.');
+
+    // procurar no cache
+    const pedido = pedidosCache.find(p => String(p.id) === String(pedidoId));
+    if (!pedido) return alert('Pedido não encontrado.');
+
+    detalhesPedidoConteudo.innerHTML = montarHTMLDetalhes(pedido);
+    if (modalDetalhes) modalDetalhes.style.display = 'flex';
+}
+
+function montarHTMLDetalhes(pedido) {
+    const itens = Array.isArray(pedido.itens) ? pedido.itens : [];
+    const itensHTML = itens.map(item => `
+        <div class="item-detalhe">
+            <img src="${item.imagem || './imagens/placeholder.jpg'}" class="item-imagem">
+            <div>
+                <h4>${item.nome || 'Produto'}</h4>
+                <p>Qtd: ${item.quantidade || 1}</p>
+                <p>R$ ${(Number((item.preco || '').replace?.('R$', '') ) || 0).toFixed(2).replace('.', ',')}</p>
             </div>
         </div>
     `).join('');
 
     return `
-        <div class="cabecalho-compra">
-            <h2>Compra #${compra.id || 'N/A'}</h2>
-            <span class="data-compra">${dataFormatada}</span>
-        </div>
-        <div class="itens-compra">
-            ${itensHTML}
-        </div>
-        <div class="resumo-compra">
-            <div class="info-adicional">
-                <span class="total">Total: R$ ${compra.total?.toFixed(2).replace('.', ',') || 'N/A'}</span>
-                <span class="pagamento">Pagamento: ${compra.formaPagamento || 'Não informado'}</span>
-            </div>
-            <button class="btn-detalhes" onclick="verDetalhesCompra(${compra.id ? `'${compra.id}'` : 'null'})">
-                Ver Detalhes
-            </button>
-        </div>
+        <h2>Pedido ${pedido.id || ''}</h2>
+        <p><strong>Status:</strong> ${getIconeStatus(pedido.status)} ${pedido.status || ''}</p>
+        <p><strong>Data:</strong> ${pedido.dataFormatada || pedido.data || ''}</p>
+        <h3>Itens</h3>
+        ${itensHTML || '<p>Nenhum item listado.</p>'}
     `;
 }
 
-/**
- * Cria o HTML para uma compra simples (um item)
- * @param {Object} compra - Dados simples da compra
- * @param {string} dataFormatada - Data formatada
- * @returns {string} HTML da compra
- */
-function criarHTMLCompraSimples(compra, dataFormatada) {
-    return `
-        <img src="${compra.imagem}" alt="${compra.nome}" onerror="this.src='./imagens/placeholder.jpg'">
-        <div class="info-compra">
-            <h2>${compra.nome}</h2>
-            <p class="preco">${compra.preco}</p>
-            <span class="data">${dataFormatada}</span>
-        </div>
-        <div class="acoes-compra">
-            <button class="btn-comprar-novamente" onclick="comprarNovamente('${compra.nome}', '${compra.preco}', '${compra.imagem}')">
-                Comprar Novamente
-            </button>
-        </div>
-    `;
+// -----------------------------
+// ÍCONES (simples)
+function getIconeStatus(s) {
+    if (s === 'Confirmado' || s === 'confirmado') return '✅';
+    if (s === 'Entregue' || s === 'entregue') return '📦';
+    if (s === 'Cancelado' || s === 'cancelado') return '❌';
+    return '📋';
+}
+function getIconePagamento(m) {
+    if (!m) return '💰';
+    if (/pix/i.test(m)) return '🏦';
+    if (/boleto/i.test(m)) return '📄';
+    if (/cartão|cartao|crédito|credito/i.test(m)) return '💳';
+    return '💰';
 }
 
-/**
- * Formata a data da compra para exibição
- * @param {string} dataString - Data em formato string
- * @returns {string} Data formatada
- */
-function formatarDataCompra(dataString) {
-    if (!dataString) return 'Data não disponível';
+// -----------------------------
+// FILTROS & EVENTOS
+// -----------------------------
+function aplicarFiltros() {
+    const statusSelecionado = filtroStatus?.value || 'todos';
+    const ordem = filtroData?.value || 'recentes';
 
-    try {
-        const data = new Date(dataString);
-        return data.toLocaleDateString('pt-BR', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-    } catch (error) {
-        console.error('Erro ao formatar data:', error);
-        return 'Data inválida';
-    }
-}
+    let lista = pedidosCache.slice();
 
-/**
- * Exibe mensagem quando não há compras no histórico
- */
-function mostrarMensagemVazio() {
-    mensagemVazio.style.display = "block";
-    mensagemVazio.innerHTML = `
-        <div class="historico-vazio">
-            <h3>Nenhuma compra encontrada</h3>
-            <p>Você ainda não realizou nenhuma compra em nossa loja.</p>
-            <a href="index.html" class="btn-comprar-agora">Fazer Minha Primeira Compra</a>
-        </div>
-    `;
-}
-
-// ============================================
-// FUNÇÕES DE INTERAÇÃO
-// ============================================
-
-/**
- * Adiciona um item do histórico de volta ao carrinho
- * @param {string} nome - Nome do produto
- * @param {string} preco - Preço do produto
- * @param {string} imagem - URL da imagem
- */
-function comprarNovamente(nome, preco, imagem) {
-    let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
-
-    // Verifica se o item já está no carrinho
-    const itemExistente = carrinho.find(item => item.nome === nome);
-
-    if (itemExistente) {
-        if (confirm(`"${nome}" já está no seu carrinho. Deseja adicionar outra unidade?`)) {
-            carrinho.push({ nome, preco, imagem });
-        }
-    } else {
-        carrinho.push({ nome, preco, imagem });
+    if (statusSelecionado !== 'todos') {
+        lista = lista.filter(p => String((p.status || '')).toLowerCase() === String(statusSelecionado).toLowerCase());
     }
 
-    localStorage.setItem("carrinho", JSON.stringify(carrinho));
+    lista.sort((a, b) => {
+        const da = parseDateForSort(a);
+        const db = parseDateForSort(b);
+        return ordem === 'recentes' ? db - da : da - db;
+    });
 
-    // Feedback visual
-    alert(`"${nome}" adicionado ao carrinho!`);
-
-    // Opcional: Redirecionar para o carrinho
-    // window.location.href = "carrinho.html";
+    exibirPedidos(lista);
 }
 
-/**
- * Exibe detalhes de uma compra específica
- * @param {string} compraId - ID da compra
- */
-function verDetalhesCompra(compraId) {
-    if (!compraId) {
-        alert('Detalhes completos não disponíveis para esta compra.');
-        return;
-    }
+function configurarEventos() {
+    // fecha modal clicando fora
+    modalDetalhes?.addEventListener('click', e => {
+        if (e.target === modalDetalhes) modalDetalhes.style.display = 'none';
+    });
 
-    // Em um sistema real, buscaria detalhes completos
-    alert(`Detalhes da compra #${compraId}\n\nEsta funcionalidade exibiria informações completas da compra.`);
+    // fechar botão (pode não existir no seu HTML; por isso opcional)
+    const fecharDetalhes = document.getElementById('fecharDetalhes');
+    fecharDetalhes?.addEventListener('click', () => {
+        if (modalDetalhes) modalDetalhes.style.display = 'none';
+    });
+
+    filtroStatus?.addEventListener('change', aplicarFiltros);
+    filtroData?.addEventListener('change', aplicarFiltros);
 }
 
-/**
- * Limpa todo o histórico de compras
- */
-function limparHistorico() {
-    if (historicoCompras.length === 0) {
-        alert('O histórico já está vazio.');
-        return;
-    }
-
-    if (confirm('Tem certeza que deseja limpar todo o histórico de compras?\nEsta ação não pode ser desfeita.')) {
-        historicoCompras = [];
-        localStorage.setItem("historicoCompras", JSON.stringify(historicoCompras));
-        carregarHistorico();
-        alert('Histórico limpo com sucesso!');
-    }
-}
-
-// ============================================
-// CONFIGURAÇÃO DO MENU DROPDOWN
-// ============================================
-
-/**
- * Configura o menu dropdown de configurações
- */
+// -----------------------------
+// MENU DROPDOWN (NÃO ALTEREI A LÓGICA)
+// -----------------------------
 function configurarMenuDropdown() {
+    if (!settingsBtn || !dropdownMenu) return;
+
     settingsBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         dropdownMenu.classList.toggle('active');
@@ -262,33 +278,44 @@ function configurarMenuDropdown() {
             dropdownMenu.classList.remove('active');
         }
     });
+
+    // fechar com ESC
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') dropdownMenu.classList.remove('active');
+    });
 }
 
-// ============================================
-// INICIALIZAÇÃO
-// ============================================
+// -----------------------------
+// Sincronização externa (quando outra aba grava)
+window.addEventListener('storage', (e) => {
+    // se algo mudou no localStorage que influencia, recarregamos
+    if (['historicoCompras', 'todosPedidos', 'usuarioLogado', 'usuarios'].includes(e.key)) {
+        carregarHistorico();
+    }
+});
 
-/**
- * Inicializa todas as funcionalidades da página de histórico
- */
-function inicializarHistorico() {
-    // Configura eventos
-    configurarMenuDropdown();
-
-    // Carrega o histórico
-    carregarHistorico();
-
-    console.log("Página de histórico inicializada");
+// -----------------------------
+// AUXILIARES (ações disponibilizadas globalmente)
+function mostrarUsuarioNaoLogado() {
+    if (usuarioNaoLogado) usuarioNaoLogado.style.display = 'block';
+    if (historicoVazio) historicoVazio.style.display = 'none';
+    if (historicoComprasDiv) historicoComprasDiv.style.display = 'none';
+}
+function mostrarHistoricoVazio() {
+    if (historicoVazio) {
+        historicoVazio.style.display = 'block';
+        historicoVazio.innerHTML = `
+            <div class="aviso-conteudo">
+                <h2>📭 Nenhuma Compra Encontrada</h2>
+                <p>Você ainda não realizou nenhuma compra.</p>
+                <a href="index.html" class="btn-comprar">Fazer Minha Primeira Compra</a>
+            </div>
+        `;
+    }
+    if (usuarioNaoLogado) usuarioNaoLogado.style.display = 'none';
+    if (historicoComprasDiv) historicoComprasDiv.style.display = 'none';
 }
 
-// Inicia quando o DOM estiver carregado
-document.addEventListener('DOMContentLoaded', inicializarHistorico);
-
-// ============================================
-// EXPORTAÇÕES PARA USO GLOBAL
-// ============================================
-
-// Torna as funções disponíveis globalmente para os eventos onclick no HTML
-window.comprarNovamente = comprarNovamente;
-window.verDetalhesCompra = verDetalhesCompra;
-window.limparHistorico = limparHistorico;
+// disponibiliza globalmente (se for necessário chamar por onclick inline)
+window.verDetalhesPedido = verDetalhesPedido;
+window.aplicarFiltros = aplicarFiltros;
