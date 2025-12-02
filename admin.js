@@ -1,151 +1,153 @@
-  // Função para gerar ID único
-        function gerarId() {
-            return Date.now().toString(36) + Math.random().toString(36).substr(2);
-        }
+// Função para gerar ID único
+function gerarId() {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+}
 
-        // Carregar produtos existentes
-        function carregarProdutos() {
-            const produtos = JSON.parse(localStorage.getItem('produtosCadastrados')) || [];
-            const lista = document.getElementById('listaProdutosCadastrados');
+// Carregar produtos existentes
+function carregarProdutos() {
+    const produtos = JSON.parse(localStorage.getItem('produtosCadastrados')) || [];
+    const lista = document.getElementById('listaProdutosCadastrados');
 
-            lista.innerHTML = '';
+    lista.innerHTML = '';
 
-            if (produtos.length === 0) {
-                lista.innerHTML = '<p>Nenhum produto cadastrado ainda.</p>';
-                return;
-            }
+    if (produtos.length === 0) {
+        lista.innerHTML = '<p>Nenhum produto cadastrado ainda.</p>';
+        return;
+    }
 
-            // Mostrar últimos 10 produtos (mais recentes primeiro)
-            const ultimosProdutos = produtos.slice(-10).reverse();
+    // Mostrar últimos 10 produtos (mais recentes primeiro)
+    const ultimosProdutos = produtos.slice(-10).reverse();
 
-            ultimosProdutos.forEach((produto, index) => {
-                const div = document.createElement('div');
-                div.className = 'produto-item';
-                div.innerHTML = `
+    ultimosProdutos.forEach((produto, index) => {
+        const div = document.createElement('div');
+        div.className = 'produto-item';
+        div.innerHTML = `
             <div class="produto-info">
                 <strong>${produto.nome}</strong> - R$ ${produto.preco.toFixed(2).replace('.', ',')}
                 <br><small>Categoria: ${produto.categoria} | Descrição: ${produto.descricao.substring(0, 50)}...</small>
             </div>
             <button class="btn-remover" data-id="${produto.id}">Remover</button>
         `;
-                lista.appendChild(div);
-            });
+        lista.appendChild(div);
+    });
 
-            // Adicionar eventos aos botões de remover
-            document.querySelectorAll('.btn-remover').forEach(btn => {
-                btn.addEventListener('click', function () {
-                    const produtoId = this.getAttribute('data-id');
-                    removerProduto(produtoId);
-                });
-            });
-        }
-
-        // Cadastrar novo produto
-        document.getElementById('formProduto').addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const novoProduto = {
-                id: gerarId(),
-                nome: document.getElementById('nomeProduto').value,
-                categoria: document.getElementById('categoriaProduto').value,
-                preco: parseFloat(document.getElementById('precoProduto').value),
-                imagem: document.getElementById('imagemProduto').value,
-                descricao: document.getElementById('descricaoProduto').value, // Descrição curta (será gerada)
-                descricaoCompleta: document.getElementById('descricaoProduto').value, // Descrição COMPLETA
-                dataCadastro: new Date().toISOString()
-            };
-
-            // Carregar produtos existentes
-            let produtos = JSON.parse(localStorage.getItem('produtosCadastrados')) || [];
-
-            // Adicionar novo produto
-            produtos.push(novoProduto);
-
-            // Salvar no localStorage
-            localStorage.setItem('produtosCadastrados', JSON.stringify(produtos));
-
-            // Mostrar mensagem de sucesso
-            const mensagem = document.getElementById('mensagemSucesso');
-            mensagem.textContent = 'Produto cadastrado com sucesso!';
-            mensagem.style.display = 'block';
-
-            // Limpar formulário
-            document.getElementById('formProduto').reset();
-
-            // Atualizar lista
-            carregarProdutos();
-
-            // Esconder mensagem após 3 segundos
-            setTimeout(() => {
-                mensagem.style.display = 'none';
-            }, 3000);
+    // Adicionar eventos aos botões de remover
+    document.querySelectorAll('.btn-remover').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const produtoId = this.getAttribute('data-id');
+            removerProduto(produtoId);
         });
+    });
+}
 
-        // Remover produto
-        function removerProduto(produtoId) {
-            if (!confirm('Tem certeza que deseja remover este produto?')) {
-                return;
-            }
+// Cadastrar novo produto
+document.getElementById('formProduto').addEventListener('submit', function (e) {
+    e.preventDefault();
 
-            let produtos = JSON.parse(localStorage.getItem('produtosCadastrados')) || [];
+    const novoProduto = {
+        id: gerarId(),
+        nome: document.getElementById('nomeProduto').value,
+        categoria: document.getElementById('categoriaProduto').value,
+        preco: parseFloat(document.getElementById('precoProduto').value),
+        imagem: document.getElementById('imagemProduto').value,
+        descricao: document.getElementById('descricaoProduto').value, // Descrição curta (será gerada)
+        descricaoCompleta: document.getElementById('descricaoProduto').value, // Descrição COMPLETA
+        dataCadastro: new Date().toISOString()
+    };
 
-            // Filtrar o produto a ser removido
-            const produtosAtualizados = produtos.filter(produto => produto.id !== produtoId);
+    // Carregar produtos existentes
+    let produtos = JSON.parse(localStorage.getItem('produtosCadastrados')) || [];
 
-            // Salvar lista atualizada
-            localStorage.setItem('produtosCadastrados', JSON.stringify(produtosAtualizados));
+    // Adicionar novo produto
+    produtos.push(novoProduto);
 
-            // Mostrar mensagem de sucesso
-            const mensagem = document.getElementById('mensagemSucesso');
-            mensagem.textContent = 'Produto removido com sucesso!';
-            mensagem.style.display = 'block';
+    // Salvar no localStorage
+    localStorage.setItem('produtosCadastrados', JSON.stringify(produtos));
 
-            // Atualizar lista
-            carregarProdutos();
+    // Mostrar mensagem de sucesso
+    const mensagem = document.getElementById('mensagemSucesso');
+    mensagem.textContent = 'Produto cadastrado com sucesso!';
+    mensagem.style.display = 'block';
 
-            // Esconder mensagem após 3 segundos
-            setTimeout(() => {
-                mensagem.style.display = 'none';
-            }, 3000);
-        }
+    // Limpar formulário
+    document.getElementById('formProduto').reset();
 
-        // Carregar produtos ao iniciar a página
-        document.addEventListener('DOMContentLoaded', carregarProdutos);
+    // Atualizar lista
+    carregarProdutos();
+
+    // Esconder mensagem após 3 segundos
+    setTimeout(() => {
+        mensagem.style.display = 'none';
+    }, 3000);
+});
+
+// Remover produto
+function removerProduto(produtoId) {
+    if (!confirm('Tem certeza que deseja remover este produto?')) {
+        return;
+    }
+
+    let produtos = JSON.parse(localStorage.getItem('produtosCadastrados')) || [];
+
+    // Filtrar o produto a ser removido
+    const produtosAtualizados = produtos.filter(produto => produto.id !== produtoId);
+
+    // Salvar lista atualizada
+    localStorage.setItem('produtosCadastrados', JSON.stringify(produtosAtualizados));
+
+    // Mostrar mensagem de sucesso
+    const mensagem = document.getElementById('mensagemSucesso');
+    mensagem.textContent = 'Produto removido com sucesso!';
+    mensagem.style.display = 'block';
+
+    // Atualizar lista
+    carregarProdutos();
+
+    // Esconder mensagem após 3 segundos
+    setTimeout(() => {
+        mensagem.style.display = 'none';
+    }, 3000);
+}
+
+// Carregar produtos ao iniciar a página
+document.addEventListener('DOMContentLoaded', carregarProdutos);
 
 
 
-        // icone de configuração 
+// icone de configuração 
 
-        const settingsBtn = document.getElementById('settingsBtn');
-        const dropdownMenu = document.getElementById('dropdownMenu');
-
-
-        settingsBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            dropdownMenu.classList.toggle('active');
-        });
+const settingsBtn = document.getElementById('settingsBtn');
+const dropdownMenu = document.getElementById('dropdownMenu');
 
 
-        document.addEventListener('click', (e) => {
-            if (!dropdownMenu.contains(e.target) && e.target !== settingsBtn) {
-                dropdownMenu.classList.remove('active');
-            }
-        });
+settingsBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dropdownMenu.classList.toggle('active');
+});
 
 
-        // Mostrar mensagem de sucesso
-        const mensagem = document.getElementById('mensagemSucesso');
-        mensagem.textContent = 'Produto removido com sucesso!';
-        mensagem.style.display = 'block';
-
-        // Atualizar lista
-        carregarProdutos();
-
-        // Esconder mensagem após 3 segundos
-        setTimeout(() => {
-            mensagem.style.display = 'none';
-        }, 3000);
+document.addEventListener('click', (e) => {
+    if (!dropdownMenu.contains(e.target) && e.target !== settingsBtn) {
+        dropdownMenu.classList.remove('active');
+    }
+});
 
 
-        // Carregar produtos ao iniciar a página
-        document.addEventListener('DOMContentLoaded', carregarProdutos);
+// Mostrar mensagem de sucesso
+const mensagem = document.getElementById('mensagemSucesso');
+mensagem.textContent = 'Produto removido com sucesso!';
+mensagem.style.display = 'block';
+
+// Atualizar lista
+carregarProdutos();
+
+// Esconder mensagem após 3 segundos
+setTimeout(() => {
+    mensagem.style.display = 'none';
+}, 3000);
+
+
+
+
+// Carregar produtos ao iniciar a página
+document.addEventListener('DOMContentLoaded', carregarProdutos);

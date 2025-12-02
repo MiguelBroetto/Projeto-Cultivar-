@@ -74,7 +74,7 @@
                 simularCalculoFrete(cep);
             }, 1500);
         }
-
+     
         function simularCalculoFrete(cep) {
             freteLoading.style.display = 'none';
 
@@ -83,15 +83,7 @@
 
             // Simulação de diferentes cenários baseados no CEP
             const ultimoDigito = parseInt(cep[cep.length - 1]);
-
-            // Para teste: apenas CEPs terminados em 0 serão inválidos
-            if (isNaN(ultimoDigito) || ultimoDigito === 0) {
-                console.log('CEP inválido detectado');
-                freteError.style.display = 'block';
-                calcularFreteBtn.disabled = false;
-                return;
-            }
-
+            
             // Opções de frete simuladas
             const opcoes = [];
             const subtotal = calcularSubtotal();

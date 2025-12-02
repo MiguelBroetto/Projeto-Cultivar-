@@ -1,4 +1,4 @@
-// historico.js - versão unificada e robusta (mantém o menu de configurações)
+    // historico.js - versão unificada e robusta (mantém o menu de configurações)
 
 // ELEMENTOS PRINCIPAIS
 const usuarioNaoLogado = document.getElementById('usuarioNaoLogado');
@@ -28,62 +28,62 @@ window.addEventListener('DOMContentLoaded', () => {
 // CARREGAR / SINCRONIZAR HISTÓRICO
 // -----------------------------
 function carregarHistorico() {
-    // vamos juntar pedidos de várias fontes para garantir que o que o carrinho salvou apareça aqui
-    const historicoLocal = JSON.parse(localStorage.getItem('historicoCompras') || '[]'); // possivelmente existente
-    const todosPedidos = JSON.parse(localStorage.getItem('todosPedidos') || '[]'); // onde o finalize do carrinho costuma salvar
+    // Verifica login corretamente
     const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado') || 'null');
-    const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
 
-    // 1) pedidos do usuário logado (se existir)
-    let pedidosDoUsuario = [];
-    if (usuarioLogado) {
-        if (Array.isArray(usuarioLogado.pedidos)) pedidosDoUsuario = usuarioLogado.pedidos.slice();
-        else {
-            // procurar em usuarios[] por segurança
-            const u = usuarios.find(x => x.email === usuarioLogado.email);
-            if (u && Array.isArray(u.pedidos)) pedidosDoUsuario = u.pedidos.slice();
-        }
-    }
-
-    // 2) pedidos vindos de todosPedidos (filtrados pelo email do usuário, quando possível)
-    let pedidosFiltradosTodos = [];
-    if (Array.isArray(todosPedidos) && todosPedidos.length) {
-        if (usuarioLogado && usuarioLogado.email) {
-            pedidosFiltradosTodos = todosPedidos.filter(p => p.usuarioEmail === usuarioLogado.email);
-        } else {
-            // se não há usuário logado, pegamos todos - mas preferimos mostrar só os do usuário quando houver login
-            pedidosFiltradosTodos = todosPedidos.slice();
-        }
-    }
-
-    // 3) historicoLocal (pode ter vindo de versões antigas)
-    const pedidosHistoricoLocal = Array.isArray(historicoLocal) ? historicoLocal.slice() : [];
-
-    // Unir todas as fontes e evitar duplicatas (por id quando presente)
-    const combined = mergePedidos([...pedidosDoUsuario, ...pedidosFiltradosTodos, ...pedidosHistoricoLocal]);
-
-    // Atualizar cache
-    pedidosCache = combined;
-
-    // Se houver algo, exibir; senão mostrar aviso
-    if (!pedidosCache || pedidosCache.length === 0) {
-        // exibe mensagem de histórico vazio
-        if (usuarioLogado) {
-            // se usuário logado mas sem pedidos
-            mostrarHistoricoVazio();
-        } else {
-            // sem usuário logado
-            mostrarUsuarioNaoLogado();
-        }
+    // Se não estiver logado → mostra aviso e para tudo
+    if (!usuarioLogado) {
+        mostrarUsuarioNaoLogado();
         return;
     }
 
-    // Se chegou aqui: ocultar avisos e renderizar
-    if (usuarioNaoLogado) usuarioNaoLogado.style.display = 'none';
-    if (historicoVazio) historicoVazio.style.display = 'none';
-    if (historicoComprasDiv) historicoComprasDiv.style.display = 'block';
+    // Continua normalmente
+    const historicoLocal = JSON.parse(localStorage.getItem('historicoCompras') || '[]');
+    const todosPedidos = JSON.parse(localStorage.getItem('todosPedidos') || '[]');
+    const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
 
-    // ordenar por data (mais recente primeiro)
+    // Carrega pedidos do usuário logado
+    let pedidosDoUsuario = [];
+    if (Array.isArray(usuarioLogado.pedidos)) {
+        pedidosDoUsuario = usuarioLogado.pedidos.slice();
+    } else {
+        const u = usuarios.find(x => x.email === usuarioLogado.email);
+        if (u && Array.isArray(u.pedidos)) {
+            pedidosDoUsuario = u.pedidos.slice();
+        }
+    }
+
+    // Filtra pedidos do sistema pelo email
+    let pedidosFiltradosTodos = [];
+    if (Array.isArray(todosPedidos) && todosPedidos.length) {
+        pedidosFiltradosTodos = todosPedidos.filter(p => p.usuarioEmail === usuarioLogado.email);
+    }
+
+    // Histórico local (compatibilidade)
+    const pedidosHistoricoLocal = Array.isArray(historicoLocal) ? historicoLocal.slice() : [];
+
+    // Unir tudo sem duplicar
+    const combined = mergePedidos([
+        ...pedidosDoUsuario,
+        ...pedidosFiltradosTodos,
+        ...pedidosHistoricoLocal
+    ]);
+
+    // Atualiza cache interno
+    pedidosCache = combined;
+
+    // Se não há pedidos
+    if (!pedidosCache.length) {
+        mostrarHistoricoVazio();
+        return;
+    }
+
+    // Exibe histórico normalmente
+    usuarioNaoLogado.style.display = 'none';
+    historicoVazio.style.display = 'none';
+    historicoComprasDiv.style.display = 'block';
+
+    // Ordenar por data
     pedidosCache.sort((a, b) => {
         const da = parseDateForSort(a);
         const db = parseDateForSort(b);
@@ -92,14 +92,8 @@ function carregarHistorico() {
 
     exibirPedidos(pedidosCache);
 
-    // sincroniza para manter uma única fonte de verdade (opcional)
-    // gravamos no localStorage.historicoCompras para facilitar futuras leituras
-    try {
-        localStorage.setItem('historicoCompras', JSON.stringify(pedidosCache));
-    } catch (err) {
-        // se falhar (quota), não é fatal
-        console.warn('Não foi possível salvar historicoCompras no localStorage:', err);
-    }
+    // Salva versão consolidada
+    localStorage.setItem('historicoCompras', JSON.stringify(pedidosCache));
 }
 
 // Mescla arrays de pedidos evitando duplicatas (usa id quando disponível, senão gera key)

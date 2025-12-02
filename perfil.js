@@ -1,4 +1,4 @@
-  // Elementos do perfil
+ // Elementos do perfil
         const formContainer = document.getElementById("form-container");
         const perfilContainer = document.getElementById("perfil-container");
         const cadastroForm = document.getElementById("cadastroForm");
