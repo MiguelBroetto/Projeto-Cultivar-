@@ -12,7 +12,7 @@ O projeto foi desenvolvido com o objetivo de aplicar, na prática, os conhecimen
 - **Carrinho de compras:** possibilidade de adicionar produtos ao carrinho.
 - **Opções de pagamento:** simulação de pagamento via Pix, cartão de crédito e boleto bancário.
 - **Interface de compra:** demonstração das etapas de seleção de produtos e finalização do pedido.
-- **Filtros personalizados:** Filtrar por faixa de preço e categoria
+- **Filtros personalizados:** Filtrar por faixa de preço e categoria.
 
 ## Tecnologias utilizadas
 
