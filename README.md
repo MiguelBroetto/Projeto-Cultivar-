@@ -54,6 +54,6 @@ Este projeto possui finalidade exclusivamente acadêmica e demonstrativa. Os pro
 
 ## Autor
 
-**Miguel Broetto** **Nikolas Kaiser** **Bryan Luchi**
+**Miguel Broetto**,  **Nikolas Kaiser**,  **Bryan Luchi**
 
 Projeto desenvolvido em grupo como parte de um Projeto Integrador.
